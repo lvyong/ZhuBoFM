@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!--Dialog类的颜色 -->
+    <color name="ui_dialog_title_color">#333333</color>
+    <color name="ui_dialog_button_color">#2181f9</color>
+    <color name="ui_alert_dialog_message_color">#808080</color>
+    <color name="ui_alert_dialog_bg_color">#f2f2f2</color>
+    <color name="ui_list_dialog_bg_color">#f2f2f2</color>
+    <color name="ui_alert_dialog_button_divider_color">#d4dfe3</color>
+    <color name="ui_jiaoyi_list_parent_bg_color">#edeff6</color>
+    <color name="ui_jiaoyi_detail_progress_dash_line_bg_clorl">#bbbbbb</color>
+    <color name="ui_scan_content_bg_color">#3b3b3d</color>
+
+    <color name="l_white">#ffffff</color>
+    <color name="l_gray">#DDDDDD</color>
+    <color name="l_gray_cccccc">#CCCCCC</color>
+    <color name="l_gray_eeeeee">#EEEEEE</color>
+    <color name="l_box">#cccccc</color>
+    <color name="l_black">#333333</color>
+    <color name="l_transparence">#00000000</color>
+    <color name="l_chenckeditem">#50282828</color>
+    <color name="l_reditem">#543737</color>
+    <!--日历中用到的颜色值-->
+    <color name="l_calendar_active_month_bg">#fff5f7f9</color>
+    <color name="l_calendar_divider">#ffbababa</color>
+    <color name="l_calendar_inactive_month_bg">#ffd7d9db</color>
+    <color name="l_calendar_selected_day_bg">#ff379bff</color>
+    <color name="l_calendar_selected_range_bg">#ff96caff</color>
+    <color name="l_calendar_text_inactive">#40778088</color>
+    <color name="l_calendar_text_active">#ff778088</color>
+    <color name="l_calendar_text_unselectable">#7f778088</color>
+    <color name="l_calendar_text_holiday">#FF0000</color>
+    <color name="l_calendar_text_today">#FF9900</color>
+    <color name="l_calendar_blue_00AEFF">#00AEFF</color>
+    <color name="l_calendar_gray_f2f2f2">#F2F2F2</color>
+    <color name="l_light_gray">#a1a1a1</color>
+
+    <!--通用组件使用颜色-->
+    <color name="ui_progressbar_dialog_bgcolor">#8c8c8c</color>
+    <color name="ui_divider_bg_color">@color/color_gray_d3e0e3</color>
+    <color name="font_gray">#8F8F8F</color>
+    <color name="font_black">#6e6e83</color>
+    <color name="transparent_background">#00000000</color> <!-- 透明色 -->
+    <color name="ui_white_bg_gray_border_color">#d4dfe4</color>
+
+    <!--通用颜色-->
+    <color name="white">#ffffff</color> <!-- 白色 -->
+    <color name="red_ff0000">#ff0000</color>
+    <color name="red_c80c0c">#c80c0c</color> <!-- 红色 -->
+    <color name="red_ff7928">#ff7928</color>
+    <color name="red_fd0202">#fd0202</color>
+    <color name="red_ea6739">#ea6739</color>
+    <color name="red_ff7029">#ff7029</color>
+    <color name="gray_888888">#888888</color>
+    <color name="black">#000000</color>
+    <color name="black_333333">#333333</color>
+    <color name="black_3a4777">#3a4777</color>
+    <color name="black_9fa0ab">#9fa0ab</color>
+    <color name="black_727385">#727385</color>
+    <color name="black_727485">#727485</color>
+    <color name="black_4e5370">#4e5370</color>
+    <color name="black_010101">#010101</color>
+    <color name="black_27283a">#27283a</color>
+
+    <color name="blue">#0000FF</color> <!--蓝色 -->
+    <color name="blue_628ea4">#628ea4</color>
+    <color name="blue_167efc">#167efc</color>
+    <color name="blue_6699cc">#6699cc</color>
+    <color name="blue_006BB1">#006BB1</color>
+    <color name="blue_DFF4FF">#DFF4FF</color>
+    <color name="blue_008BCE">#008BCE</color>
+    <color name="blue_00AEFF">#00AEFF</color>
+    <color name="blue_34abf0">#34abf0</color>
+    <color name="blue_414574">#414574</color>
+    <color name="blue_4963eb">#4963eb</color>
+    <color name="blue_97bcc5">#97bcc5</color>
+    <color name="blue_475580">#475580</color>
+    <color name="blue_2f88f0">#2f88f0</color>
+    <color name="blue_3088EF">#3088EF</color>
+    <color name="gray">#f7f7f7</color> <!-- 灰色 -->
+    <color name="gray_5e5e5e">#5e5e5e</color>
+    <color name="gray_b5b5b6">#b5b5b6</color>
+    <color name="gray_949494">#949494</color>
+    <color name="gray_454545">#454545</color>
+    <color name="gray_a1a1a1">#a1a1a1</color>
+    <color name="gray_afb6c7">#afb6c7</color>
+    <color name="gray_a9a9a9">#A9A9A9</color>
+    <color name="gray_666666">#666666</color>
+    <color name="gray_677272">#677272</color>
+    <color name="gray_CCCCCC">#CCCCCC</color>
+    <color name="gray_AAAAAA">#AAAAAA</color>
+    <color name="gray_727485">#727485</color>
+    <color name="gray_727588">#727588</color>
+    <color name="gray_bbbbbb">#bbbbbb</color>
+    <color name="gray_bcbbb9">#bcbbb9</color>
+    <color name="gray_d3d3d3">#d3d3d3</color>
+    <color name="gray_b2b2b2">#80b2b2b2</color>
+    <color name="gray_babcb9">#babcb9</color>
+    <color name="green_ccffcc">#ccffcc</color> <!-- 绿色 -->
+    <color name="green_006633">#006633</color>
+    <color name="orange_fd5f00">#fd5f00</color> <!-- 桔色 -->
+    <color name="orange_FF6600">#FF6600</color>
+    <color name="orange_ff9900">#ff9900</color>
+    <color name="orange_ff7a1b">#ff7a1b</color>
+    <color name="yellow">#ffff00</color> <!-- 黄色 -->
+    <color name="yellow_dec674">#dec674</color> <!-- 淡黄色 -->
+    <color name="yellow_f8f9c0">#f8f9c0</color> <!-- 淡黄色 -->
+    <color name="yellow_FFCC00">#FFCC00</color> <!-- 发票黄色 -->
+    <color name="yellow_FF9933">#FF9933</color> <!-- 卡号背景黄色 -->
+    <color name="pink_ffccff">#efffccff</color>   <!-- 粉色 -->
+
+
+    <color name="purple_3a4777">#3a4777</color>
+    <color name="gray_727475">#727485</color>
+    <color name="gray_e6e7e9">#e6e7e9</color>
+
+
+    <color name="color_purple_3a4777">#3a4777</color>
+    <color name="color_gray_727485">#727485</color>
+    <color name="color_gray_d3e0e3">#d3e0e3</color>
+    <color name="color_orange_f69e13">#f69e13</color>
+    <color name="color_green_62c904">#62c904</color>
+    <color name="color_orange_ff7928">#ff7928</color>
+    <color name="color_gray_bbbbbb">#bbbbbb</color>
+    <color name="color_white_ffffff">#ffffff</color>
+    <color name="color_white_eceff6">#eceff6</color>
+    <color name="color_blue_3b4a78">#3b4a78</color>
+    <color name="color_blue_50bdef">#50bdef</color>
+    <color name="color_blue_4eaaea">#4eaaea</color>
+    <color name="color_green_566776">#566776</color>
+    <color name="color_blue_00a1e9">#00a1e9</color>
+    <color name="color_black_3b4878">#3b4878</color>
+    <color name="color_yellow_ffd822">#ffd822</color>
+    <color name="color_gray_eceff6">#eceff6</color>
+    <color name="color_black_727745">#727745</color>
+    <color name="color_blue_33acf0">#33acf0</color>
+    <color name="color_white_EAEAEA">#EAEAEA</color>
+
+    <color name="slime_color">#6aa1a8</color>
+
+    <color name="color_black">#32393d</color>
+
+</resources>

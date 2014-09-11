@@ -1,0 +1,146 @@
+package com.zhubo.fm.activity;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.text.TextUtils;
+import android.util.Log;
+
+import com.andy.commonlibrary.net.exception.MessageException;
+import com.andy.corelibray.CoreApplication;
+import com.andy.corelibray.net.BusinessResponseHandler;
+import com.google.gson.Gson;
+import com.zhubo.control.bussiness.bean.AuthToken;
+import com.zhubo.control.bussiness.db.AuthTokenDB;
+import com.zhubo.fm.R;
+import com.zhubo.fm.activity.main.MainActivity;
+import com.zhubo.fm.bll.request.UserReqeustFactory;
+
+import org.json.JSONObject;
+
+import java.util.Random;
+
+/**
+ * 欢迎页面
+ * Created by andy_lv on 2014/9/2.
+ */
+public class SplashActivity extends Activity {
+
+    private final String TAG = "SplashActivity";
+
+    private boolean againAuth = false;
+
+    private int uuid ;
+
+    /**
+     *
+     * @param savedInstanceState
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash_layout);
+
+        AuthTokenDB authTokenDB =  AuthTokenDB.getInstance();
+        String apiToken = authTokenDB.getApiToken();
+        ((CoreApplication)getApplication()).setApiToken(apiToken);
+        Log.e(TAG,"-------db--apiToken="+apiToken);
+       /* if(!TextUtils.isEmpty(apiToken)){
+            launcher();
+        }else{
+            getToken();
+        }*/
+        launcher();
+    }
+
+
+    /**
+     *
+     */
+    private void getToken(){
+        /*Random random = new Random(1000);
+        int temp ;
+        do{
+            temp  = random.nextInt(10000);
+        }while(uuid == temp);*/
+        uuid = 111333;
+        ((CoreApplication) getApplication()).setUuid(uuid+"");
+        UserReqeustFactory userReqeustFactory  = new UserReqeustFactory(this);
+        userReqeustFactory.getToken(new BusinessResponseHandler() {
+            @Override
+            public void start() {
+
+            }
+
+            @Override
+            public void success(String object) {
+                Log.e(TAG,"-----------获取的数据=="+object);
+                try{
+                    JSONObject jsonObject = new JSONObject(object);
+                    Gson gson = new Gson();
+                    AuthToken authToken = gson.fromJson(jsonObject.optString("user"),AuthToken.class);
+
+                    AuthTokenDB authTokenDB =  AuthTokenDB.getInstance();
+                    authTokenDB.save(authToken);
+
+                    String apiToken = authTokenDB.getApiToken();
+                    Log.e(TAG,"-------apiToken="+apiToken);
+                    ((CoreApplication)getApplication()).setApiToken(apiToken);
+                     launcher();
+                    // login();
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void fail(MessageException exception) {
+                if(!againAuth){
+                    getToken();
+                    againAuth = true;
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 请求数据
+     */
+    private void login(){
+        UserReqeustFactory userReqeustFactory  = new UserReqeustFactory(this);
+
+        userReqeustFactory.login(new BusinessResponseHandler() {
+            @Override
+            public void start() {
+
+            }
+
+            @Override
+            public void success(String object) {
+                Log.e(TAG,"-----------登录:"+object);
+                launcher();
+            }
+
+            @Override
+            public void fail(MessageException exception) {
+                launcher();
+            }
+        });
+    }
+
+    /**
+     *
+     */
+    private void launcher(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }, 500);
+    }
+}

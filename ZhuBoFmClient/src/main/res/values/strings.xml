@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">主播FM</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="edit_note">编辑文稿</string>
+    <string name="edit">编辑</string>
+    <string name="finish">完成</string>
+    <string name="finish_editing_text">您还有提交文稿</string>
+    <string name="create_note">传文稿</string>
+    <string name="please_program_note">请输入节目文稿内容</string>
+    <string name="read_note">查看文稿</string>
+    <string name="choose_product">选产品</string>
+
+    <string name="product_sale">产品销量</string>
+    <string name="sale_detail">销量明细</string>
+    <string name="product_detail">产品明细</string>
+    <string name="program">节目</string>
+    <string name="time">时间</string>
+    <string name="sale">销量</string>
+
+    <string name="message_detail">私信详情</string>
+
+    <string name="settings">设置</string>
+    <string name="people_photo">头像</string>
+    <string name="qianming">签名</string>
+    <string name="check_update">检查更新</string>
+    <string name="about_us">关于我们</string>
+    <string name="suggest_feedback">意见反馈</string>
+
+    <string name="program_comment">节目文稿</string>
+    <string name="listener_benefit">听众福利</string>
+    <string name="real_time_interact">即时互动</string>
+
+    <string name="live">正在直播</string>
+    <string name="write_note">写文稿</string>
+    <string name="instace_recommend">立即推荐</string>
+    <string name="important_recommend">特别推荐</string>
+
+    <string name="category_browser">类目浏览</string>
+    <string name="sale_range">按销量排序</string>
+    <string name="choose_ok">选好了</string>
+
+    <string name="choosed_product">已选商品</string>
+    <string name="continue_add">继续添加</string>
+    <string name="exit_app_remider">再按一次就会退出应用</string>
+
+
+
+</resources>

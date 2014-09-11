@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CommonLibrary/CommonLibrary.iml" filepath="$PROJECT_DIR$/CommonLibrary/CommonLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CoreLibray/CoreLibray.iml" filepath="$PROJECT_DIR$/CoreLibray/CoreLibray.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ImageLoader/ImageLoader.iml" filepath="$PROJECT_DIR$/ImageLoader/ImageLoader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UILibrary/UILibrary.iml" filepath="$PROJECT_DIR$/UILibrary/UILibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ZhuBoFM.iml" filepath="$PROJECT_DIR$/ZhuBoFM.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ZhuBoFmClient/ZhuBoFMClient.iml" filepath="$PROJECT_DIR$/ZhuBoFmClient/ZhuBoFMClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ZhuBoFmControl/ZhuBoFmControl.iml" filepath="$PROJECT_DIR$/ZhuBoFmControl/ZhuBoFmControl.iml" />
+    </modules>
+  </component>
+</project>
+

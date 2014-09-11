@@ -1,0 +1,42 @@
+apply plugin: 'android'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion '19.1.0'
+
+    defaultConfig {
+        versionCode 1
+        versionName '1.0'
+        minSdkVersion 9
+        targetSdkVersion 19
+        testPackageName "com.zhubo.fm.test"
+        testInstrumentationRunner 'android.test.InstrumentationTestRunner'
+        testApplicationId 'com.zhubo.fm.test'
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // This is important, it will run lint checks but won't abort build
+    lintOptions {
+        abortOnError false
+    }
+
+    productFlavors {
+        '99' {}
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+}
+
+dependencies {
+    compile project(':ZhuBoFmControl')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:19.+'
+}

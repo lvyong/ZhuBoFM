@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">ZhuBoFmControl</string>
+
+    <string name="program_manage">节目管理</string>
+    <string name="prouduct_sale">产品销量</string>
+    <string name="private_messgae_comment">私信评论</string>
+    <string name="program_note">节目文稿</string>
+    <string name="audience_benefit">听众福利</string>
+    <string name="instance_communicate">即时互动</string>
+
+    <string name="delete">删除</string>
+    <string name="clear">清空</string>
+    <string name="cancel">取消</string>
+
+    <string name="search">搜索</string>
+    <string name="plase_input_search_keyword">请输入关键字</string>
+
+    <string name="all_product">所有产品</string>
+    <string name="choose_product_recently">近期已选产品</string>
+    <string name="popular_product">热销产品</string>
+    <string name="collect">收藏夹</string>
+
+
+
+</resources>

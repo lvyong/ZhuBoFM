@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/fragement_live_note_empty_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-13dp"
+        android:visibility="gone"
+     >
+       <ImageView
+           android:id="@+id/fragement_live_note_right_img"
+           android:layout_width="68dip"
+           android:layout_height="92dip"
+           android:scaleType="centerInside"
+           android:src="@drawable/live_note_indicator"
+           android:layout_alignParentRight="true"
+           android:layout_marginRight="26dip"
+        />
+        <ImageView
+            android:id="@+id/fragement_live_note_comment_img"
+            android:layout_width="224dp"
+            android:layout_height="62dip"
+            android:scaleType="centerInside"
+            android:src="@drawable/live_note_empty_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="108.5dip"
+
+        />
+     </RelativeLayout>
+     <TextView
+         android:id="@+id/fragememnt_live_note_textview"
+         android:layout_height="wrap_content"
+         android:layout_width="match_parent"
+         android:paddingTop="18dip"
+         android:paddingBottom="18dip"
+         android:paddingLeft="11dip"
+         android:paddingRight="11dip"
+         android:background="@color/white"
+         android:textSize="@dimen/font_size_normal"
+         android:textColor="@color/black"
+         android:lineSpacingExtra="1.5dip"
+      />
+</FrameLayout>

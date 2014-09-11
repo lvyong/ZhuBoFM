@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <view
+        android:id="@+id/activity_real_time_interact_viewpage_itme_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="guide"
+        android:scaleType="centerCrop"
+        class="com.zhubo.control.activity.common.ItotemImageView"
+        />
+ </FrameLayout>

@@ -1,0 +1,9 @@
+<resources>
+
+    <style name="AppClientTheme" parent="@android:style/Theme.Light.NoTitleBar">
+        <item name="android:windowBackground">@color/bg_color</item>
+        <item name="android:colorBackground">@color/bg_color</item>
+    </style>
+
+
+</resources>

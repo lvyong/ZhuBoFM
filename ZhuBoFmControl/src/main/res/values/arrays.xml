@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 特别注意，这个数据千万不能更改！！！！！！！！！！！！！！！！-->
+    <string-array name="message_comment_popview_data">
+        <item>私信</item>
+        <item>《音乐之声》评论</item>
+        <item>《交通广播》评论</item>
+    </string-array>
+</resources>

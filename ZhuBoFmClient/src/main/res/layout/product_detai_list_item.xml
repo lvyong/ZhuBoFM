@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="15dip"
+    android:paddingBottom="15dip"
+    >
+    <TextView
+        android:id="@+id/product_detail_list_item_product_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="#818181"
+        android:textSize="@dimen/font_size_normal"
+        android:text="《幸福厨房》"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/product_detail_list_item_product_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="#818181"
+        android:textSize="@dimen/font_size_small"
+        android:text="06-17"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/product_detail_list_item_product_count"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="#818181"
+        android:textSize="@dimen/font_size_normal"
+        android:text="99件"
+        android:gravity="center"
+        />
+</LinearLayout>

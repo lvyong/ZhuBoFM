@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--LabelTextView-->
+    <declare-styleable name="LabelTextView">
+        <attr name="rightImgSrc" format="reference|integer"/>
+        <attr name="labeltextSize" format="dimension"/>
+        <attr name="color" format="reference|color"/>
+        <attr name="textString" format="reference|string"/>
+    </declare-styleable>
+</resources>

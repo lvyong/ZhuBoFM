@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f8f8f8"
+    >
+    <view
+        android:id="@+id/navigation_bar"
+        class="com.andy.ui.libray.component.NavigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dip"
+        app:backBg="@drawable/back"
+        app:navBg="@drawable/navigation_bar_bg"
+        app:textColor="#101010"
+        app:titleMaxLength="9"
+        app:titleTextSize="@dimen/font_size_large"/>
+
+    <FrameLayout
+        android:id="@+id/base_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

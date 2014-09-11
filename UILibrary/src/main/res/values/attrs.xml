@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--日历中每个cell的属性-->
+    <declare-styleable name="calendar_cell">
+        <attr name="state_selectable" format="boolean" />
+        <attr name="state_current_month" format="boolean" />
+        <attr name="state_today" format="boolean" />
+        <attr name="state_range_first" format="boolean" />
+        <attr name="state_range_middle" format="boolean" />
+        <attr name="state_range_last" format="boolean" />
+        <attr name="state_holiday" format="boolean" />
+    </declare-styleable>
+
+    <!--导航条-->
+    <declare-styleable name="NavigationBar">
+        <!--导航栏主背景-->
+        <attr name="navBg" format="reference|color"/>
+        <!--导航条底部背景-->
+        <attr name="bottomBg" format="reference|color"/>
+        <!--返回按钮文字-->
+        <attr name="backText" format="reference|string"/>
+        <!--返回按钮背景-->
+        <attr name="backBg" format="reference|color"/>
+        <!--操作按钮文字-->
+        <attr name="actionText" format="reference|string"/>
+        <!--操作按钮背景-->
+        <attr name="actionBg" format="reference|color"/>
+        <!--文字颜色-->
+        <attr name="textColor" format="reference|color"/>
+        <!--button文字大小-->
+        <attr name="btnTextSize" format="dimension"/>
+        <!--title文字大小-->
+        <attr name="titleTextSize" format="dimension"/>
+        <!--title文字长度-->
+        <attr name="titleMaxLength" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="PullToRefresh">
+        <attr name="ptrAdapterViewBackground" format="reference|color" />
+        <attr name="ptrHeaderBackground" format="reference|color" />
+        <attr name="ptrHeaderTextColor" format="color" />
+        <attr name="ptrMode">
+            <flag name="pullDownFromTop" value="0x1" />
+            <flag name="pullUpFromBottom" value="0x2" />
+            <flag name="both" value="0x3" />
+        </attr>
+    </declare-styleable>
+</resources>

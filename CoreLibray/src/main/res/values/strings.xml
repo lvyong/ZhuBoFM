@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">CoreLibray</string>
+    <!--网络请求失败 -->
+    <string name="io_exception_message">网络请求失败</string>
+    <string name="timeout_exception_message">网络请求超时</string>
+    <string name="general_http_exception_message">http连接失败</string>
+
+    <string name="io_statuscode">213</string>
+    <string name="timeout_status_code">214</string>
+    <string name="general_statuscode">215</string>
+
+    <string name="com_confirm">确定</string>
+    <string name="com_next">下一步</string>
+    <string name="com_cancel">取消</string>
+    <string name="com_quit">退出</string>
+    <string name="com_complete">完成</string>
+</resources>
