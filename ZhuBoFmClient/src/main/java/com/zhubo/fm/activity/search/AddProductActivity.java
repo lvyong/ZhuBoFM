@@ -1,9 +1,11 @@
 package com.zhubo.fm.activity.search;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -11,6 +13,8 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.andy.commonlibrary.net.exception.MessageException;
@@ -21,12 +25,18 @@ import com.andy.ui.libray.pullrefreshview.PullToRefreshBase;
 import com.andy.ui.libray.pullrefreshview.PullToRefreshListView;
 import com.google.gson.Gson;
 import com.zhubo.control.activity.BaseActivity;
+import com.zhubo.control.bussiness.bean.ProductBean;
 import com.zhubo.control.bussiness.bean.SearchResultBean;
+import com.zhubo.control.bussiness.db.RecentlyChooseProductDB;
 import com.zhubo.fm.R;
 import com.zhubo.fm.bll.common.FmConstant;
 import com.zhubo.fm.bll.request.SearchRequestFactory;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * 搜索到的产品，且可以添加产品
@@ -40,15 +50,17 @@ public class AddProductActivity extends BaseActivity {
     private TextView range_up_textview;
     private TextView add_result_textview;
     private Button addButton;
+    private LinearLayout topLayout;
 
     private SearchRequestFactory searchRequestFactory;
+    private RecentlyChooseProductDB recentLyChooseDB;
 
     private AddProductAdapter adapter;
     private String searchContent;
     private String type;
     private String categoryId ;
 
-    private OrderEum currentOrder = OrderEum.DESC;
+    private OrderEum currentOrder = OrderEum.ASCE;
 
     private AddProductActivity self;
     private int currentPage = 1;
@@ -94,7 +106,7 @@ public class AddProductActivity extends BaseActivity {
         setContentView(R.layout.activity_add_product_layout);
         initView();
         setListener();
-        setData();
+        initData();
         setAddCount();
         searchProduct(1);
     }
@@ -108,6 +120,7 @@ public class AddProductActivity extends BaseActivity {
        this.range_up_textview = (TextView)findViewById(R.id.add_product_range_textview);
        this.add_result_textview = (TextView)findViewById(R.id.activity_add_product_choosed_product_count);
        this.addButton = (Button)findViewById(R.id.activity_add_product_choose_button);
+       this.topLayout = (LinearLayout)findViewById(R.id.activity_add_product_top_layout);
     }
 
     /**
@@ -135,9 +148,14 @@ public class AddProductActivity extends BaseActivity {
         super.onViewClick(view);
         int id = view.getId();
         if(id == R.id.activity_add_product_choose_button){
-            Intent intent =new Intent(AddProductActivity.this,AddProductResultActivity.class);
-            intent.putExtra(FmConstant.PROGRAM_ID,programId);
-            startActivity(intent);
+            if(addCount != 0){
+                Intent intent =new Intent(AddProductActivity.this,AddProductResultActivity.class);
+                intent.putExtra(FmConstant.PROGRAM_ID,programId);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }else{
+                ToastUtil.toast(this,"请选择产品");
+            }
         }else if(id == R.id.add_product_range_textview){
             range();
         }
@@ -146,7 +164,8 @@ public class AddProductActivity extends BaseActivity {
     /**
      *
      */
-    private void setData(){
+    private void initData(){
+        recentLyChooseDB = RecentlyChooseProductDB.getInstance();
         navigationBar.setBackBtnVisibility(View.VISIBLE);
         navigationBar.setActionBtnVisibility(View.INVISIBLE);
         Intent intent = getIntent();
@@ -158,21 +177,20 @@ public class AddProductActivity extends BaseActivity {
             }
         }
 
-        if(getIntent() != null){
-             searchContent = getIntent()!=null &&
+        if(getIntent() != null) {
+            searchContent = getIntent() != null &&
                     getIntent().hasExtra(FmConstant.SEARCH_CONTNET)
-                    ? getIntent().getStringExtra(FmConstant.SEARCH_CONTNET):"";
+                    ? getIntent().getStringExtra(FmConstant.SEARCH_CONTNET) : "";
 
-             type = getIntent()!=null &&
+            type = getIntent() != null &&
                     getIntent().hasExtra(FmConstant.SEARCH_TYPE)
-                    ? getIntent().getStringExtra(FmConstant.SEARCH_TYPE):"";
+                    ? getIntent().getStringExtra(FmConstant.SEARCH_TYPE) : "";
 
-             categoryId = getIntent()!=null &&
+            categoryId = getIntent() != null &&
                     getIntent().hasExtra(FmConstant.CATEGORY_ID)
-                    ? getIntent().getStringExtra(FmConstant.CATEGORY_ID):"";
+                    ? getIntent().getStringExtra(FmConstant.CATEGORY_ID) : "";
 
         }
-
     }
 
     /**
@@ -184,6 +202,14 @@ public class AddProductActivity extends BaseActivity {
         int length = new String(addCount+"").length();
         builder.setSpan(redSpan, 5, 5+length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         add_result_textview.setText(builder);
+
+        if(addCount >0){
+            this.addButton.setBackgroundResource(R.drawable.button_enable_drawable);
+            this.addButton.setTextColor(getResources().getColor(R.color.white));
+        }else{
+            this.addButton.setBackgroundResource(R.drawable.button_uneable_drawable);
+            this.addButton.setTextColor(getResources().getColor(R.color.button_default_textcolor));
+        }
     }
 
 
@@ -204,7 +230,7 @@ public class AddProductActivity extends BaseActivity {
             drawable = R.drawable.range_up;
             currentOrder = OrderEum.ASCE;
         }else{
-            drawable = R.drawable.range_up;
+            drawable = R.drawable.range_down;
             currentOrder = OrderEum.DESC;
         }
         currentPage = 1;
@@ -223,43 +249,44 @@ public class AddProductActivity extends BaseActivity {
         }else{
             searchRequestFactory.cancle();
         }
-         searchRequestFactory.searchProduct(page,type,categoryId,searchContent,currentOrder.getValue()
-           ,new BusinessResponseHandler(this,true){
-               @Override
-               public void success(String response) {
-                   Gson gson = new Gson();
-                   SearchResultBean searchResultBean = gson.fromJson(response,SearchResultBean.class);
-                   if(null != searchResultBean){
-                       if(null == adapter){
-                           adapter = new AddProductAdapter(self,true);
-                           adapter.setHandler(handler);
-                           listview.getAdapterView().setAdapter(adapter);
-                       }
-                       adapter.addData(searchResultBean.getProducts(),page == 1? true: false);
-                       adapter.notifyDataSetChanged();
-                       if(searchResultBean.isHasNext()){
-                           currentPage = currentPage+1;
-                       }else{
-                           ToastUtil.toast(self, "没有更多数据");
-                       }
-                   }
-                   listview.onRefreshComplete();
-                   setSearchCount();
-               }
+         searchRequestFactory.searchProduct(page, type, categoryId, searchContent, currentOrder.getValue()
+                 , new BusinessResponseHandler(this, true) {
+             @Override
+             public void success(String response) {
+                 Gson gson = new Gson();
+                 SearchResultBean searchResultBean = gson.fromJson(response, SearchResultBean.class);
+                 if (null != searchResultBean) {
+                     if (null == adapter) {
+                         adapter = new AddProductAdapter(self, true);
+                         adapter.setHandler(handler);
+                         listview.getAdapterView().setAdapter(adapter);
+                     }
+                     adapter.addData(searchResultBean.getProducts(), page == 1 ? true : false);
+                     adapter.notifyDataSetChanged();
+                     if (searchResultBean.isHasNext()) {
+                         currentPage = currentPage + 1;
+                     } else {
+                         ToastUtil.toast(self, "没有更多数据");
+                     }
+                 }
+                 listview.onRefreshComplete();
+                 setSearchCount();
+             }
 
-               @Override
-               public void fail(MessageException exception) {
-                   super.fail(exception);
-                   listview.onRefreshComplete();
-               }
+             @Override
+             public void fail(MessageException exception) {
+                 super.fail(exception);
+                 listview.onRefreshComplete();
+             }
 
-               @Override
-               public void cancel() {
-                   super.cancel();
-                   listview.onRefreshComplete();
-               }
-           });
+             @Override
+             public void cancel() {
+                 super.cancel();
+                 listview.onRefreshComplete();
+             }
+         });
     }
+
 
     /**
      *
@@ -296,6 +323,7 @@ public class AddProductActivity extends BaseActivity {
                                      ToastUtil.toast(self,"取消选中产品成功");
                                  }else{
                                      ToastUtil.toast(self,"选中产品成功");
+                                     saveChoosedProduct(adapter.getItem(positionInList));
                                  }
                                  handleProgram(!cancel);
                                  adapter.setAddState(positionInList,!cancel);
@@ -316,5 +344,17 @@ public class AddProductActivity extends BaseActivity {
                     }
                 };
         searchRequestFactory.chooseProduct(programId,productIds,cancel,businessResponseHandler);
+    }
+
+    /**
+     * 保存用户已经选择过的产品
+     */
+    private void saveChoosedProduct(final ProductBean productBean){
+        new Thread(){
+            @Override
+            public void run() {
+                recentLyChooseDB.save(productBean);
+            }
+        }.start();
     }
 }

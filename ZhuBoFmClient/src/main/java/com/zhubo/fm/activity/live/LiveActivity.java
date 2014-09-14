@@ -71,7 +71,7 @@ public class LiveActivity extends BaseActivity implements BottomTabBar.BottomTab
             case MIDDLE_BUTTON:
                 fName = ListenerBenefitFragement.class.getName();
                 newFragment = new ListenerBenefitFragement();
-                bundle = new Bundle();
+                bundle = getIntent().getBundleExtra(FmConstant.BUNDLE_DATA);
                 break;
             case RIGHT_BUTTON:
               /*  fName = RealTimeInteractFragement.class.getName();
@@ -86,7 +86,6 @@ public class LiveActivity extends BaseActivity implements BottomTabBar.BottomTab
 
     @Override
     public NavigationBar getNavigationBar() {
-        navigationBar.setBackBtnVisibility(View.VISIBLE);
         return navigationBar;
     }
 

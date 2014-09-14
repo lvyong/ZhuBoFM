@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +24,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.andy.commonlibrary.net.exception.MessageException;
+import com.andy.commonlibrary.util.AppUtil;
 import com.andy.commonlibrary.util.DateUtil;
 import com.andy.commonlibrary.util.ToastUtil;
 import com.andy.corelibray.net.BusinessResponseHandler;
+import com.andy.ui.libray.component.CircleImageView;
 import com.andy.ui.libray.component.NavigationBar;
 import com.andy.ui.libray.pullrefreshview.PullToRefreshBase;
 import com.andy.ui.libray.pullrefreshview.PullToRefreshListView;
 import com.google.gson.Gson;
+import com.imageloader.core.ImageLoader;
+import com.imageloader.core.assist.FailReason;
+import com.imageloader.core.assist.ImageLoadingListener;
 import com.imageloader.core.download.URLConnectionImageDownloader;
 import com.zhubo.control.activity.common.ItotemImageView;
 import com.zhubo.control.activity.common.LabelTextView;
@@ -70,18 +76,22 @@ public class ProgramManageFragement extends BaseFragment{
 
     private ProgamManageAdapter adapter;
     private ProgramManagerRequestFactory requestFactory;
-    private ItotemImageView programImage;
+    private ImageView peopleImage;
+    private ImageView settingsButton;
+    private TextView  peopleTextView;
 
     private int currentPage = 1;
 
     private ProgramBean liveProgramBean;
     private NavigationBar navigationBar;
 
+    private boolean isLive = false;
+
 
     @Override
     public void setNavigationBar(NavigationBar navigationBar) {
        this.navigationBar = navigationBar;
-      // navigationBar.setBackText("张小溪");
+       navigationBar.setVisibility(View.GONE);
        navigationBar.setBackBtnVisibility(View.VISIBLE);
        navigationBar.setActionCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.settings,0);
        navigationBar.setActionBtnVisibility(View.VISIBLE);
@@ -89,9 +99,7 @@ public class ProgramManageFragement extends BaseFragment{
 
     @Override
     public void onNavItemClick(NavigationBar.NavigationBarItem navBarItem) {
-         if(navBarItem == NavigationBar.NavigationBarItem.action){
-             startActivity(new Intent(getActivity(), SettingActivity.class));
-         }
+
     }
 
     @Override
@@ -111,15 +119,28 @@ public class ProgramManageFragement extends BaseFragment{
      * 初始化View
      */
     private void initView(){
-         this.listView = (PullToRefreshListView) rootView.findViewById(R.id.fragement_program_management_listview);
-         this.toplayout = (RelativeLayout) rootView.findViewById(R.id.fragment_program_management_top_layout);
-         this.topTextView = (TextView) rootView.findViewById(R.id.fragment_program_management_top_label_textView);
-         this.middleTextView = (TextView)rootView.findViewById(R.id.fragment_program_management_top_middle_textView);
-         this.bottomTextView = (TextView)rootView.findViewById(R.id.fragment_program_management_top_bottom_textView);
-         this.buttonLayout = (LinearLayout)rootView.findViewById(R.id.fragement_program_management_bottom_linear);
-         this.leftButton = (Button)rootView.findViewById(R.id.fragement_program_management_bottom_leftButton);
-         this.rightButton = (Button)rootView.findViewById(R.id.fragement_program_management_bottom_rightButton);
-         this.programImage = (ItotemImageView)rootView.findViewById(R.id.fragment_program_management_top_img);
+         this.listView = (PullToRefreshListView) rootView.findViewById(
+                 R.id.fragement_program_management_listview);
+         this.toplayout = (RelativeLayout) rootView.findViewById(
+                 R.id.fragment_program_management_top_layout);
+         this.topTextView = (TextView) rootView.findViewById(
+                 R.id.fragment_program_management_top_label_textView);
+         this.middleTextView = (TextView)rootView.findViewById(
+                 R.id.fragment_program_management_top_middle_textView);
+         this.bottomTextView = (TextView)rootView.findViewById(R.id.
+                 fragment_program_management_top_bottom_textView);
+         this.buttonLayout = (LinearLayout)rootView.findViewById(
+                 R.id.fragement_program_management_bottom_linear);
+         this.leftButton = (Button)rootView.findViewById(
+                 R.id.fragement_program_management_bottom_leftButton);
+         this.rightButton = (Button)rootView.findViewById(
+                 R.id.fragement_program_management_bottom_rightButton);
+         this.peopleImage = (ImageView)rootView.findViewById(
+                 R.id.fragement_program_management_people_image);
+         this.settingsButton = (ImageView)rootView.findViewById(
+                 R.id.fragement_program_management_settings_imageview);
+        this.peopleTextView = (TextView)rootView.findViewById(
+                R.id.fragement_program_management_people_name);
     }
 
     /**
@@ -144,14 +165,20 @@ public class ProgramManageFragement extends BaseFragment{
        this.toplayout.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               if(null!= liveProgramBean){
+               if(null!= liveProgramBean && isLive){
                    Intent intent = new Intent(getActivity(),LiveActivity.class);
                    Bundle bundle = new Bundle();
-                   bundle.putInt(FmConstant.PROGRAM_ID,liveProgramBean.getChannelId());
+                   bundle.putInt(FmConstant.PROGRAM_ID,liveProgramBean.getId());
                    bundle.putString(FmConstant.PROGRAM_NOTE,liveProgramBean.getPresentation());
                    intent.putExtra(FmConstant.BUNDLE_DATA,bundle);
                    startActivityForResult(intent,FmConstant.START_LIVE_ACTIVITY);
                }
+           }
+       });
+       this.settingsButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               startActivity(new Intent(getActivity(), SettingActivity.class));
            }
        });
     }
@@ -164,7 +191,7 @@ public class ProgramManageFragement extends BaseFragment{
                  goProduct(liveProgramBean.getProductNum(),liveProgramBean.getId());
                  break;
             case R.id.fragement_program_management_bottom_rightButton:
-                 goEditNote(liveProgramBean.getPresentation(),liveProgramBean.getChannelId());
+                 goEditNote(liveProgramBean.getPresentation(),liveProgramBean.getId());
                  break;
         }
     }
@@ -192,7 +219,11 @@ public class ProgramManageFragement extends BaseFragment{
             intent.putExtra(FmConstant.PROGRAM_ID,program_id);
             startActivity(intent);
         }else{
-            startActivity(new Intent(getActivity(), AddProductResultActivity.class));
+            Intent intent = new Intent(getActivity(),AddProductResultActivity.class);
+            intent.putExtra(FmConstant.PROGRAM_ID,program_id);
+            intent.putExtra(FmConstant.FROM_PAGE,ProgramManageFragement.class.getSimpleName());
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
     }
 
@@ -215,13 +246,32 @@ public class ProgramManageFragement extends BaseFragment{
         }
     }
 
-
+    /**
+     * 初始化数据
+     */
     private void initData(){
         loadData(1);
-        loadPeopleImag("");
+        //测试
+        loadPeopleImag("http://e.hiphotos.baidu.com/image/pic/item/91ef76c6a7efce1b39441ad2ad51f3deb48f65bf.jpg");
+        peopleTextView.setText("张小溪");
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        navigationBar.setVisibility(View.GONE);
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        navigationBar.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 加载数据
+     * @param page
+     */
     private void loadData(final int page){
         if(null == requestFactory){
             requestFactory = new ProgramManagerRequestFactory(getActivity());
@@ -238,7 +288,6 @@ public class ProgramManageFragement extends BaseFragment{
                         adapter = new ProgamManageAdapter(getActivity());
                         listView.getAdapterView().setAdapter(adapter);
                     }
-                    findLiveProgram(mainProgram.getContents());
                     adapter.addData(mainProgram.getContents(),page == 1? true: false);
                     adapter.notifyDataSetChanged();
                     if(mainProgram.isHasNext()){
@@ -246,6 +295,10 @@ public class ProgramManageFragement extends BaseFragment{
                     }else{
                         ToastUtil.toast(getActivity(),"没有更多数据");
                     }
+                     //设置直播节目
+                     if(mainProgram.getContents().size()>0 && page == 1){
+                         setLiveProgramBeanData(adapter.getItem(0));
+                     }
                 }
                 listView.onRefreshComplete();
             }
@@ -265,108 +318,101 @@ public class ProgramManageFragement extends BaseFragment{
 
     }
 
-    /**
-     *
-     * @param list
-     */
-    private void findLiveProgram(List<ProgramBean> list){
-        if(null != list && list.size() >0){
-            boolean isFrist = true;
-            Iterator<ProgramBean> iterator = list.iterator();
-            while(iterator.hasNext()){
-                ProgramBean programBean = iterator.next();
-                if(isFrist){
-                    liveProgramBean = programBean;
-                    isFrist = false;
-                }
-                String date = DateUtil.formatDate(new Date(),"yy-mm-dd hh:mm:ss");
-                if(null != programBean){
-                    String startTime = programBean.getStartAt();
-                    if(!TextUtils.isEmpty(startTime)){
-                        String[] array = startTime.split(" ");
-                        if(null != array  && array.length ==2){
-                            if(array[0].equals(date.split(" ")[0]) && array[1].equals(date.split(" ")[1])){
-                                liveProgramBean = programBean;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        if(null != liveProgramBean ){
-            setLiveProgramBeanData(liveProgramBean);
-        }
-    }
 
     /**
-     *
+     * 设置直播节目数据
      * @param programBeanData
      */
     private void setLiveProgramBeanData(ProgramBean programBeanData){
-        if(null != programBeanData){
-            if(TextUtils.isEmpty(programBeanData.getPresentation()) ||
-                    programBeanData.getProductNum() == 0){
-                this.buttonLayout.setVisibility(View.VISIBLE);
-                this.bottomTextView.setVisibility(View.GONE);
-            }else{
-                this.buttonLayout.setVisibility(View.GONE);
-                this.bottomTextView.setVisibility(View.VISIBLE);
-            }
-        }
+        liveProgramBean = programBeanData;
+        isLive = isLiveProgram(programBeanData);
+        isLive = true;
+        if(isLive){
+            Drawable img1 = getActivity().getResources().getDrawable(R.drawable.triple_arrow);
+            img1.setBounds(0, 0, 22, 29);
+            topTextView.setCompoundDrawables(img1, null,null, null);
+            topTextView.setText("正在直播");
 
-        Drawable img = getActivity().getResources().getDrawable(R.drawable.right_arrow);
-        img.setBounds(0, 0, 18, 27);
-        middleTextView.setCompoundDrawables(img, null, null, null);
+            Drawable img = getActivity().getResources().getDrawable(R.drawable.right_arrow);
+            img.setBounds(0, 0, 18, 27);
+            middleTextView.setCompoundDrawables(null, null, img, null);
+            bottomTextView.setVisibility(View.VISIBLE);
+            buttonLayout.setVisibility(View.GONE);
+
+            String startTime = programBeanData.getStartAt();
+            String endTime   = programBeanData.getEndAt();
+            if(!TextUtils.isEmpty(startTime) && !TextUtils.isEmpty(endTime)){
+                bottomTextView.setText(startTime.split(" ")[1]+"-"+endTime.split(" ")[1]);
+            }
+        }else{
+            topTextView.setText("暂无直播内，"+programBeanData.getStartAt()+" 即将播出");
+            bottomTextView.setVisibility(View.GONE);
+            buttonLayout.setVisibility(View.VISIBLE);
+        }
         middleTextView.setText(programBeanData.getName());
 
-        Drawable img1 = getActivity().getResources().getDrawable(R.drawable.triple_arrow);
-        img1.setBounds(0, 0, 22, 29);
-        topTextView.setCompoundDrawables(img1, null,null, null);
+        if(buttonLayout.getVisibility() == View.VISIBLE){
+            if(programBeanData.getProductNum() != 0){
+                leftButton.setText("查看产品");
+            }else{
+                String html = getResources().getString(R.string.choose_product) ;
+                leftButton.setText(html);
+            }
 
-        if(bottomTextView.getVisibility() == View.VISIBLE){
-            String endTime   = programBeanData.getEndAt();
-            bottomTextView.setText(programBeanData.getTime()+"-"+endTime.split(" ")[1].substring(0,4));
+            String rightText = "";
+            if(TextUtils.isEmpty(programBeanData.getPresentation())){
+                rightText = getResources().getString(
+                        R.string.create_note);
+            }else{
+                rightText = getResources().getString(R.string.read_note);
+            }
+            rightButton.setText(rightText);
         }
-
-        programImage.setUrl("");
-        programImage.reload(false);
     }
 
     /**
-     *
+     *  加载当前用户头像
      * @param url
      */
     private void loadPeopleImag(final  String url){
-        if(TextUtils.isEmpty(url)){
-            return ;
-        }
-        Looper looper = Looper.getMainLooper();
-        new Thread(){
+        ImageLoader.getInstance().displayImage(url,peopleImage,new ImageLoadingListener() {
             @Override
-            public void run() {
-             try{
-                 URLConnectionImageDownloader downloader = new URLConnectionImageDownloader(2000,10000);
-                 URI uri = URI.create(url);
-                 final InputStream inputStream = downloader.getStreamFromNetwork(uri);
-                 new Handler().post(new Runnable(){
+            public void onLoadingStarted() {
 
-                     @Override
-                     public void run() {
-                         if(null != inputStream){
-                             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                              navigationBar.setCircleImageView(bitmap);
-                              navigationBar.setCircleImageViewVisibility(View.VISIBLE);
-                         }
-                     }
-                 });
-             }catch(Exception e){
-
-             }
             }
-        }.start();
-        looper.prepare();
+
+            @Override
+            public void onLoadingFailed(FailReason failReason) {
+
+            }
+
+            @Override
+            public void onLoadingComplete(Bitmap loadedImage) {
+                peopleImage.setImageBitmap(AppUtil.getCircleBitmap(loadedImage));
+            }
+
+            @Override
+            public void onLoadingCancelled() {
+
+            }
+        });
+    }
+
+    /**
+     * 判断当前节目是否正在直播
+     * @param programBean
+     * @return
+     */
+    private boolean isLiveProgram(ProgramBean programBean){
+        boolean isLive = false;
+        Date date = new Date();
+       long currentMilisconds  = date.getTime();
+       long startTime = DateUtil.getMiliseconds(programBean.getStartAt(),"yyyy-mm-dd hh:mm:ss");
+       long endTime   = DateUtil.getMiliseconds(programBean.getEndAt(),"yyyy-mm-dd hh:mm:ss");
+       if(startTime <= currentMilisconds && currentMilisconds <= endTime) {
+         isLive = true;
+       }
+        return isLive;
     }
 
 
@@ -438,6 +484,28 @@ public class ProgramManageFragement extends BaseFragment{
                 viewHolder.leftLabelTextView = (LabelTextView) contentView.findViewById(R.id.fragement_program_management_item_left_button);
                 viewHolder.rightLabelTextView = (LabelTextView) contentView.findViewById(R.id.fragement_program_management_item_right_button);
                 contentView.setTag(viewHolder);
+            }else{
+                viewHolder = (ViewHolder) contentView.getTag();
+            }
+            if(null != programBean){
+                 String startTime = programBean.getStartAt();
+                if(!TextUtils.isEmpty(startTime) && startTime.split(" ").length ==2){
+                     long miliseconds = DateUtil.getMiliseconds(startTime,"yyyy-mm-dd hh:mm:ss");
+                     viewHolder.topTextView.setText(startTime.split(" ")[0]
+                         +" "+DateUtil.getWeekOfSomeDay(miliseconds)+" "+startTime.split(" ")[1]);
+                }
+                viewHolder.bottomTextView.setText(programBean.getName());
+
+                if(programBean.getProductNum() != 0){
+                    String html = "查看产品<font size=\"8\">" +
+                            "(已选" + programBean.getProductNum() +
+                            ")</font>" ;
+                    viewHolder.leftLabelTextView.setText(Html.fromHtml(html).toString());
+                }else{
+                    String html = getResources().getString(R.string.choose_product) ;
+                    viewHolder.leftLabelTextView.setText(Html.fromHtml(html).toString());
+                    viewHolder.leftLabelTextView.setImageView(R.drawable.choose_product);
+                }
                 viewHolder.leftLabelTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -447,26 +515,9 @@ public class ProgramManageFragement extends BaseFragment{
                 viewHolder.rightLabelTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        goEditNote(programBean.getPresentation(),programBean.getChannelId());
+                        goEditNote(programBean.getPresentation(),programBean.getId());
                     }
                 });
-            }else{
-                viewHolder = (ViewHolder) contentView.getTag();
-            }
-            if(null != programBean){
-                viewHolder.topTextView.setText(programBean.getStartAt());
-                viewHolder.bottomTextView.setText(programBean.getName());
-
-                if(programBean.getProductNum() != 0){
-                    String html = "查看产品<span style=\"font-size:12px;\">" +
-                            "(已选" + programBean.getProductNum() +
-                            ")</span>" ;
-                    viewHolder.leftLabelTextView.setText(Html.fromHtml(html).toString());
-                }else{
-                    String html = getResources().getString(R.string.choose_product) ;
-                    viewHolder.leftLabelTextView.setText(Html.fromHtml(html).toString());
-                    viewHolder.leftLabelTextView.setImageView(R.drawable.choose_product);
-                }
 
                 String rightText = "";
                 if(TextUtils.isEmpty(programBean.getPresentation())){

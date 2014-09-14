@@ -21,20 +21,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by andy_lv on 2014/9/10.
+ * Created by andy_lv on 2014/9/12.
  */
-public class AddProductAdapter extends BaseAdapter{
+public class RecentlyChooseProductAdapter extends BaseAdapter {
+
 
     private Context context;
     private Handler handler;
-    private boolean showAddButton ;
 
     private ArrayList<ProductBean> data ;
 
 
-    public AddProductAdapter(Context context, boolean showAddButton){
+    public RecentlyChooseProductAdapter(Context context){
         this.context = context;
-        this.showAddButton = showAddButton;
     }
 
     public void setHandler(Handler handler){
@@ -115,7 +114,7 @@ public class AddProductAdapter extends BaseAdapter{
         }else{
             viewHolder = (ViewHolder) contentView.getTag();
         }
-        viewHolder.addImageView.setVisibility(showAddButton ? View.VISIBLE : View.INVISIBLE);
+        viewHolder.addImageView.setVisibility(View.VISIBLE);
         viewHolder.addImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

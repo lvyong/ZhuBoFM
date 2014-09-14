@@ -56,6 +56,12 @@ public class BaseActivity extends FragmentActivity implements NavigationBar.OnNa
 
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        navigationBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void onNavItemClick(NavigationBar.NavigationBarItem navBarItem) {
         if (navBarItem == NavigationBar.NavigationBarItem.back) finish();
     }

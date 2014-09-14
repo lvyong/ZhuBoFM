@@ -13,6 +13,7 @@ public class ProductBean {
     private String name;
     private int  starredCount ;
     private int  viewCount;
+    //x
     private int  quantity;
     private int  recommendTimes;
     private String amount;

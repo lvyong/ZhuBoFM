@@ -20,7 +20,7 @@
         android:paddingLeft="11dip"
         android:paddingRight="11dip"
         android:background="@drawable/comment_pop_bg"
-        android:visibility="gone"
+        android:visibility="visible"
       >
       <ImageView
           android:id="@+id/fragement_listener_benefit_pop_close_img"
@@ -42,7 +42,7 @@
           android:singleLine="true"
           android:ellipsize="marquee"
           android:layout_marginRight="10dip"
-          android:text="积分卡大家辣椒粉的可发卡就发的可"
+          android:text="小黄已售出 1000件"
           android:layout_centerVertical="true"
         />
     </RelativeLayout>

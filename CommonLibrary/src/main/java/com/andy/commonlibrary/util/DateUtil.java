@@ -167,4 +167,57 @@ public class DateUtil {
         }
     }
 
+    /**
+     * 把日期转化成为毫秒
+     * @param dateStr
+     * @param datePattern
+     * @return
+     */
+    public static long getMiliseconds(String dateStr,String datePattern){
+        long milisecond = 0;
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(datePattern);
+            milisecond = simpleDateFormat.parse(dateStr).getTime();
+        }catch ( Exception e){
+            return milisecond;
+        }
+        return milisecond;
+    }
+
+    /**
+     * 得到某一个时间（毫秒）是周几
+     * @return
+     */
+    public static String getWeekOfSomeDay(long miliscoends){
+        String weekDay = "";
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date(miliscoends));
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+        switch (dayOfWeek) {
+            case 1:
+                weekDay = "周日";
+                break;
+            case 2:
+                weekDay = "周一";
+                break;
+            case 3:
+                weekDay = "周二";
+                break;
+            case 4:
+                weekDay = "周三";
+                break;
+            case 5:
+                weekDay = "周四";
+                break;
+            case 6:
+                weekDay = "周五";
+                break;
+            case 7:
+                weekDay = "周六";
+                break;
+
+        }
+        return weekDay;
+    }
+
 }

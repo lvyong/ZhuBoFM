@@ -69,6 +69,7 @@ public class AuthTokenDB extends BaseDB {
         }else {
             db.insert(AuthTokenTableColumn.TABLE_NAME,null,contentValues);
         }
+
     }
 
     /**

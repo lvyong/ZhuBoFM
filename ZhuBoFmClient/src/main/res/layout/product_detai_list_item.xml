@@ -1,40 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="10dip"
+    android:paddingLeft="12dip"
+    android:paddingRight="12dip"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dip"
+        android:orientation="vertical"
+        >
+   <TextView
+        android:id="@+id/product_detail_list_item_top_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:ellipsize="end"
+
+    />
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="15dip"
-    android:paddingBottom="15dip"
+    android:layout_marginTop="10dip"
     >
     <TextView
-        android:id="@+id/product_detail_list_item_product_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textColor="#818181"
-        android:textSize="@dimen/font_size_normal"
-        android:text="《幸福厨房》"
-        android:gravity="center"
-        />
-    <TextView
         android:id="@+id/product_detail_list_item_product_time"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textColor="#818181"
-        android:textSize="@dimen/font_size_small"
-        android:text="06-17"
-        android:gravity="center"
-        />
-    <TextView
-        android:id="@+id/product_detail_list_item_product_count"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:textColor="#818181"
         android:textSize="@dimen/font_size_normal"
-        android:text="99件"
-        android:gravity="center"
+        android:text=""
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/shijian"
+        android:layout_alignParentLeft="true"
+        android:drawablePadding="5dip"
         />
+    <TextView
+        android:id="@+id/product_detail_list_item_product_sale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#818181"
+        android:textSize="@dimen/font_size_normal"
+        android:text=""
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/yingyeer"
+        android:layout_alignParentRight="true"
+        android:drawablePadding="5dip"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_toRightOf="@id/product_detail_list_item_product_time"
+        android:layout_toLeftOf="@id/product_detail_list_item_product_sale"
+        >
+        <TextView
+            android:id="@+id/product_detail_list_item_product_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#818181"
+            android:textSize="@dimen/font_size_small"
+            android:text=""
+            android:gravity="center"
+            android:drawableLeft="@drawable/xiaoliang"
+            android:layout_centerInParent="true"
+            android:drawablePadding="5dip"
+            />
+     </RelativeLayout>
+</RelativeLayout>
+</LinearLayout>
 </LinearLayout>

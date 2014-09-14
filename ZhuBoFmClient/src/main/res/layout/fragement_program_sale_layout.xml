@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#eeeeee"
-    >
+   >
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -71,61 +71,63 @@
                 />
       </LinearLayout>
     </LinearLayout>
-     <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:orientation="horizontal"
-         android:background="@drawable/ui_white_bg_gray_border"
-         android:gravity="center_vertical"
-         android:paddingTop="15dip"
-         android:paddingBottom="15dip"
-         android:paddingLeft="16dip"
-         android:paddingRight="16dip"
-     >
-         <TextView
-             android:id="@+id/fragement_program_sale_top_left_textview"
-             android:layout_width="0dip"
-             android:layout_height="wrap_content"
-             android:textColor="#898989"
-             android:textSize="@dimen/font_size_medium"
-             android:singleLine="true"
-             android:ellipsize="end"
-             android:gravity="left"
-             android:layout_weight="1"
-             android:text="30天产品销量"
-          />
-         <TextView
-             android:id="@+id/fragement_program_sale_top_right_textview"
-             android:layout_width="0dp"
-             android:layout_height="wrap_content"
-             android:textColor="#898989"
-             android:textSize="@dimen/font_size_medium"
-             android:singleLine="true"
-             android:ellipsize="end"
-             android:gravity="right"
-             android:layout_weight="1"
-             android:text="9999件"
-             />
-     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:background="@drawable/ui_white_bg_gray_border"
+        >
+        <TextView
+            android:id="@+id/fragement_program_sale_top_left_textview"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:textColor="#898989"
+            android:textSize="@dimen/font_size_medium"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:layout_weight="1"
+            android:text=""
+            />
+        <TextView
+            android:id="@+id/fragement_program_sale_top_right_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#898989"
+            android:textSize="@dimen/font_size_medium"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:gravity="right"
+            android:layout_weight="1"
+            android:text=""
+            />
+    </LinearLayout>
      <TextView
+        android:id="@+id/fragement_program_sale_count_textview"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:gravity="center_vertical"
-        android:paddingLeft="16dip"
+        android:paddingLeft="10dip"
         android:textColor="@color/black"
         android:textSize="@dimen/font_size_normal"
         android:singleLine="true"
-        android:text="产品[4]"
-        android:paddingTop="10dip"
+        android:text=""
+        android:layout_marginTop="10dip"
       />
-     <ListView
+     <view
+         xmlns:ptr="http://schemas.android.com/apk/res/com.zhubo.fm"
          android:id="@+id/fragement_program_sale_listview"
          android:layout_height="match_parent"
          android:layout_width="match_parent"
          android:fadingEdge="none"
          android:listSelector="@color/transparent_background"
+         class="com.andy.ui.libray.pullrefreshview.PullToRefreshListView"
          android:scrollbars="none"
          android:divider="@null"
          android:background="@color/transparent_background"
+         ptr:ptrMode="both"
      />
 </LinearLayout>

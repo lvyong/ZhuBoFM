@@ -151,6 +151,7 @@ public class AddProductResultAdapter extends BaseAdapter {
            viewHolder.addImageView.setImageResource(productBean.isAdd()?R.drawable.tap_add:
                    R.drawable.add);
            viewHolder.programImageView.setDefault(R.drawable.default_img);
+           viewHolder.deleteHolder.setTag(position);
            viewHolder.deleteHolder.setOnClickListener(new View.OnClickListener(){
                @Override
                public void onClick(View view) {

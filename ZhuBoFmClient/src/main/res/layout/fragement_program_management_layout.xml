@@ -6,24 +6,24 @@
     android:layout_height="match_parent">
     <RelativeLayout
       android:id="@+id/fragment_program_management_top_layout"
-      android:layout_height="145dip"
+      android:layout_height="205dip"
       android:layout_width="match_parent"
       android:background="@drawable/main_top_bg"
     >
-     <view
-         android:id="@+id/fragment_program_management_top_img"
-         class="com.zhubo.control.activity.common.ItotemImageView"
+     <include
+         android:id="@+id/fragement_program_management_top_linear"
          android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         android:scaleType="centerCrop"
-     />
+         android:layout_height="wrap_content"
+         layout="@layout/fragement_program_manage_top_layout"
+         android:layout_alignParentTop="true"
+      />
     <RelativeLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:paddingBottom ="12dip"
-        android:paddingTop ="12dip"
         android:paddingLeft="10dip"
         android:paddingRight="10dip"
+        android:layout_below="@id/fragement_program_management_top_linear"
         >
      <LinearLayout
         android:layout_width="match_parent"
@@ -43,8 +43,9 @@
            android:textColor="@color/white"
            android:ellipsize="marquee"
            android:singleLine="true"
-           android:text="正在直播"
+           android:text=""
            android:drawablePadding="5dip"
+           android:marqueeRepeatLimit="-1"
         />
          <TextView
              android:id="@+id/fragment_program_management_top_middle_textView"
@@ -97,7 +98,7 @@
                  android:layout_marginLeft="11dip"
                  />
          </LinearLayout>
-     </LinearLayout>
+       </LinearLayout>
      </RelativeLayout>
     </RelativeLayout>
     <view

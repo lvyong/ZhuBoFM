@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center_vertical"
               android:orientation="vertical">
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,33 +11,22 @@
         android:paddingRight="10dip"
         android:gravity="center_vertical"
         >
-
-        <view
-            android:id="@+id/nav_left_imageview"
-            class="com.andy.ui.libray.component.CircleImageView"
-            android:layout_width="30dip"
-            android:layout_height="30dip"
-            android:layout_marginRight="10dip"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:visibility="gone"
-         />
         <TextView
             android:id="@+id/nav_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:gravity="left|center_vertical"
-            android:layout_toRightOf="@id/nav_left_imageview"
             android:textSize="@dimen/font_size_normal"/>
 
         <TextView
             android:id="@+id/nav_right_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:gravity="center_vertical|right"
+            android:padding="6dip"
             android:textSize="@dimen/font_size_small"
             android:visibility="gone"/>
 

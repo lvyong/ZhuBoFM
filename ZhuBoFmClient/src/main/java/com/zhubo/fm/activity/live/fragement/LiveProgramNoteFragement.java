@@ -51,6 +51,8 @@ public class LiveProgramNoteFragement extends BaseFragment {
           Intent intent = new Intent(getActivity(), EditNoteActivity.class);
           intent.putExtra(FmConstant.PROGRAM_NOTE,note);
           intent.putExtra(FmConstant.PROGRAM_ID,programId);
+          intent.putExtra(FmConstant.FROM_PAGE,
+                  LiveProgramNoteFragement.class.getSimpleName());
           getActivity().startActivityForResult(intent, FmConstant.LIVE_NOTE_FRAGEMENT);
        }else if(navBarItem == NavigationBar.NavigationBarItem.back){
            getActivity().finish();

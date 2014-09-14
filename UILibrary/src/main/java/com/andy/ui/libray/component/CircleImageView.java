@@ -45,28 +45,30 @@ public class CircleImageView extends ImageView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        width = getWidth();
-        height = getHeight();
+        if(null != bitmap){
+            width = getWidth();
+            height = getHeight();
 
 
-        bitmap = ((BitmapDrawable) getDrawable()).getBitmap();
-        // 重新生成指定大小的图片
-        bitmap = Bitmap.createScaledBitmap(bitmap, width, height,
-                true);
+            bitmap = ((BitmapDrawable) getDrawable()).getBitmap();
+            // 重新生成指定大小的图片
+            bitmap = Bitmap.createScaledBitmap(bitmap, width, height,
+                    true);
 
-        // 构造渲染器BitmapShader
-        bitmapShader = new BitmapShader(bitmap, Shader.TileMode.MIRROR,
-                Shader.TileMode.REPEAT);
+            // 构造渲染器BitmapShader
+            bitmapShader = new BitmapShader(bitmap, Shader.TileMode.MIRROR,
+                    Shader.TileMode.REPEAT);
 
-        // 将图片裁剪为椭圆形
-        // 构建ShapeDrawable对象并定义形状为椭圆
-        shapeDrawable = new ShapeDrawable(new OvalShape());
-        // 得到画笔并设置渲染器
-        shapeDrawable.getPaint().setShader(bitmapShader);
-        // 设置显示区域
-        shapeDrawable.setBounds(0, 0, width, height);
-        // 绘制shapeDrawable
-        shapeDrawable.draw(canvas);
+            // 将图片裁剪为椭圆形
+            // 构建ShapeDrawable对象并定义形状为椭圆
+            shapeDrawable = new ShapeDrawable(new OvalShape());
+            // 得到画笔并设置渲染器
+            shapeDrawable.getPaint().setShader(bitmapShader);
+            // 设置显示区域
+            shapeDrawable.setBounds(0, 0, width, height);
+            // 绘制shapeDrawable
+            shapeDrawable.draw(canvas);
+        }
     }
 
 

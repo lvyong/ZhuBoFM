@@ -38,8 +38,12 @@
         <activity android:name=".activity.live.LiveActivity"/>
         <activity android:name=".activity.search.SearchProductActivity"/>
         <activity android:name=".activity.search.ProductCategoryActivity"/>
-        <activity android:name=".activity.search.AddProductResultActivity"/>
+        <activity android:name=".activity.search.AddProductResultActivity"
+            android:launchMode="singleTask"
+         >
+         </activity>
         <activity android:name=".activity.search.AddProductActivity"/>
         <activity android:name=".activity.realtimeinteract.RealTimeInteractActivity"/>
+        <activity android:name=".activity.search.RecentlyChoosedProductActivity"/>
     </application>
 </manifest>

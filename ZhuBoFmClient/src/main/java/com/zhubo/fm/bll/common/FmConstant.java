@@ -12,6 +12,8 @@ public class FmConstant {
     //从ProgramMangementFragement 到 EditNoteActivity的requestCode
     public static final int  PROGRAM_MANAGE_TO_EDITNOTE_REQUESTCODE = 1000;
 
+    public static final String FROM_PAGE = "FROM_PAGE";
+
     //选择产品
     public static final int  ADD_PRODUCT = 2000;
 
@@ -32,6 +34,12 @@ public class FmConstant {
     public static final int LIVE_NOTE_FRAGEMENT = 34000;
 
     public static final int START_LIVE_ACTIVITY= 35000;
+
+    public static final String PRODUCT_ID = "PRODUCT_ID" ;
+
+    public static final String START_DATE = "START_DATE";
+
+    public static final String END_DATE = "END_DATE";
 
 
 

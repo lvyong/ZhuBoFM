@@ -60,9 +60,13 @@ public class SearchProductActivity extends Activity implements View.OnClickListe
        if(id == R.id.activity_search_all_product_layout){
            goSearch("all",searchBar.getSearchContent());
        }else if(id == R.id.activity_search_choose_prouct_recently_layout){
-           goAddProduct("choosed",searchBar.getSearchContent());
+           Intent intent =new Intent(SearchProductActivity.this,RecentlyChoosedProductActivity.class);
+           if(getIntent() != null && getIntent().hasExtra(FmConstant.PROGRAM_ID)){
+               intent.putExtra(FmConstant.PROGRAM_ID,getIntent().getIntExtra(FmConstant.PROGRAM_ID,0));
+           }
+           startActivity(intent);
        }else if(id == R.id.activity_search_popular_product_layout){
-           goAddProduct("hot",searchBar.getSearchContent());
+           goAddProduct("hot",searchBar.getSearchContent(),getString(R.string.popular_product));
        }else if(id == R.id.activity_search_collect_layout){
 
        }
@@ -70,13 +74,13 @@ public class SearchProductActivity extends Activity implements View.OnClickListe
 
     @Override
     public void search(String searBox) {
-        goAddProduct("all",searBox);
+        goAddProduct("all",searBox,searBox);
     }
 
     private void goSearch(String type,String searBox){
         Intent intent = new Intent(SearchProductActivity.this,
                 ProductCategoryActivity.class);
-        intent.putExtra(FmConstant.SEARCH_CONTNET,"");
+        intent.putExtra(FmConstant.SEARCH_CONTNET,searBox);
         intent.putExtra(FmConstant.SEARCH_TYPE,type);
         if(getIntent() != null && getIntent().hasExtra(FmConstant.PROGRAM_ID)){
             intent.putExtra(FmConstant.PROGRAM_ID,getIntent().getIntExtra(FmConstant.PROGRAM_ID,0));
@@ -89,15 +93,15 @@ public class SearchProductActivity extends Activity implements View.OnClickListe
      * @param type
      * @param searchBox
      */
-    private void goAddProduct(String type,String searchBox){
+    private void goAddProduct(String type,String searchBox,String title){
         Intent intent = new Intent(SearchProductActivity.this,
                 AddProductActivity.class);
         intent.putExtra(FmConstant.SEARCH_CONTNET,searchBox);
-        intent.putExtra(FmConstant.SEARCH_TYPE,"all");
+        intent.putExtra(FmConstant.SEARCH_TYPE,type);
+        intent.putExtra(FmConstant.ADD_PRODUCT_PAGE_TITLE,title);
         if(getIntent() != null && getIntent().hasExtra(FmConstant.PROGRAM_ID)){
             intent.putExtra(FmConstant.PROGRAM_ID,getIntent().getIntExtra(FmConstant.PROGRAM_ID,0));
         }
-        intent.putExtra(FmConstant.ADD_PRODUCT_PAGE_TITLE,searchBox);
         startActivity(intent);
     }
 }

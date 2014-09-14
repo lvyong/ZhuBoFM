@@ -53,8 +53,6 @@ public class NavigationBar extends LinearLayout implements View.OnClickListener 
     private OnNavBarClickListener onNavBarClickListener;    //导航栏点击事件监听器
     private RelativeLayout mRootLayout; //根布局
 
-    private CircleImageView circleImageView;
-
     public NavigationBar(Context context) {
         super(context);
     }
@@ -145,34 +143,6 @@ public class NavigationBar extends LinearLayout implements View.OnClickListener 
     public void setBackText(int resId) {
         String text = getContext().getString(resId);
         setBackText(text);
-    }
-
-    /**
-     * 设置左边圆形图片的资源
-     * @param imageSrc
-     */
-    public void setCircleImageView(int imageSrc){
-        circleImageView.setImageResource(imageSrc);
-    }
-
-    /**
-     *
-     * @param bitmap
-     */
-    public void setCircleImageView(Bitmap bitmap){
-        circleImageView.setBitmap(bitmap);
-    }
-
-
-    /**
-     * 设置左边圆形ImagView 是否显示
-     * @param visibility
-     */
-    public void setCircleImageViewVisibility(int visibility){
-        if(visibility == View.GONE){
-            circleImageView.setBitmap(null);
-        }
-        circleImageView.setVisibility(visibility);
     }
 
     /**
@@ -434,7 +404,6 @@ public class NavigationBar extends LinearLayout implements View.OnClickListener 
         actionButton    = (TextView) findViewById(R.id.nav_right_btn);
         titleText       = (TextView) findViewById(R.id.nav_center_text);
         mProgress       = (ProgressBar) findViewById(R.id.nav_right_progress);
-        circleImageView = (CircleImageView)findViewById(R.id.nav_left_imageview);
 
         //背景
         mRootLayout = (RelativeLayout) backButton.getParent();

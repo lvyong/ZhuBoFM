@@ -14,14 +14,14 @@
     android:background="@color/white"
     android:padding="10dip"
     >
-    <ImageView
+    <view
        android:id ="@+id/fragement_program_sale_list_item_imageview"
        android:layout_width="52dip"
        android:layout_height="52dip"
-       android:scaleType="centerInside"
+       android:scaleType="centerCrop"
        android:layout_alignParentLeft="true"
-       android:src="@drawable/ic_launcher"
        android:layout_centerVertical="true"
+      class="com.zhubo.control.activity.common.ItotemImageView"
      />
      <ImageView
          android:id="@+id/fragement_program_sale_list_item_right_img"
@@ -42,7 +42,7 @@
         android:ellipsize="end"
         android:layout_toRightOf="@id/fragement_program_sale_list_item_imageview"
         android:layout_toLeftOf="@id/fragement_program_sale_list_item_right_img"
-        android:text="摇滚乐月死了摇滚乐月死了摇滚乐月死了"
+        android:text=""
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="6dip"
@@ -70,7 +70,7 @@
         android:ellipsize="end"
         android:drawableLeft="@drawable/xiaoliang"
         android:drawablePadding="3dip"
-        android:text="售出9999"
+        android:text=""
         android:layout_weight="0.8"
         android:gravity="left|center_vertical"
         />
@@ -84,7 +84,7 @@
         android:ellipsize="end"
         android:drawableLeft="@drawable/yingyeer"
         android:drawablePadding="3dip"
-        android:text="营业额:￥1000.0"
+        android:text=""
         android:layout_weight="1"
         android:gravity="left|center_vertical"
         />

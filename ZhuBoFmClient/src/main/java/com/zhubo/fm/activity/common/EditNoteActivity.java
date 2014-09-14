@@ -9,11 +9,13 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.andy.commonlibrary.net.exception.MessageException;
+import com.andy.commonlibrary.util.AppUtil;
 import com.andy.commonlibrary.util.ToastUtil;
 import com.andy.corelibray.net.BusinessResponseHandler;
 import com.andy.ui.libray.component.NavigationBar;
 import com.zhubo.control.activity.BaseActivity;
 import com.zhubo.fm.R;
+import com.zhubo.fm.activity.live.fragement.LiveProgramNoteFragement;
 import com.zhubo.fm.bll.common.FmConstant;
 import com.zhubo.fm.bll.request.NoteRequestFactory;
 
@@ -31,6 +33,7 @@ public class EditNoteActivity extends BaseActivity {
     private int programId;
     private NoteRequestFactory noteRequestFactory;
     private EditNoteActivity self;
+    private String previousStr = "";
 
     @Override
     public void onNavItemClick(NavigationBar.NavigationBarItem navBarItem) {
@@ -62,14 +65,27 @@ public class EditNoteActivity extends BaseActivity {
         if(null != intent){
             navigationBar.setTitle(R.string.edit_note);
             String data = intent.getStringExtra(FmConstant.PROGRAM_NOTE);
+            previousStr = data;
+            Log.e(TAG,"---------note=="+data);
             if(TextUtils.isEmpty(data)){
                 navigationBar.setTitle(R.string.create_note);
                 navigationBar.setActionBtnText(R.string.finish);
                 editText.setEnabled(true);
+                editText.setFocusable(true);
+                AppUtil.showSoftKeyboard(this,editText);
             }else{
                 editText.setText(data);
-                editText.setEnabled(false);
-                navigationBar.setActionBtnText(R.string.edit);
+                if(intent.hasExtra(FmConstant.FROM_PAGE) &&
+                        intent.getStringExtra(FmConstant.FROM_PAGE)
+                                .equals(LiveProgramNoteFragement.class.getSimpleName())){
+                    editText.setEnabled(true);
+                    navigationBar.setActionBtnText(R.string.finish);
+                    editText.setFocusable(true);
+                    AppUtil.showSoftKeyboard(this,editText);
+                }else{
+                    editText.setEnabled(false);
+                    navigationBar.setActionBtnText(R.string.edit);
+                }
             }
             if(intent.hasExtra(FmConstant.PROGRAM_ID)){
                 programId = intent.getIntExtra(FmConstant.PROGRAM_ID,0);
@@ -106,6 +122,10 @@ public class EditNoteActivity extends BaseActivity {
     private void sendTextToServer(){
         String data = editText.getText().toString();
         if(!TextUtils.isEmpty(data)){
+            if(data.equals(previousStr)){
+                ToastUtil.toast(this,R.string.you_cannot_edit_note);
+                return ;
+            }
             saveNote(data);
         }else{
             ToastUtil.toast(this,R.string.please_program_note);

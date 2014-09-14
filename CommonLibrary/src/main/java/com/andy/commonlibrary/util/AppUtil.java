@@ -15,6 +15,8 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.telephony.TelephonyManager;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import java.util.List;
 
@@ -206,6 +208,26 @@ public class AppUtil {
         // 画出一个圆
         canvas.drawCircle(x/2, x/2, x/2, paint1);
         return output;
+    }
+
+    /**
+     * 显示软键盘
+     * @param context
+     * @param view
+     */
+    public static void showSoftKeyboard(Context context,View view){
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(view,InputMethodManager.SHOW_FORCED);
+    }
+
+    /**
+     * 隐藏软键盘
+     * @param context
+     * @param view
+     */
+    public static void hideSoftKeyBoard(Context context,View view){
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromInputMethod(view.getWindowToken(),0);
     }
 
 }

@@ -5,10 +5,16 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.DatePicker;
@@ -17,12 +23,29 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.andy.commonlibrary.net.exception.MessageException;
+import com.andy.commonlibrary.util.DateUtil;
+import com.andy.commonlibrary.util.StringUtil;
+import com.andy.commonlibrary.util.ToastUtil;
+import com.andy.corelibray.net.BusinessResponseHandler;
 import com.andy.ui.libray.component.NavigationBar;
+import com.andy.ui.libray.pullrefreshview.PullToRefreshBase;
+import com.andy.ui.libray.pullrefreshview.PullToRefreshListView;
+import com.google.gson.Gson;
+import com.zhubo.control.activity.common.ItotemImageView;
 import com.zhubo.control.activity.fragement.BaseFragment;
+import com.zhubo.control.bussiness.bean.MainProgram;
+import com.zhubo.control.bussiness.bean.ProductBean;
+import com.zhubo.control.bussiness.bean.ProductSaleBean;
+import com.zhubo.control.bussiness.bean.ProgramBean;
 import com.zhubo.fm.R;
 import com.zhubo.fm.activity.common.ProductDetailActivity;
+import com.zhubo.fm.bll.common.FmConstant;
+import com.zhubo.fm.bll.request.ProductSaleFactory;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * 产品销量
@@ -31,10 +54,11 @@ import java.util.Calendar;
 public class ProductSaleFragement extends BaseFragment {
 
     private View rootView;
-    private ListView listView;
+    private PullToRefreshListView listView;
     private TextView leftDateTextView,rightDateTextView;
     private LinearLayout leftDateLinear,rightDateLinear;
     private TextView  saleTextView,sumTextView;
+    private TextView  productCountTextView;
     private ListAdapter  listAdapter;
 
     private final int SHOW_LEFT_DATE_DIALOG = 1;
@@ -43,10 +67,13 @@ public class ProductSaleFragement extends BaseFragment {
     private int rightYear,rightMonth,rightDay;
 
     private DatePickerDialog leftDailog,rihgtDialog;
+    private ProductSaleFactory productSaleFactory;
+    private int currentPage  = 1;
+
+    private int totalProductCount = 0,saleSum = 0;
 
     @Override
     public void setNavigationBar(NavigationBar navigationBar) {
-        navigationBar.setCircleImageViewVisibility(View.GONE);
         navigationBar.setBackBtnVisibility(View.INVISIBLE);
         navigationBar.setTitle(R.string.product_sale);
         navigationBar.setActionBtnVisibility(View.INVISIBLE);
@@ -63,7 +90,8 @@ public class ProductSaleFragement extends BaseFragment {
              rootView = inflater.inflate(R.layout.fragement_program_sale_layout,container,false);
              initView();
              setListener();
-             loadData();
+             initData();
+             loadData(currentPage);
          }else{
              ((ViewGroup)rootView.getParent()).removeView(rootView);
          }
@@ -88,19 +116,20 @@ public class ProductSaleFragement extends BaseFragment {
                fragement_program_sale_top_left_textview);
        this.sumTextView = (TextView)rootView.findViewById(R.id.
                fragement_program_sale_top_right_textview);
+       this.productCountTextView = (TextView)
+               rootView.findViewById(R.id.fragement_program_sale_count_textview);
 
-       this.listView    = (ListView)rootView.findViewById(R.id.fragement_program_sale_listview);
-
-
+       this.listView    = (PullToRefreshListView)rootView.findViewById(R.id.fragement_program_sale_listview);
     }
 
     /**
      * 加载数据
      */
-    private void loadData(){
+    private void initData(){
         listAdapter = new ListAdapter(getActivity());
-        listView.setAdapter(listAdapter);
+        listView.getAdapterView().setAdapter(listAdapter);
         initDatePickData();
+        productSaleFactory = new ProductSaleFactory(getActivity());
     }
 
     /**
@@ -144,11 +173,26 @@ public class ProductSaleFragement extends BaseFragment {
      * 设置监听事件
      */
     private void setListener(){
-        this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        this.listView.getAdapterView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-               Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
-               startActivity(intent);
+                Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+                intent.putExtra(FmConstant.PRODUCT_ID,listAdapter.getItem(position-1).getId());
+                intent.putExtra(FmConstant.START_DATE,leftDateTextView.getText());
+                intent.putExtra(FmConstant.END_DATE,rightDateTextView.getText());
+                startActivity(intent);
+            }
+        });
+        this.listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2() {
+            @Override
+            public void onPullDownToRefresh() {
+                currentPage = 1;
+                loadData(currentPage);
+            }
+
+            @Override
+            public void onPullUpToRefresh() {
+                loadData(currentPage);
             }
         });
        this.leftDateLinear.setOnClickListener(new View.OnClickListener(){
@@ -211,31 +255,146 @@ public class ProductSaleFragement extends BaseFragment {
          }
     }
 
+    private void setTopLableValue(int totalProductCount,int totalSale){
+        ForegroundColorSpan redSpan = new ForegroundColorSpan(Color.RED);
+        SpannableStringBuilder builder = new SpannableStringBuilder(getDays()+"天,共销售"+
+                totalProductCount);
+        int length = new String(totalProductCount+"").length();
+        int firstLength = new String(getDays()+"天,共销售").length();
+        builder.setSpan(redSpan, firstLength, firstLength+length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        saleTextView.setText(builder);
+
+        SpannableStringBuilder builder1 = new SpannableStringBuilder("合计:¥ "+
+                StringUtil.formatAmount(totalSale+""));
+        int length1 =StringUtil.formatAmount(totalSale+"").length();
+        builder1.setSpan(redSpan, 3,5+length1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        sumTextView.setText(builder1);
+    }
+
+
+    private long getDays(){
+        long day = 0;
+        String startDay = leftDateTextView.getText().toString();
+        String endDay   = rightDateTextView.getText().toString();
+        long sartMiliseconds = DateUtil.getMiliseconds(startDay,"YYYY-MM-DD");
+        long endMiliseconds  = DateUtil.getMiliseconds(endDay,"YYYY-MM-DD");
+        long cha = endMiliseconds - sartMiliseconds;
+        if(cha ==0){
+            day = 1;
+        }else{
+            day = cha/1000/60/60/24;
+        }
+        return day;
+    }
+
+    /**
+     *
+     * @param productCount
+     */
+    public void setProductCountValue(int productCount){
+        productCountTextView.setText("产品【" +productCount +"】");
+    }
+
+    /**
+     *
+     * @param page
+     */
+    private void loadData(final int page){
+      productSaleFactory.cancel();
+      productSaleFactory.getProductSale(leftDateTextView.getText().toString(),
+              rightDateTextView.getText().toString(),
+              page,
+              new BusinessResponseHandler(getActivity(),true,"加载中..."){
+
+                  @Override
+                  public void success(String response) {
+                      Gson gson = new Gson();
+                      ProductSaleBean productSaleBean = gson.fromJson(response,ProductSaleBean.class);
+                      if(null != productSaleBean){
+                          listAdapter.addData(productSaleBean.getProducts(), page == 1 ? true : false);
+                          listAdapter.notifyDataSetChanged();
+                          if(page == 1){
+                              totalProductCount = productSaleBean.getQuantity();
+                              saleSum = productSaleBean.getAmount();
+                          }
+                          if(productSaleBean.isHasNext()){
+                              currentPage = currentPage+1;
+                              totalProductCount += productSaleBean.getQuantity();
+                              saleSum += productSaleBean.getAmount();
+                          }else{
+                              ToastUtil.toast(getActivity(), "没有更多数据");
+                          }
+                          setTopLableValue(totalProductCount,saleSum);
+                          setProductCountValue(listAdapter.getCount());
+                      }
+                      listView.onRefreshComplete();
+                  }
+
+                  @Override
+                  public void fail(MessageException exception) {
+                      super.fail(exception);
+                      listView.onRefreshComplete();
+                  }
+
+                  @Override
+                  public void cancel() {
+                      super.cancel();
+                      productSaleFactory.cancel();
+                      listView.onRefreshComplete();
+                  }
+              });
+    }
+
+
     /**
      * listview Adapter
      */
     private class ListAdapter extends BaseAdapter{
 
         private Context context;
-
+        private ArrayList<ProductBean> data ;
 
         public ListAdapter(Context context){
             this.context = context;
         }
 
+        /**
+         *
+         * @param list
+         * @param clear
+         */
+        public  void addData(List<ProductBean> list,boolean clear){
+           if(clear){
+                clear();
+            }
+            if(null == data){
+                data = new ArrayList<ProductBean>();
+            }
+            if(null != list && list.size() > 0){
+                this.data.addAll(list);
+            }
+        }
 
-        public void setData(){
-            notifyDataSetChanged();
+        private void clear(){
+            if(null != data){
+                data.clear();
+            }
         }
 
         @Override
         public int getCount() {
-            return 10;
+           if(null == data){
+               return 0;
+           }
+           return data.size();
         }
 
         @Override
-        public Object getItem(int i) {
-            return null;
+        public ProductBean getItem(int position) {
+            if(null == data){
+                return null;
+            }
+           return data.get(position);
         }
 
         @Override
@@ -246,10 +405,11 @@ public class ProductSaleFragement extends BaseFragment {
         @Override
         public View getView(int position, View contentView, ViewGroup viewGroup) {
            ViewHolder viewHolder;
+           ProductBean productBean = getItem(position);
            if(null == contentView){
                contentView = LayoutInflater.from(context).inflate(R.layout.fragement_program_sale_list_item,null);
                viewHolder = new ViewHolder();
-               viewHolder.imageView    = (ImageView)contentView.findViewById(R.id.fragement_program_sale_list_item_imageview);
+               viewHolder.imageView    = (ItotemImageView)contentView.findViewById(R.id.fragement_program_sale_list_item_imageview);
                viewHolder.programName  = (TextView)contentView.findViewById(R.id.fragement_program_sale_list_item_program_name);
                viewHolder.saleTextView = (TextView)contentView.findViewById(R.id.fragement_program_sale_list_item_program_sale);
                viewHolder.sumTextView  = (TextView)contentView.findViewById(R.id.fragement_program_sale_list_item_program_sum);
@@ -257,11 +417,28 @@ public class ProductSaleFragement extends BaseFragment {
            }else{
                viewHolder = (ViewHolder)contentView.getTag();
            }
+           if(null != productBean){
+               viewHolder.programName.setText(productBean.getName());
+               viewHolder.saleTextView.setText("销量："+productBean.getQuantity());
+               viewHolder.sumTextView.setText("营业额: ¥"+productBean.getAmount());
+               viewHolder.imageView.setDefault(R.drawable.default_img);
+               if (!TextUtils.isEmpty(productBean.getImageUrl())
+                       && URLUtil.isHttpUrl(productBean.getImageUrl())) {
+                   if (viewHolder.imageView.getTag() == null
+                           || !((String) viewHolder.imageView.getTag())
+                           .equals(productBean.getImageUrl())) {
+                       viewHolder.imageView.setUrl(productBean.getImageUrl());
+                       viewHolder.imageView.setTag(productBean.getImageUrl());
+                       viewHolder.imageView.setIsLoad(false);
+                       viewHolder.imageView.reload(false);
+                   }
+               }
+           }
            return contentView;
         }
 
         class ViewHolder{
-            ImageView imageView;
+            ItotemImageView imageView;
             TextView  programName;
             TextView  saleTextView;
             TextView  sumTextView;

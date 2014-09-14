@@ -7,6 +7,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.andy.commonlibrary.net.exception.MessageException;
 import com.andy.commonlibrary.util.ToastUtil;
@@ -17,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 import com.zhubo.control.activity.BaseActivity;
 import com.zhubo.control.bussiness.bean.ProductBean;
 import com.zhubo.fm.R;
+import com.zhubo.fm.activity.main.fragement.ProgramManageFragement;
 import com.zhubo.fm.bll.common.FmConstant;
 import com.zhubo.fm.bll.request.SearchRequestFactory;
 
@@ -36,6 +38,7 @@ public class AddProductResultActivity extends BaseActivity {
     private AddProductResultActivity self;
     private int programId ;
 
+    private String  fromPage = "";
 
     private Handler handler = new Handler(){
         @Override
@@ -56,8 +59,12 @@ public class AddProductResultActivity extends BaseActivity {
         setContentView(R.layout.activity_add_product_result_layout);
         initView();
         initData();
+        processIntent(getIntent());
     }
 
+    /**
+     * 初始化view
+     */
     private void initView(){
         this.listview = (ListViewCompat) findViewById(R.id.activity_add_product_result_listview);
         navigationBar.setTitle(R.string.choosed_product);
@@ -69,19 +76,48 @@ public class AddProductResultActivity extends BaseActivity {
     }
 
     private void initData(){
-      Intent intent = getIntent();
-      if(null != intent && intent.hasExtra(FmConstant.PROGRAM_ID)){
-          programId = intent.getIntExtra(FmConstant.PROGRAM_ID,0);
-          loadData(programId+"");
-      }
+        adapter = new AddProductResultAdapter(AddProductResultActivity.this, false);
+        adapter.setHandler(handler);
+        listview.setAdapter(adapter);
+    }
 
+    /**
+     * 处理Intent
+     * @param intent
+     */
+    private void processIntent(Intent intent){
+        if(null != intent){
+            if(intent.hasExtra(FmConstant.PROGRAM_ID)){
+                programId = intent.getIntExtra(FmConstant.PROGRAM_ID,0);
+            }
+            if(intent.hasExtra(FmConstant.FROM_PAGE)){
+                fromPage = intent.getStringExtra(FmConstant.FROM_PAGE);
+            }
+            loadData(programId+"");
+        }
+    }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        processIntent(intent);
     }
 
     @Override
     public void onNavItemClick(NavigationBar.NavigationBarItem navBarItem) {
         super.onNavItemClick(navBarItem);
         if(navBarItem == NavigationBar.NavigationBarItem.action){
-                   finish();
+                if(fromPage.equals("ProgramManageFragement")){
+                     Intent intent = new Intent(self,SearchProductActivity.class);
+                     intent.putExtra(FmConstant.ADD_PRODUCT_PAGE_TITLE,"选择商品");
+                     intent.putExtra(FmConstant.PROGRAM_ID,programId);
+                     intent.putExtra(FmConstant.SEARCH_TYPE,"all");
+                     startActivity(intent);
+                }else{
+                  finish();
+                }
         }
     }
 
@@ -104,12 +140,9 @@ public class AddProductResultActivity extends BaseActivity {
                                 gson.fromJson(jsonObject.optString("products"),
                                         new TypeToken<List<ProductBean>>() {
                                         }.getType());
-                        adapter = new AddProductResultAdapter(AddProductResultActivity.this, false);
                         adapter.addData(list,true);
-                        adapter.setHandler(handler);
-                        listview.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
                     }
-
                 }catch(Exception e){
 
                 }

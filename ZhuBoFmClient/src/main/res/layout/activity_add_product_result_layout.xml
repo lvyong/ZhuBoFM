@@ -7,7 +7,7 @@
  <com.zhubo.fm.activity.search.ListViewCompat
        android:id="@+id/activity_add_product_result_listview"
        android:layout_width="match_parent"
-       android:layout_height="wrap_content"
+       android:layout_height="match_parent"
        android:listSelector="@color/transparent_background"
        android:fadingEdge="none"
        android:scrollbars="none"

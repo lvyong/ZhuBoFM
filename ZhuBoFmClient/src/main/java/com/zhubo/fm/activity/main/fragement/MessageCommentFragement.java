@@ -34,7 +34,6 @@ public class MessageCommentFragement extends BaseFragment implements MessagePopV
     @Override
     public void setNavigationBar(NavigationBar navigationBar) {
       this.navigationBar = navigationBar;
-      navigationBar.setCircleImageViewVisibility(View.GONE);
       navigationBar.setBackBtnVisibility(View.INVISIBLE);
       navigationBar.setActionCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.delete,0);
       navigationBar.setTitle(R.string.private_messgae_comment);

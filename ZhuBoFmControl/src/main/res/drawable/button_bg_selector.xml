@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item  android:state_enabled="true"
-          android:state_focused="true"
-          android:state_pressed="true"
+    <item android:state_pressed="true" android:state_enabled="true" android:state_window_focused="false"
         android:drawable="@drawable/button_enable_drawable" /> <!-- pressed,enable等多个属性 -->
+    <item android:state_focused="true"
+        android:drawable="@drawable/button_enable_drawable" /> <!-- focused -->
+    <item android:state_hovered="true"
+        android:drawable="@drawable/button_enable_drawable" /> <!-- hovered -->
     <item android:drawable="@drawable/button_uneable_drawable" /> <!-- default -->
 </selector>
 
