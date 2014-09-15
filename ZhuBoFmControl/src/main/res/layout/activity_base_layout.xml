@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f8f8f8"
+    android:background="#F4F4F4"
     >
     <view
         android:id="@+id/navigation_bar"

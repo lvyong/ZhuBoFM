@@ -293,7 +293,9 @@ public class ProgramManageFragement extends BaseFragment{
                     if(mainProgram.isHasNext()){
                         currentPage = currentPage+1;
                     }else{
-                        ToastUtil.toast(getActivity(),"没有更多数据");
+                        if(page != 1){
+                            ToastUtil.toast(getActivity(),"没有更多数据");
+                        }
                     }
                      //设置直播节目
                      if(mainProgram.getContents().size()>0 && page == 1){
@@ -326,7 +328,7 @@ public class ProgramManageFragement extends BaseFragment{
     private void setLiveProgramBeanData(ProgramBean programBeanData){
         liveProgramBean = programBeanData;
         isLive = isLiveProgram(programBeanData);
-        isLive = true;
+      //  isLive = true;
         if(isLive){
             Drawable img1 = getActivity().getResources().getDrawable(R.drawable.triple_arrow);
             img1.setBounds(0, 0, 22, 29);
@@ -342,10 +344,14 @@ public class ProgramManageFragement extends BaseFragment{
             String startTime = programBeanData.getStartAt();
             String endTime   = programBeanData.getEndAt();
             if(!TextUtils.isEmpty(startTime) && !TextUtils.isEmpty(endTime)){
-                bottomTextView.setText(startTime.split(" ")[1]+"-"+endTime.split(" ")[1]);
+                String starHour = startTime.split(" ")[1].substring(0,5);
+                String endHour  = endTime.split(" ")[1].substring(0,5);
+                bottomTextView.setText(starHour+"~"+endHour);
             }
         }else{
-            topTextView.setText("暂无直播内，"+programBeanData.getStartAt()+" 即将播出");
+            String startTime = programBeanData.getStartAt().substring(0,
+                    programBeanData.getStartAt().lastIndexOf(":"));
+            topTextView.setText("暂无直播内容,"+startTime+" 即将播出");
             bottomTextView.setVisibility(View.GONE);
             buttonLayout.setVisibility(View.VISIBLE);
         }
@@ -491,15 +497,15 @@ public class ProgramManageFragement extends BaseFragment{
                  String startTime = programBean.getStartAt();
                 if(!TextUtils.isEmpty(startTime) && startTime.split(" ").length ==2){
                      long miliseconds = DateUtil.getMiliseconds(startTime,"yyyy-mm-dd hh:mm:ss");
-                     viewHolder.topTextView.setText(startTime.split(" ")[0]
-                         +" "+DateUtil.getWeekOfSomeDay(miliseconds)+" "+startTime.split(" ")[1]);
+                     String html = startTime.split(" ")[0]
+                             +"  "+DateUtil.getWeekOfSomeDay(miliseconds)+"  "+
+                             startTime.split(" ")[1];
+                     viewHolder.topTextView.setText(html);
                 }
                 viewHolder.bottomTextView.setText(programBean.getName());
 
                 if(programBean.getProductNum() != 0){
-                    String html = "查看产品<font size=\"8\">" +
-                            "(已选" + programBean.getProductNum() +
-                            ")</font>" ;
+                    String html = "查看产品(已选" + programBean.getProductNum() + ")" ;
                     viewHolder.leftLabelTextView.setText(Html.fromHtml(html).toString());
                 }else{
                     String html = getResources().getString(R.string.choose_product) ;
@@ -523,6 +529,7 @@ public class ProgramManageFragement extends BaseFragment{
                 if(TextUtils.isEmpty(programBean.getPresentation())){
                     rightText = getResources().getString(
                             R.string.create_note);
+                    viewHolder.rightLabelTextView.setImageView(R.drawable.send_file);
                 }else{
                     rightText = getResources().getString(R.string.read_note);
                 }
