@@ -2,12 +2,12 @@ package com.andy.corelibray.db;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.andy.commonlibrary.DBHelper;
 import com.andy.commonlibrary.db.AbstractTable;
 import com.andy.corelibray.CoreApplication;
 
-import net.sqlcipher.database.SQLiteDatabase;
 
 import java.util.List;
 
@@ -64,6 +64,4 @@ public class BaseDB {
             }
         }
     }
-
-
 }

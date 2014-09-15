@@ -28,8 +28,6 @@ public class CoreApplication extends Application{
     public void onCreate() {
         super.onCreate();
         instance = this;
-        //加载数据库
-        DBHelper.getInstance(this).loadLibs();
     }
 
     public String getT() {

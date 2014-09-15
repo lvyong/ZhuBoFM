@@ -10,10 +10,8 @@ import com.andy.commonlibrary.db.TableColumn;
 import com.andy.corelibray.db.BaseDB;
 import com.zhubo.control.bussiness.bean.ProductBean;
 
-import net.sqlcipher.database.SQLiteStatement;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
