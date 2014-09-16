@@ -15,6 +15,7 @@
         app:backBg="@drawable/back"
         app:navBg="@drawable/navigation_bar_bg"
         app:textColor="#101010"
+        app:btnTextSize="@dimen/font_size_medium"
         app:titleMaxLength="9"
         app:titleTextSize="@dimen/font_size_large"/>
 

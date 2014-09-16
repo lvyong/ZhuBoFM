@@ -17,7 +17,7 @@
       android:layout_height="match_parent"
       android:scrollbars="none"
       android:fadingEdge="none"
-      android:listSelector="#f5f5f5"
+      android:listSelector="#eaeaea"
       android:background="@color/white"
     />
 </LinearLayout>

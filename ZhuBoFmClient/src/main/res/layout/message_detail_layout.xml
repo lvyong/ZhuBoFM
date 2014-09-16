@@ -13,5 +13,6 @@
         android:fadingEdge="none"
         android:scrollbars="none"
         ptr:ptrMode="both"
+        android:divider="@null"
         />
 </RelativeLayout>

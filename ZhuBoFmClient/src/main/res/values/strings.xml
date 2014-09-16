@@ -28,6 +28,11 @@
     <string name="check_update">检查更新</string>
     <string name="about_us">关于我们</string>
     <string name="suggest_feedback">意见反馈</string>
+    <string name="change_password">修改密码</string>
+    <string name="take_photo">拍照模式</string>
+    <string name="photo_album">手机相册</string>
+    <string name="cancel">取消</string>
+    <string name="unlogin">退出登录</string>
 
     <string name="program_comment">节目文稿</string>
     <string name="listener_benefit">听众福利</string>

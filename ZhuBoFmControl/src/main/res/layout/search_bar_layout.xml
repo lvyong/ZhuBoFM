@@ -24,7 +24,7 @@
         android:text="@string/search"
         android:gravity="center"
         android:textColor="#4994ec"
-        android:textSize="@dimen/font_size_medium"
+        android:textSize="@dimen/font_size_normal"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
      />
@@ -36,7 +36,7 @@
         android:drawablePadding="12dip"
         android:hint="@string/plase_input_search_keyword"
         android:textColor="@color/gray_677272"
-        android:textSize="@dimen/font_size_medium"
+        android:textSize="@dimen/font_size_small"
         android:singleLine="true"
         android:paddingLeft="5dip"
         android:paddingRight="5dip"

@@ -41,6 +41,9 @@ public class FmConstant {
 
     public static final String END_DATE = "END_DATE";
 
+    //签名字段常量
+    public static final  String USER_QIANMING = "USER_QIANMING";
+
 
 
 }

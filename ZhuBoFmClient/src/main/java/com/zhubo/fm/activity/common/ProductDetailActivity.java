@@ -128,6 +128,7 @@ public class ProductDetailActivity extends BaseActivity {
      */
     private void setProductDetail(ProductBean productBean){
           if(null != productBean){
+              productImage.setDefault(R.drawable.default_img);
               productImage.setUrl(productBean.getImageUrl());
               productImage.reload(false);
               programNameTextView.setText(productBean.getName());

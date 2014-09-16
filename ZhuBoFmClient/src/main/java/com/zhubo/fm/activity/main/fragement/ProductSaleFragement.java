@@ -256,7 +256,8 @@ public class ProductSaleFragement extends BaseFragment {
     }
 
     private void setTopLableValue(int totalProductCount,int totalSale){
-        ForegroundColorSpan redSpan = new ForegroundColorSpan(Color.RED);
+        ForegroundColorSpan redSpan = new ForegroundColorSpan(getResources().
+                getColor(R.color.red_fe6f02));
         SpannableStringBuilder builder = new SpannableStringBuilder(getDays()+"天,共销售"+
                 totalProductCount);
         int length = new String(totalProductCount+"").length();
@@ -420,7 +421,7 @@ public class ProductSaleFragement extends BaseFragment {
            if(null != productBean){
                viewHolder.programName.setText(productBean.getName());
                viewHolder.saleTextView.setText("销量："+productBean.getQuantity());
-               viewHolder.sumTextView.setText("营业额: ¥"+productBean.getAmount());
+               setSaleText(viewHolder.sumTextView,"营业额: ¥"+productBean.getAmount());
                viewHolder.imageView.setDefault(R.drawable.default_img);
                if (!TextUtils.isEmpty(productBean.getImageUrl())
                        && URLUtil.isHttpUrl(productBean.getImageUrl())) {
@@ -435,6 +436,16 @@ public class ProductSaleFragement extends BaseFragment {
                }
            }
            return contentView;
+        }
+
+
+        private void setSaleText(TextView textView,String value){
+            ForegroundColorSpan redSpan = new ForegroundColorSpan(getResources().
+                    getColor(R.color.red_fe6804));
+            SpannableStringBuilder builder = new SpannableStringBuilder(value);
+            int index = value.indexOf("¥");
+            builder.setSpan(redSpan, index, index+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            textView.setText(builder);
         }
 
         class ViewHolder{

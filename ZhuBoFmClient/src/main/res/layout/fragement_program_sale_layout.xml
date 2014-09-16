@@ -9,7 +9,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
-      android:background="#2f88f0"
+      android:background="#2e88ef"
     >
      <LinearLayout
          android:id="@+id/fragement_program_sale_top_left_layout"
@@ -19,7 +19,7 @@
          android:orientation="horizontal"
          android:gravity="center"
          android:layout_marginTop="10dip"
-         android:layout_marginBottom="10dip"
+         android:layout_marginBottom="11dip"
       >
          <ImageView
              android:layout_width="15dip"
@@ -35,7 +35,7 @@
              android:textColor="@color/white"
              android:textSize="@dimen/font_size_normal"
              android:gravity="center_vertical|left"
-             android:layout_marginLeft="12dip"
+             android:layout_marginLeft="10dip"
            />
       </LinearLayout>
       <View
@@ -50,8 +50,8 @@
             android:layout_weight="1"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginTop="10dip"
-            android:layout_marginBottom="10dip"
+          android:layout_marginTop="10dip"
+          android:layout_marginBottom="11dip"
             >
             <ImageView
                 android:layout_width="15dip"
@@ -67,25 +67,25 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_size_normal"
                 android:gravity="center_vertical|left"
-                android:layout_marginLeft="12dip"
+                android:layout_marginLeft="10dip"
                 />
       </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dip"
+        android:layout_height="51dip"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingLeft="10dip"
-        android:paddingRight="10dip"
+        android:paddingLeft="12dip"
+        android:paddingRight="12dip"
         android:background="@drawable/ui_white_bg_gray_border"
         >
         <TextView
             android:id="@+id/fragement_program_sale_top_left_textview"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:textColor="#898989"
-            android:textSize="@dimen/font_size_medium"
+            android:textColor="#878787"
+            android:textSize="@dimen/font_size_normal"
             android:singleLine="true"
             android:ellipsize="end"
             android:gravity="left"
@@ -96,8 +96,8 @@
             android:id="@+id/fragement_program_sale_top_right_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="#898989"
-            android:textSize="@dimen/font_size_medium"
+            android:textColor="#878787"
+            android:textSize="@dimen/font_size_normal"
             android:singleLine="true"
             android:ellipsize="end"
             android:gravity="right"
@@ -110,12 +110,12 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:gravity="center_vertical"
-        android:paddingLeft="10dip"
+        android:paddingLeft="12dip"
         android:textColor="@color/black"
         android:textSize="@dimen/font_size_normal"
         android:singleLine="true"
         android:text=""
-        android:layout_marginTop="10dip"
+        android:layout_marginTop="12dip"
       />
      <view
          xmlns:ptr="http://schemas.android.com/apk/res/com.zhubo.fm"

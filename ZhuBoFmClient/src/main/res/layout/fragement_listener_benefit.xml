@@ -27,7 +27,7 @@
           android:layout_width="30dip"
           android:layout_height="30dip"
           android:scaleType="centerInside"
-          android:src="@drawable/check"
+          android:src="@drawable/close_img"
           android:layout_alignParentRight="true"
           android:layout_centerVertical="true"
        />

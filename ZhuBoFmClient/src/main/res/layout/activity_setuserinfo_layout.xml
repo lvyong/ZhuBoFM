@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/activity_setuserinfo_editext"
+        android:layout_width="match_parent"
+        android:layout_height="86dip"
+        android:background="@drawable/ui_white_bg_gray_border"
+        android:textColor="#363636"
+        android:textSize="@dimen/font_size_normal"
+        android:layout_marginTop="10dip"
+        android:padding="23dip"
+     />
+    <TextView
+        android:id="@+id/activity_setuserinfo_count_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#7d8496"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/activity_setuserinfo_editext"
+        android:textSize="@dimen/font_size_small"
+        android:layout_marginTop="20dip"
+        android:text="0/24"
+        android:layout_marginRight="18dip"
+     />
+</RelativeLayout>

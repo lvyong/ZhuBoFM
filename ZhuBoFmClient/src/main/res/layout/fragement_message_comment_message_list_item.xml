@@ -3,9 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="10dip"
-    android:paddingBottom="10dip"
-    android:paddingLeft="9dip"
+    android:padding="12dip"
     >
    <CheckBox
        android:id="@+id/message_comment_checkbox"
@@ -15,17 +13,17 @@
        android:layout_alignParentLeft="true"
        android:checked="false"
        android:layout_centerVertical="true"
-       android:layout_marginRight="8dip"
+       android:layout_marginRight="12dip"
        android:visibility="gone"
     />
-   <ImageView
+   <view
        android:id="@+id/message_comment_list_item_img"
-       android:layout_width="30dip"
-       android:layout_height="30dip"
-       android:scaleType="centerInside"
+       android:layout_width="45dip"
+       android:layout_height="45dip"
+       android:scaleType="centerCrop"
+       class="com.zhubo.control.activity.common.ItotemImageView"
        android:layout_toRightOf="@id/message_comment_checkbox"
-       android:src="@drawable/clock"
-       android:layout_centerVertical="true"
+       android:src="@drawable/default_img"
     />
 
     <ImageView
@@ -34,25 +32,24 @@
         android:layout_height="13.5dip"
         android:src="@drawable/right_arrow"
         android:scaleType="centerInside"
-        android:layout_marginRight="9dip"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:background="@color/blue_475580"
      />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/message_comment_list_item_img"
         android:layout_toLeftOf="@id/message_comment_list_item_arrow_img"
-        android:layout_marginLeft="10dip"
-        android:layout_marginRight="19dip"
+        android:layout_alignTop="@id/message_comment_list_item_img"
+        android:layout_marginLeft="12dip"
+        android:layout_marginRight="12dip"
     >
         <TextView
             android:id="@+id/message_comment_list_item_listener"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/font_size_normal"
-            android:textColor="@color/black_010101"
+            android:textSize="17sp"
+            android:textColor="#333333"
             android:singleLine="true"
             android:ellipsize="end"
             android:text="听众张某"
@@ -62,8 +59,8 @@
             android:id="@+id/message_comment_list_item_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/font_size_small_small"
-            android:textColor="#c8c8c8"
+            android:textSize="13sp"
+            android:textColor="#D0D0D0"
             android:singleLine="true"
             android:ellipsize="end"
             android:text="07-19 20:00"
@@ -74,12 +71,12 @@
             android:id="@+id/message_comment_list_item_message_context"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/font_size_small"
-            android:textColor="#c8c8c8"
+            android:textSize="15sp"
+            android:textColor="#797979"
             android:text="激发发卡量飞机阿里发的就啊了发就拉大"
             android:layout_below="@id/message_comment_list_item_listener"
             android:layout_alignLeft="@id/message_comment_list_item_listener"
+            android:layout_marginTop="12dip"
             />
     </RelativeLayout>
-
 </RelativeLayout>

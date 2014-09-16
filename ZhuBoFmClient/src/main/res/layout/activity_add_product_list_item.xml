@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#444444"
-        android:textSize="@dimen/font_size_medium"
+        android:textSize="@dimen/font_size_normal"
         android:layout_alignTop="@id/activity_add_product_list_item_image"
         android:layout_marginLeft="15dip"
         android:text=""
@@ -52,11 +52,11 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:textColor="#e56463"
-          android:textSize="@dimen/font_size_normal"
+          android:textSize="@dimen/font_size_small"
           android:layout_below="@id/activity_add_product_list_item_programDesc"
-          android:layout_marginTop="5dip"
+          android:layout_marginTop="10dip"
           android:layout_alignLeft="@id/activity_add_product_list_item_programName"
-          android:text="￥53.00"
+          android:text=""
        />
        <LinearLayout
            android:layout_width="match_parent"
@@ -73,30 +73,30 @@
                android:layout_width="0dp"
                android:layout_height="wrap_content"
                android:textSize="@dimen/font_size_small_small"
-               android:textColor="#BABABA"
+               android:textColor="#999999"
                android:layout_weight="1"
                android:gravity="left|center_vertical"
-               android:text="人气 1000"
+               android:text=""
                />
            <TextView
                android:id="@+id/activity_add_product_list_item_sale_textview"
                android:layout_width="0dp"
                android:layout_height="wrap_content"
                android:textSize="@dimen/font_size_small_small"
-               android:textColor="#BABABA"
+               android:textColor="#999999"
                android:layout_weight="1"
                android:gravity="center"
-               android:text="销量 1000"
+               android:text=""
                />
            <TextView
                android:id="@+id/activity_add_product_list_item_collect_textview"
                android:layout_width="0dp"
                android:layout_height="wrap_content"
                android:textSize="@dimen/font_size_small_small"
-               android:textColor="#BABABA"
+               android:textColor="#999999"
                android:layout_weight="1"
                android:gravity="right|center_vertical"
-               android:text="99人收藏"
+               android:text=""
                />
        </LinearLayout>
 </RelativeLayout>

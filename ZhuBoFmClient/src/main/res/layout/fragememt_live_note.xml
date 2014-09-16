@@ -34,13 +34,11 @@
          android:id="@+id/fragememnt_live_note_textview"
          android:layout_height="wrap_content"
          android:layout_width="match_parent"
-         android:paddingTop="18dip"
-         android:paddingBottom="18dip"
-         android:paddingLeft="11dip"
-         android:paddingRight="11dip"
+         android:padding="12dip"
          android:background="@color/white"
          android:textSize="@dimen/font_size_normal"
-         android:textColor="@color/black"
+         android:textColor="#333333"
          android:lineSpacingExtra="1.5dip"
+         android:layout_marginTop="12dip"
       />
 </FrameLayout>

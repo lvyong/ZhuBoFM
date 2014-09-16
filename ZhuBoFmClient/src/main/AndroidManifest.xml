@@ -45,5 +45,7 @@
         <activity android:name=".activity.search.AddProductActivity"/>
         <activity android:name=".activity.realtimeinteract.RealTimeInteractActivity"/>
         <activity android:name=".activity.search.RecentlyChoosedProductActivity"/>
+        <activity android:name=".activity.setting.SetUserInfoActivity"/>
+
     </application>
 </manifest>

@@ -12,10 +12,10 @@
       android:layout_height="wrap_content"
       android:minHeight="200dp"
       android:textSize="@dimen/font_size_normal"
-      android:textColor="@color/gray_888888"
+      android:textColor="#aaaaaa"
       android:hint="@string/please_program_note"
       android:gravity="left|top"
-      android:layout_marginTop="15dip"
-      android:padding="10dip"
+      android:layout_marginTop="12dip"
+      android:padding="12dip"
    />
 </LinearLayout>

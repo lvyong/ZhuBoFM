@@ -328,7 +328,7 @@ public class ProgramManageFragement extends BaseFragment{
     private void setLiveProgramBeanData(ProgramBean programBeanData){
         liveProgramBean = programBeanData;
         isLive = isLiveProgram(programBeanData);
-      //  isLive = true;
+        isLive = true;
         if(isLive){
             Drawable img1 = getActivity().getResources().getDrawable(R.drawable.triple_arrow);
             img1.setBounds(0, 0, 22, 29);

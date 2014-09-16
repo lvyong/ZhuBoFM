@@ -42,7 +42,7 @@ public class NavigationBar extends LinearLayout implements View.OnClickListener 
     private String backText;        //返回按钮文字
     private String actionText;      //操作按钮文字
     private int actionBg;           //操作按钮背景
-    private int textColor;          //文字颜色，包括title和操作按钮的文字颜色
+    private int textColor;          //文字颜色，包括title
     private float btnTextSize;      //按钮文字大小
     private float titleTextSize;    //title文字大小
     private int titleMaxLength;    //title最大长度
@@ -385,10 +385,12 @@ public class NavigationBar extends LinearLayout implements View.OnClickListener 
             actionText      = typedArray.getString(R.styleable.NavigationBar_actionText);
             backText        = typedArray.getString(R.styleable.NavigationBar_backText);
             actionBg        = typedArray.getResourceId(R.styleable.NavigationBar_actionBg, 0);
+
             textColor       = typedArray.getColor(R.styleable.NavigationBar_textColor, 0xFFFFFFFF);
             btnTextSize     = typedArray.getDimension(R.styleable.NavigationBar_btnTextSize, 0.0f);
             titleTextSize   = typedArray.getDimension(R.styleable.NavigationBar_titleTextSize, 0.0f);
             titleMaxLength  = typedArray.getInt(R.styleable.NavigationBar_titleMaxLength, 9);
+
         } finally {
             typedArray.recycle();
         }
@@ -417,7 +419,6 @@ public class NavigationBar extends LinearLayout implements View.OnClickListener 
         //操作按钮
         actionButton.setBackgroundResource(actionBg);
         actionButton.setText(actionText);
-        actionButton.setTextColor(textColor);
 
         //标题文字
         titleText.setTextColor(textColor);

@@ -64,6 +64,7 @@ public class EditNoteActivity extends BaseActivity {
         Intent intent = getIntent();
         if(null != intent){
             navigationBar.setTitle(R.string.edit_note);
+            navigationBar.setActionBtnTextColor(getResources().getColor(R.color.blue_2f89f0));
             String data = intent.getStringExtra(FmConstant.PROGRAM_NOTE);
             previousStr = data;
             Log.e(TAG,"---------note=="+data);

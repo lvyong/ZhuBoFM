@@ -32,6 +32,7 @@ public class LiveProgramNoteFragement extends BaseFragment {
     public void setNavigationBar(NavigationBar navigationBar) {
         navigationBar.setBackBtnVisibility(View.VISIBLE);
         navigationBar.setBackButtonBackground(R.drawable.back);
+        navigationBar.setActionBtnTextColor(getResources().getColor(R.color.blue_2f89f0));
         initData();
         navigationBar.setTitle(R.string.live);
         if (TextUtils.isEmpty(textView.getText())) {
