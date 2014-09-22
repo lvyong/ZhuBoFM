@@ -3,6 +3,8 @@ package com.zhubo.fm.activity.live;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.andy.ui.libray.component.NavigationBar;
@@ -23,6 +25,7 @@ import com.zhubo.fm.bll.common.FmConstant;
  */
 public class LiveActivity extends BaseActivity implements BottomTabBar.BottomTabBarClickCallBack,BaseFragment.NavigationCallBack{
 
+    private final String TAG = "LiveActivity";
     private BottomTabBar bottomTabBar;
     private FragmentController fragmentController;
 
@@ -67,6 +70,7 @@ public class LiveActivity extends BaseActivity implements BottomTabBar.BottomTab
                 fName = LiveProgramNoteFragement.class.getName();
                 newFragment = new LiveProgramNoteFragement();
                 bundle = getIntent().getBundleExtra(FmConstant.BUNDLE_DATA);
+                LiveProgramNoteFragement.setIsStopStateHide(false);
                 break;
             case MIDDLE_BUTTON:
                 fName = ListenerBenefitFragement.class.getName();
@@ -76,7 +80,7 @@ public class LiveActivity extends BaseActivity implements BottomTabBar.BottomTab
             case RIGHT_BUTTON:
               /*  fName = RealTimeInteractFragement.class.getName();
                 newFragment = new RealTimeInteractFragement();*/
-                startActivity(new Intent(this, RealTimeInteractActivity.class));
+              //  startActivity(new Intent(this, RealTimeInteractActivity.class));
                 return ;
         }
         newFragment.setArguments(bundle);
@@ -95,6 +99,7 @@ public class LiveActivity extends BaseActivity implements BottomTabBar.BottomTab
         if (current != null)   current.onNavItemClick(navBarItem);
     }
 
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -108,8 +113,14 @@ public class LiveActivity extends BaseActivity implements BottomTabBar.BottomTab
         switch (requestCode){
             case FmConstant.LIVE_NOTE_FRAGEMENT:
                 if(resultCode == Activity.RESULT_OK){
-                    setResult(Activity.RESULT_OK);
-                    finish();
+                   if(null!= data && data.hasExtra(FmConstant.PROGRAM_NOTE)){
+                       if(fragmentController.getCurrentFragment() instanceof LiveProgramNoteFragement){
+                           LiveProgramNoteFragement currentFragement =
+                                   (LiveProgramNoteFragement) fragmentController.getCurrentFragment();
+                           Log.e(TAG,"----返回数据="+data.getStringExtra(FmConstant.PROGRAM_NOTE));
+                           currentFragement.setNote(data.getStringExtra(FmConstant.PROGRAM_NOTE));
+                       }
+                   }
                 }
         }
     }

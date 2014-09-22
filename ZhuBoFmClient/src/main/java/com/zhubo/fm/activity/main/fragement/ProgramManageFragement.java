@@ -43,7 +43,9 @@ import com.zhubo.control.activity.fragement.BaseFragment;
 import com.zhubo.control.bussiness.bean.MainProgram;
 import com.zhubo.control.bussiness.bean.ProgramBean;
 import com.zhubo.fm.activity.common.EditNoteActivity;
+import com.zhubo.fm.activity.common.EmptyNoteActivity;
 import com.zhubo.fm.activity.live.LiveActivity;
+import com.zhubo.fm.activity.live.fragement.LiveProgramNoteFragement;
 import com.zhubo.fm.activity.search.AddProductResultActivity;
 import com.zhubo.fm.activity.search.SearchProductActivity;
 import com.zhubo.fm.activity.setting.SettingActivity;
@@ -68,6 +70,7 @@ public class ProgramManageFragement extends BaseFragment{
     private View rootView;
     private PullToRefreshListView  listView;
     private RelativeLayout toplayout;
+    private LinearLayout detaiLayout;
     private TextView topTextView;
     private TextView middleTextView;
     private TextView bottomTextView;
@@ -87,6 +90,16 @@ public class ProgramManageFragement extends BaseFragment{
 
     private boolean isLive = false;
 
+    private static boolean isStopStateHide = false;
+
+    public static void setIsStopStateHide(boolean hide){
+        isStopStateHide = hide;
+    }
+
+    //节目状态
+    private enum LiveStateEnum{
+        LVIE,BEFORE,ATFTER
+    }
 
     @Override
     public void setNavigationBar(NavigationBar navigationBar) {
@@ -141,6 +154,8 @@ public class ProgramManageFragement extends BaseFragment{
                  R.id.fragement_program_management_settings_imageview);
         this.peopleTextView = (TextView)rootView.findViewById(
                 R.id.fragement_program_management_people_name);
+        this.detaiLayout =(LinearLayout)rootView.
+                findViewById(R.id.fragement_program_management_detail_layout);
     }
 
     /**
@@ -162,10 +177,11 @@ public class ProgramManageFragement extends BaseFragment{
                 loadData(currentPage);
             }
         });
-       this.toplayout.setOnClickListener(new View.OnClickListener() {
+       this.detaiLayout.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
                if(null!= liveProgramBean && isLive){
+                   setIsStopStateHide(true);
                    Intent intent = new Intent(getActivity(),LiveActivity.class);
                    Bundle bundle = new Bundle();
                    bundle.putInt(FmConstant.PROGRAM_ID,liveProgramBean.getId());
@@ -178,6 +194,7 @@ public class ProgramManageFragement extends BaseFragment{
        this.settingsButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
+               setIsStopStateHide(true);
                startActivity(new Intent(getActivity(), SettingActivity.class));
            }
        });
@@ -201,10 +218,14 @@ public class ProgramManageFragement extends BaseFragment{
      * @param note
      */
     private void goEditNote(String note,int programId){
-        Intent intent = new Intent(getActivity(), EditNoteActivity.class);
-       if(!TextUtils.isEmpty(note)){
-           intent.putExtra(FmConstant.PROGRAM_NOTE,note);
-       }
+        setIsStopStateHide(true);
+        Intent intent = null;
+        if(!TextUtils.isEmpty(note)){
+            intent = new Intent(getActivity(), EditNoteActivity.class);
+            intent.putExtra(FmConstant.PROGRAM_NOTE,note);
+        }else{
+            intent = new Intent(getActivity(), EmptyNoteActivity.class);
+        }
        intent.putExtra(FmConstant.PROGRAM_ID,programId);
        startActivityForResult(intent, FmConstant.PROGRAM_MANAGE_TO_EDITNOTE_REQUESTCODE);
     }
@@ -215,10 +236,12 @@ public class ProgramManageFragement extends BaseFragment{
      */
     private void goProduct(int productNum,int program_id){
         if(productNum == 0){
+            setIsStopStateHide(true);
             Intent intent = new Intent(getActivity(),SearchProductActivity.class);
             intent.putExtra(FmConstant.PROGRAM_ID,program_id);
             startActivity(intent);
         }else{
+            setIsStopStateHide(true);
             Intent intent = new Intent(getActivity(),AddProductResultActivity.class);
             intent.putExtra(FmConstant.PROGRAM_ID,program_id);
             intent.putExtra(FmConstant.FROM_PAGE,ProgramManageFragement.class.getSimpleName());
@@ -230,7 +253,7 @@ public class ProgramManageFragement extends BaseFragment{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
+     /*   switch (requestCode){
             case FmConstant.PROGRAM_MANAGE_TO_EDITNOTE_REQUESTCODE:
                  if(resultCode == Activity.RESULT_OK){
                      currentPage = 1;
@@ -243,14 +266,14 @@ public class ProgramManageFragement extends BaseFragment{
                     loadData(currentPage);
                 }
                 break;
-        }
+        }*/
     }
 
     /**
      * 初始化数据
      */
     private void initData(){
-        loadData(1);
+      //  loadData(1);
         //测试
         loadPeopleImag("http://e.hiphotos.baidu.com/image/pic/item/91ef76c6a7efce1b39441ad2ad51f3deb48f65bf.jpg");
         peopleTextView.setText("张小溪");
@@ -260,12 +283,24 @@ public class ProgramManageFragement extends BaseFragment{
     public void onResume() {
         super.onResume();
         navigationBar.setVisibility(View.GONE);
+        currentPage = 1;
+        loadData(currentPage);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        navigationBar.setVisibility(View.VISIBLE);
+        if(!isStopStateHide){
+            navigationBar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(navigationBar.getVisibility() == View.GONE && isStopStateHide){
+            navigationBar.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
@@ -327,9 +362,10 @@ public class ProgramManageFragement extends BaseFragment{
      */
     private void setLiveProgramBeanData(ProgramBean programBeanData){
         liveProgramBean = programBeanData;
-        isLive = isLiveProgram(programBeanData);
-        isLive = true;
-        if(isLive){
+         LiveStateEnum stateEnum = getLiveProgramStatus(programBeanData);
+         isLive = true;
+        if(stateEnum == LiveStateEnum.LVIE){
+            isLive = true;
             Drawable img1 = getActivity().getResources().getDrawable(R.drawable.triple_arrow);
             img1.setBounds(0, 0, 22, 29);
             topTextView.setCompoundDrawables(img1, null,null, null);
@@ -348,10 +384,18 @@ public class ProgramManageFragement extends BaseFragment{
                 String endHour  = endTime.split(" ")[1].substring(0,5);
                 bottomTextView.setText(starHour+"~"+endHour);
             }
-        }else{
+        }else if(stateEnum == LiveStateEnum.BEFORE){
+            isLive = true;
             String startTime = programBeanData.getStartAt().substring(0,
                     programBeanData.getStartAt().lastIndexOf(":"));
             topTextView.setText("暂无直播内容,"+startTime+" 即将播出");
+            bottomTextView.setVisibility(View.GONE);
+            buttonLayout.setVisibility(View.VISIBLE);
+        }else{
+            isLive = true;
+            String startTime = programBeanData.getStartAt().substring(0,
+                    programBeanData.getStartAt().lastIndexOf(":"));
+            topTextView.setText("已经结束");
             bottomTextView.setVisibility(View.GONE);
             buttonLayout.setVisibility(View.VISIBLE);
         }
@@ -409,16 +453,20 @@ public class ProgramManageFragement extends BaseFragment{
      * @param programBean
      * @return
      */
-    private boolean isLiveProgram(ProgramBean programBean){
-        boolean isLive = false;
+    private LiveStateEnum getLiveProgramStatus(ProgramBean programBean){
+        LiveStateEnum stateEnum;
         Date date = new Date();
        long currentMilisconds  = date.getTime();
-       long startTime = DateUtil.getMiliseconds(programBean.getStartAt(),"yyyy-mm-dd hh:mm:ss");
-       long endTime   = DateUtil.getMiliseconds(programBean.getEndAt(),"yyyy-mm-dd hh:mm:ss");
+       long startTime = DateUtil.getMiliseconds(programBean.getStartAt(),"yyyy-MM-dd HH:mm:ss");
+       long endTime   = DateUtil.getMiliseconds(programBean.getEndAt(),"yyyy-MM-dd HH:mm:ss");
        if(startTime <= currentMilisconds && currentMilisconds <= endTime) {
-         isLive = true;
+           stateEnum = LiveStateEnum.LVIE;
+       }else if(currentMilisconds < startTime){
+           stateEnum = LiveStateEnum.BEFORE;
+       }else{
+           stateEnum = LiveStateEnum.ATFTER;
        }
-        return isLive;
+       return stateEnum;
     }
 
 
@@ -496,7 +544,7 @@ public class ProgramManageFragement extends BaseFragment{
             if(null != programBean){
                  String startTime = programBean.getStartAt();
                 if(!TextUtils.isEmpty(startTime) && startTime.split(" ").length ==2){
-                     long miliseconds = DateUtil.getMiliseconds(startTime,"yyyy-mm-dd hh:mm:ss");
+                     long miliseconds = DateUtil.getMiliseconds(startTime,"yyyy-MM-dd HH:mm:ss");
                      String html = startTime.split(" ")[0]
                              +"  "+DateUtil.getWeekOfSomeDay(miliseconds)+"  "+
                              startTime.split(" ")[1];

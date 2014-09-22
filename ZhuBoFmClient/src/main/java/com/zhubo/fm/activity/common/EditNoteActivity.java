@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 
@@ -69,7 +70,7 @@ public class EditNoteActivity extends BaseActivity {
             previousStr = data;
             Log.e(TAG,"---------note=="+data);
             if(TextUtils.isEmpty(data)){
-                navigationBar.setTitle(R.string.create_note);
+                navigationBar.setTitle(R.string.write_note);
                 navigationBar.setActionBtnText(R.string.finish);
                 editText.setEnabled(true);
                 editText.setFocusable(true);
@@ -95,26 +96,21 @@ public class EditNoteActivity extends BaseActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        canBack();
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            canBack();;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     /**
      * 判断是否可以退出当前Activity
      */
     private void canBack(){
-        if(!editText.isInEditMode()){
-            if(editText.getText().toString().equals(getIntent().getStringExtra(
-                    FmConstant.PROGRAM_NOTE))){
-                setResult(RESULT_CANCELED);
-            }else{
-                setResult(RESULT_OK);
-            }
-            finish();
-        }else{
-            ToastUtil.toast(this,R.string.finish_editing_text);
-        }
+                Intent intent =new Intent();
+                intent.putExtra(FmConstant.PROGRAM_NOTE, editText.getText().toString());
+                setResult(RESULT_OK,intent);
+                finish();
     }
 
     /**
@@ -122,15 +118,12 @@ public class EditNoteActivity extends BaseActivity {
      */
     private void sendTextToServer(){
         String data = editText.getText().toString();
-        if(!TextUtils.isEmpty(data)){
-            if(data.equals(previousStr)){
+        if(data.equals(previousStr)){
                 ToastUtil.toast(this,R.string.you_cannot_edit_note);
                 return ;
-            }
-            saveNote(data);
-        }else{
-            ToastUtil.toast(this,R.string.please_program_note);
         }
+        saveNote(data);
+
     }
 
 
@@ -150,9 +143,9 @@ public class EditNoteActivity extends BaseActivity {
                    JSONObject jsonObject = new JSONObject(response);
                    if(jsonObject.optBoolean("success")){
                        ToastUtil.toast(self,"文稿上传成功");
-                       setResult(Activity.RESULT_OK);
-                       self.finish();
                     }
+                   editText.setEnabled(false);
+                   navigationBar.setActionBtnText(R.string.edit);
              }catch (Exception e){
 
                }

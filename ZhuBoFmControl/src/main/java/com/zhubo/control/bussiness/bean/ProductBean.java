@@ -18,8 +18,8 @@ public class ProductBean {
     private int  recommendTimes;
     private String amount;
 
-    //自定义字段，表示是否选中
-    private boolean add = false;
+    //自定义字段，表示是否未选中
+    private boolean add = true;
 
 
     public String getId() {

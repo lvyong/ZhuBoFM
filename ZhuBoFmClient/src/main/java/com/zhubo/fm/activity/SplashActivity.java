@@ -8,17 +8,24 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.andy.commonlibrary.net.exception.MessageException;
+import com.andy.commonlibrary.util.FileUtil;
 import com.andy.corelibray.CoreApplication;
 import com.andy.corelibray.net.BusinessResponseHandler;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.zhubo.control.bussiness.bean.AuthToken;
+import com.zhubo.control.bussiness.bean.ComlumnBean;
 import com.zhubo.control.bussiness.db.AuthTokenDB;
 import com.zhubo.fm.R;
 import com.zhubo.fm.activity.main.MainActivity;
+import com.zhubo.fm.bll.common.FmConstant;
+import com.zhubo.fm.bll.request.PrivateMessageRequest;
 import com.zhubo.fm.bll.request.UserReqeustFactory;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -51,7 +58,6 @@ public class SplashActivity extends Activity {
         }else{
             getToken();
         }*/
-        launcher();
     }
 
 
@@ -87,7 +93,7 @@ public class SplashActivity extends Activity {
                     String apiToken = authTokenDB.getApiToken();
                     Log.e(TAG,"-------apiToken="+apiToken);
                     ((CoreApplication)getApplication()).setApiToken(apiToken);
-                     launcher();
+
                     // login();
                 }catch (Exception e){
 
@@ -105,42 +111,6 @@ public class SplashActivity extends Activity {
     }
 
 
-    /**
-     * 请求数据
-     */
-    private void login(){
-        UserReqeustFactory userReqeustFactory  = new UserReqeustFactory(this);
 
-        userReqeustFactory.login(new BusinessResponseHandler() {
-            @Override
-            public void start() {
 
-            }
-
-            @Override
-            public void success(String object) {
-                Log.e(TAG,"-----------登录:"+object);
-                launcher();
-            }
-
-            @Override
-            public void fail(MessageException exception) {
-                launcher();
-            }
-        });
-    }
-
-    /**
-     *
-     */
-    private void launcher(){
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }, 500);
-    }
 }

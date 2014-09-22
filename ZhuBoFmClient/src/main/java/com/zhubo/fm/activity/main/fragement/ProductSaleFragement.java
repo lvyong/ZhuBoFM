@@ -11,6 +11,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.andy.commonlibrary.net.exception.MessageException;
+import com.andy.commonlibrary.util.AppUtil;
 import com.andy.commonlibrary.util.DateUtil;
 import com.andy.commonlibrary.util.StringUtil;
 import com.andy.commonlibrary.util.ToastUtil;
@@ -45,6 +47,7 @@ import com.zhubo.fm.bll.request.ProductSaleFactory;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,7 +55,7 @@ import java.util.List;
  * Created by andy_lv on 2014/8/24.
  */
 public class ProductSaleFragement extends BaseFragment {
-
+    private final String TAG = "ProductSaleFragement";
     private View rootView;
     private PullToRefreshListView listView;
     private TextView leftDateTextView,rightDateTextView;
@@ -137,6 +140,7 @@ public class ProductSaleFragement extends BaseFragment {
      */
     private void initDatePickData(){
         final Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
         int year  = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day   = c.get(Calendar.DAY_OF_MONTH);
@@ -157,12 +161,14 @@ public class ProductSaleFragement extends BaseFragment {
     private void setDateText(DatePickEnum datePickEnum){
          switch (datePickEnum){
              case LEFT:
-                 String leftMonthValue  = (leftMonth+1) < 10 ? "0"+(leftMonth+1) : leftMonth+"" ;
+                 int month1 = leftMonth + 1;
+                 String leftMonthValue  = (month1) < 10 ? "0"+(month1) : month1+"" ;
                  String leftDayValue    = leftDay < 10 ? "0"+leftDay : leftDay+"";
                  leftDateTextView.setText(leftYear + "-" + leftMonthValue + "-" + leftDayValue);
                  break;
              case RIGHT:
-                 String rightMonthValue  = (rightMonth+1) < 10 ? "0"+(rightMonth+1) : rightMonth+"" ;
+                 int month2 = rightMonth + 1;
+                 String rightMonthValue  = (month2) < 10 ? "0"+(month2) : month2+"" ;
                  String rightDayValue    = rightDay < 10 ?   "0"+rightDay   : rightDay+"";
                  rightDateTextView.setText(rightYear + "-" + rightMonthValue + "-" + rightDayValue);
                  break;
@@ -199,14 +205,12 @@ public class ProductSaleFragement extends BaseFragment {
 
            @Override
            public void onClick(View view) {
-              leftDailog.updateDate(leftYear,leftMonth,leftDay);
               leftDailog.show();
            }
        });
        this.rightDateLinear.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               rihgtDialog.updateDate(rightYear,rightMonth,rightDay);
                rihgtDialog.show();
            }
        });
@@ -221,10 +225,10 @@ public class ProductSaleFragement extends BaseFragment {
         switch (id) {
             case SHOW_LEFT_DATE_DIALOG:
                 return new DatePickerDialog(this.getActivity(), new DatePickListener(DatePickEnum.LEFT),
-                        leftYear,leftMonth -1,leftDay);
+                        leftYear,leftMonth,leftDay);
             case SHOW_RIGHT_DATE_DIALOG:
                 return new DatePickerDialog(this.getActivity(),  new DatePickListener(DatePickEnum.RIGHT),
-                        rightYear,rightMonth -1,rightDay);
+                        rightYear,rightMonth,rightDay);
         }
         return null;
     }
@@ -233,6 +237,8 @@ public class ProductSaleFragement extends BaseFragment {
     public  enum DatePickEnum{
         LEFT,RIGHT
     }
+
+
     class DatePickListener implements  DatePickerDialog.OnDateSetListener{
 
          private DatePickEnum datePickEnum;
@@ -242,17 +248,56 @@ public class ProductSaleFragement extends BaseFragment {
 
          @Override
          public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-               if(datePickEnum == DatePickEnum.LEFT){
-                  leftYear  = year;
-                  leftMonth = monthOfYear;
-                  leftDay   = dayOfMonth ;
-               }else if(datePickEnum == DatePickEnum.RIGHT){
-                   rightYear  = year;
-                   rightMonth = monthOfYear;
-                   rightDay   = dayOfMonth;
-               }
-               setDateText(datePickEnum);
+             Log.e(TAG,"---year=="+year+"----monthOfYear="+monthOfYear+"-----dayOfMonth=="+dayOfMonth);
+             boolean isInValid = isDateChooseValid(year,monthOfYear,dayOfMonth,datePickEnum);
+             if(!isInValid){
+                 if(datePickEnum == DatePickEnum.LEFT){
+                     ToastUtil.toast(getActivity(),"开始日期不能大于结束日期");
+                 }else if(datePickEnum == DatePickEnum.RIGHT){
+                     ToastUtil.toast(getActivity(),"结束日期不能小于开始日期");
+                 }
+             }else{
+                 if(datePickEnum == DatePickEnum.LEFT){
+                     leftYear  = year;
+                     leftMonth = monthOfYear;
+                     leftDay   = dayOfMonth ;
+                 }else if(datePickEnum == DatePickEnum.RIGHT){
+                     rightYear  = year;
+                     rightMonth = monthOfYear;
+                     rightDay   = dayOfMonth;
+                 }
+                 setDateText(datePickEnum);
+                 currentPage = 1;
+                 loadData(currentPage);
+             }
          }
+    }
+
+    /**
+     * 日期选择是否合法
+     * @param choosedYear
+     * @param choosedMonth
+     * @param choosedDay
+     * @return
+     */
+    private boolean isDateChooseValid(int choosedYear,int choosedMonth,int choosedDay,DatePickEnum datePickEnum){
+     boolean isValid = false;
+     int month1 = choosedMonth + 1;
+     String leftMonthValue  = (month1) < 10 ? "0"+(month1) : month1+"" ;
+     String leftDayValue    = choosedDay < 10 ? "0"+choosedDay : choosedDay+"";
+     String date = choosedYear+"-"+leftMonthValue +"-"+leftDayValue;
+     long chooseMilisecond = DateUtil.getMiliseconds(date,"yyyy-MM-dd");
+     long lastMilisecond = 0;
+     if(datePickEnum == DatePickEnum.LEFT){
+         String rightValue = rightDateTextView.getText().toString();
+         lastMilisecond = DateUtil.getMiliseconds(rightValue,"yyyy-MM-dd");
+         isValid = lastMilisecond - chooseMilisecond >= 0;
+     }else if(datePickEnum == DatePickEnum.RIGHT){
+         String leftValue  = leftDateTextView.getText().toString();
+         lastMilisecond = DateUtil.getMiliseconds(leftValue,"yyyy-MM-dd");
+         isValid = chooseMilisecond - lastMilisecond >= 0;
+     }
+     return isValid;
     }
 
     private void setTopLableValue(int totalProductCount,int totalSale){
@@ -277,8 +322,8 @@ public class ProductSaleFragement extends BaseFragment {
         long day = 0;
         String startDay = leftDateTextView.getText().toString();
         String endDay   = rightDateTextView.getText().toString();
-        long sartMiliseconds = DateUtil.getMiliseconds(startDay,"YYYY-MM-DD");
-        long endMiliseconds  = DateUtil.getMiliseconds(endDay,"YYYY-MM-DD");
+        long sartMiliseconds = DateUtil.getMiliseconds(startDay,"yyyy-MM-dd");
+        long endMiliseconds  = DateUtil.getMiliseconds(endDay,"yyyy-MM-dd");
         long cha = endMiliseconds - sartMiliseconds;
         if(cha ==0){
             day = 1;
@@ -323,7 +368,9 @@ public class ProductSaleFragement extends BaseFragment {
                               totalProductCount += productSaleBean.getQuantity();
                               saleSum += productSaleBean.getAmount();
                           }else{
-                              ToastUtil.toast(getActivity(), "没有更多数据");
+                              if(page !=1){
+                                  ToastUtil.toast(getActivity(), "没有更多数据");
+                              }
                           }
                           setTopLableValue(totalProductCount,saleSum);
                           setProductCountValue(listAdapter.getCount());

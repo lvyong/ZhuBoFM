@@ -1,5 +1,7 @@
+
 package com.zhubo.fm.activity.setting;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,11 +11,19 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.andy.commonlibrary.net.exception.MessageException;
 import com.andy.commonlibrary.util.ToastUtil;
+import com.andy.corelibray.net.BusinessResponseHandler;
 import com.andy.ui.libray.component.NavigationBar;
+import com.google.gson.Gson;
 import com.zhubo.control.activity.BaseActivity;
+import com.zhubo.control.bussiness.bean.UserBean;
 import com.zhubo.fm.R;
+import com.zhubo.fm.ZhuBoApplication;
 import com.zhubo.fm.bll.common.FmConstant;
+import com.zhubo.fm.bll.request.UserReqeustFactory;
+
+import org.json.JSONObject;
 
 /**
  * 设置用户签名
@@ -53,12 +63,12 @@ public class SetUserInfoActivity extends BaseActivity{
      * 初始化数据
      */
     private void initData(){
-      Intent intent = getIntent();
-      if(null != intent && intent.hasExtra(FmConstant.USER_QIANMING)){
-          previousStr = intent.getStringExtra(FmConstant.USER_QIANMING);
-          userInfoEdit.setText(previousStr);
-          countTextView.setText(previousStr.length()+"/24");
-      }
+        UserBean userBean = ZhuBoApplication.getInstance().getUserBean();
+        if(null != userBean){
+            previousStr = userBean.getSignature();
+            userInfoEdit.setText(previousStr);
+            countTextView.setText(previousStr.length()+"/24");
+        }
     }
 
     /**
@@ -107,8 +117,38 @@ public class SetUserInfoActivity extends BaseActivity{
             }else if(text.equals(previousStr)){
                 ToastUtil.toast(this,"您没有修改签名内容");
             }else{
-
+                changeSignaute(text);
             }
         }
     }
+
+    /**
+     * 修改用户签名
+     * @param signature
+     */
+    private void changeSignaute(final String signature){
+        UserReqeustFactory userReqeustFactory =new UserReqeustFactory(this);
+        userReqeustFactory.changeSignature(signature,new BusinessResponseHandler(){
+            @Override
+            public void success(String response) {
+                super.success(response);
+                try{
+                    ToastUtil.toast(SetUserInfoActivity.this,"签名更改成功");
+                    ZhuBoApplication application =
+                            (ZhuBoApplication) SetUserInfoActivity.this.getApplication();
+                    application.getUserBean().setSignature(signature);
+                    setResult(Activity.RESULT_OK);
+                    SetUserInfoActivity.this.finish();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void fail(MessageException exception) {
+                super.fail(exception);
+            }
+        });
+    }
+
 }

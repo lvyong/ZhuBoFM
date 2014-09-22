@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/activity_login_user_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="账户"
+    />
+    <EditText
+        android:id="@+id/activity_login_password_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="账户"
+        android:layout_marginTop="10dip"
+        />
+    <LinearLayout
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+     >
+        <CheckBox
+            android:id="@+id/activity_login_remmenber_passord"
+            android:layout_width="35dip"
+            android:layout_height="35dip"
+            android:checked="true"
+            />
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="记住密码"
+           />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/activity_login_login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="登录"
+        android:layout_marginTop="10dip"
+    />
+</LinearLayout>

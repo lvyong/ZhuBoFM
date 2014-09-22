@@ -118,6 +118,7 @@ public class HttpManger {
             try {
                 String responseString = HttpClientUtil.getInstance().send(requestType
                         ,bussinessParams);
+                Log.e(TAG,"---------返回的报文----"+responseString);
                 try {
                     JSONObject jsonObject = new JSONObject(responseString);
                     if(jsonObject != null){

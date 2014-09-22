@@ -158,8 +158,8 @@ public class ProductDetailActivity extends BaseActivity {
 
     private long getDays(){
         long day = 0;
-        long sartMiliseconds = DateUtil.getMiliseconds(startDate, "YYYY-MM-DD");
-        long endMiliseconds  = DateUtil.getMiliseconds(endDate,"YYYY-MM-DD");
+        long sartMiliseconds = DateUtil.getMiliseconds(startDate, "yyyy-MM-dd");
+        long endMiliseconds  = DateUtil.getMiliseconds(endDate,"yyyy-MM-dd");
         long cha = endMiliseconds - sartMiliseconds;
         if(cha ==0){
             day = 1;

@@ -26,6 +26,7 @@
         android:layout_below="@id/fragement_program_management_top_linear"
         >
      <LinearLayout
+        android:id="@+id/fragement_program_management_detail_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/main_bg"

@@ -4,6 +4,11 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import org.apache.commons.httpclient.Cookie;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.DeleteMethod;
+import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
+import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
@@ -12,6 +17,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
@@ -34,12 +40,20 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeoutException;
 import java.util.zip.GZIPInputStream;
 
@@ -226,19 +240,19 @@ public class BaseRequest {
             if (contentEncoding != null
                     && contentEncoding.getValue().equalsIgnoreCase("gzip")) {
                 GZIPInputStream gzip = new GZIPInputStream(new BufferedInputStream(response.getEntity().getContent()));
-                StringBuilder builder =new StringBuilder();
-                try{
-                    if(gzip!=null){
-                        byte[] b=new byte[256];
+                StringBuilder builder = new StringBuilder();
+                try {
+                    if (gzip != null) {
+                        byte[] b = new byte[256];
                         int len = 0;
-                        while((len = gzip.read(b))!=-1){
-                            builder.append(new String(b,0,len));
+                        while ((len = gzip.read(b)) != -1) {
+                            builder.append(new String(b, 0, len));
                         }
                     }
-                }catch(Exception exception){
+                } catch (Exception exception) {
 
-                }finally{
-                    if(gzip!=null){
+                } finally {
+                    if (gzip != null) {
                         gzip.close();
                         gzip = null;
                     }
@@ -246,16 +260,17 @@ public class BaseRequest {
                 result = builder.toString();
                 builder = null;
                 contentEncoding = null;
-            }else{
+            } else {
                 result = EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
             }
         } else {
             throw new HttpException("Error Response:" + response.getStatusLine().toString());
         }
-        if(!TextUtils.isEmpty(result)){
+        if (!TextUtils.isEmpty(result)) {
             result = result.substring(result.indexOf("{"));
         }
         return result;
     }
+
 
 }

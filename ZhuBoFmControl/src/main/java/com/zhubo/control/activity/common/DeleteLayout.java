@@ -116,21 +116,33 @@ public class DeleteLayout extends LinearLayout implements View.OnClickListener{
     private void changeButtonState(ButtonType buttonType){
        switch (buttonType){
            case DELETE_BUTTON:
-                deleteButton.setEnabled(true);
-                clearButton.setEnabled(false);
-                cancleButton.setEnabled(false);
+                setButtonState(deleteButton,true);
+                setButtonState(clearButton,false);
+                setButtonState(cancleButton,false);
                 break;
            case CANCEL_BUTTON:
-                deleteButton.setEnabled(false);
-                clearButton.setEnabled(false);
-                cancleButton.setEnabled(true);
+               setButtonState(deleteButton,false);
+               setButtonState(clearButton,false);
+               setButtonState(cancleButton,true);
                 break;
            case CLEAR_BUTTON:
-                deleteButton.setEnabled(false);
-                clearButton.setEnabled(true);
-                cancleButton.setEnabled(false);
-                break;
+               setButtonState(deleteButton,false);
+               setButtonState(clearButton,true);
+               setButtonState(cancleButton,false);
+               break;
        }
+    }
+
+
+    private void setButtonState(Button button,boolean enable){
+        if(enable){
+            button.setBackgroundResource(R.drawable.button_enable_drawable);
+            button.setTextColor(getResources().getColor(R.color.white));
+        }else{
+            button.setBackgroundResource(R.drawable.button_uneable_drawable);
+            button.setTextColor(getResources().getColor(
+                    R.color.delete_layout_button_normal_color));
+        }
     }
 
 }

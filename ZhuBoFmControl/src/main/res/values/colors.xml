@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="bottom_tab_bar_bg">#262c3b</color>
+    <color name="delete_layout_button_normal_color">#565656</color>
 </resources>

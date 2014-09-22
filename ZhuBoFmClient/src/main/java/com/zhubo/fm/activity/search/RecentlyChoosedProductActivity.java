@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.andy.commonlibrary.net.exception.MessageException;
 import com.andy.commonlibrary.util.ToastUtil;
 import com.andy.corelibray.net.BusinessResponseHandler;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.zhubo.control.activity.BaseActivity;
 import com.zhubo.control.bussiness.bean.ProductBean;
 import com.zhubo.control.bussiness.db.RecentlyChooseProductDB;
@@ -26,6 +28,8 @@ import com.zhubo.fm.bll.request.SearchRequestFactory;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -42,6 +46,7 @@ public class RecentlyChoosedProductActivity extends BaseActivity {
     private RecentlyChoosedProductActivity self;
     private SearchRequestFactory searchRequestFactory;
     private RecentlyChooseProductDB recentlyChooseProductDB;
+    private  ArrayList<ProductBean> choosedProductList;
 
     private int addCount = 0;
     private int programId ;
@@ -67,7 +72,6 @@ public class RecentlyChoosedProductActivity extends BaseActivity {
         initData();
         setListener();
         setAddCount();
-        reloadLocalData();
     }
 
     private void initView(){
@@ -103,6 +107,7 @@ public class RecentlyChoosedProductActivity extends BaseActivity {
         recentlyChooseProductDB = RecentlyChooseProductDB.getInstance();
         if(getIntent() != null && getIntent().hasExtra(FmConstant.PROGRAM_ID)){
             programId = getIntent().getIntExtra(FmConstant.PROGRAM_ID,0);
+            loadAlreadyChoosedProduct(programId);
         }
     }
 
@@ -120,6 +125,7 @@ public class RecentlyChoosedProductActivity extends BaseActivity {
                         @Override
                         public void run() {
                             adapter = new RecentlyChooseProductAdapter(self);
+                            filterProductChoose((ArrayList<ProductBean>)list);
                             adapter.addData(list,true);
                             adapter.setHandler(handler);
                             listView.setAdapter(adapter);
@@ -151,8 +157,9 @@ public class RecentlyChoosedProductActivity extends BaseActivity {
                                     ToastUtil.toast(self,"选中产品成功");
                                     saveChoosedProduct(adapter.getItem(positionInList));
                                 }
-                                handleProgram(!cancel);
-                                adapter.setAddState(positionInList,!cancel);
+                               // handleProgram(!cancel);
+                                adapter.setAddState(positionInList,cancel);
+                                loadAlreadyChoosedProduct(programId);
                             }
                         }catch (Exception e){
 
@@ -218,6 +225,74 @@ public class RecentlyChoosedProductActivity extends BaseActivity {
                 recentlyChooseProductDB.save(productBean);
             }
         }.start();
+    }
+
+
+    /**
+     *查询此节目下的所有产品
+     * @param programId
+     */
+    private void loadAlreadyChoosedProduct(int programId){
+        searchRequestFactory = new SearchRequestFactory(this);
+        searchRequestFactory.getAllProductsOfProgram(programId+""
+                , new BusinessResponseHandler(this,true) {
+            @Override
+            public void success(String response) {
+                Log.e(TAG,"----getAllProductsOfProgram:"+response);
+                try{
+                    Gson gson = new Gson();
+                    JSONObject jsonObject = new JSONObject(response);
+                    if(jsonObject != null){
+                        ArrayList<ProductBean> list =
+                                gson.fromJson(jsonObject.optString("products"),
+                                        new TypeToken<List<ProductBean>>() {
+                                        }.getType());
+                        if(null == choosedProductList){
+                            reloadLocalData();
+                        }
+                        choosedProductList = list;
+                        if(choosedProductList != null){
+                            addCount = choosedProductList.size();
+                        }
+                        setAddCount();
+                    }
+                }catch(Exception e){
+
+                }
+            }
+
+            @Override
+            public void fail(MessageException exception) {
+                super.fail(exception);
+            }
+
+            @Override
+            public void cancel() {
+                super.cancel();
+
+            }
+        });
+    }
+
+    /**
+     * 判断某个产品是否被收藏
+     * @param alreadyList
+     * @return
+     */
+    private void filterProductChoose( ArrayList<ProductBean> alreadyList){
+        if(null != choosedProductList && alreadyList != null){
+            Iterator iterator = choosedProductList.listIterator();
+            while(iterator.hasNext()){
+                ProductBean proBean = (ProductBean) iterator.next();
+                Iterator<ProductBean> iterator1 = alreadyList.listIterator();
+                while (iterator1.hasNext()){
+                    ProductBean productBean = iterator1.next();
+                    if(productBean.getId().equals(proBean.getId())){
+                        productBean.setAdd(false);
+                    }
+                }
+            }
+        }
     }
 
 }

@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import com.andy.commonlibrary.util.AppUtil;
 import com.imageloader.core.ImageLoader;
 import com.imageloader.core.assist.FailReason;
 import com.imageloader.core.assist.ImageLoadingListener;
@@ -25,6 +26,9 @@ public class ItotemImageView extends ImageView {
     private boolean isLoadBgInRecyle=false;
     
     private int default_drawalbe;
+
+    private boolean isRoundedCorner = false;
+
 	public ItotemImageView(Context context) {
 		super(context);
 		init();
@@ -59,6 +63,10 @@ public class ItotemImageView extends ImageView {
 	public void setIsisLoadBgInRecyle(boolean isLoadBgInRecyle){
 		this.isLoadBgInRecyle = isLoadBgInRecyle;
 	}
+
+    public void setRoundedCorner(boolean isRoundedCorner){
+        this.isRoundedCorner = isRoundedCorner;
+    }
 	
 	@Override
 	public void setBackgroundDrawable(Drawable d) {
@@ -125,7 +133,9 @@ public class ItotemImageView extends ImageView {
 
 						@Override
 						public void onLoadingComplete(Bitmap loadedImage) {
-							
+							if(isRoundedCorner){
+                                setImageBitmap(AppUtil.getRoundedCornerBitmap(loadedImage, 3.0f));
+                            }
 						}
 						@Override
 						public void onLoadingCancelled() {

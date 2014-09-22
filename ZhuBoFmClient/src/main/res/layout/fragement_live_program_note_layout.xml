@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dip"
+    android:gravity="center_vertical"
+    android:background="@drawable/navigation_bar_bg"
+    >
+    <ImageView
+        android:id="@+id/fragement_live_program_note_back"
+        android:layout_width="30dip"
+        android:layout_height="30dip"
+        android:src="@drawable/back"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:visibility="visible"
+        />
+    <TextView
+        android:id="@+id/fragement_live_program_right_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:drawableLeft="@drawable/edit"
+        android:textSize="@dimen/font_size_medium"
+        android:drawablePadding="5dip"
+        android:textColor="@color/blue_2f89f0"
+        android:text="@string/create_note"
+        />
+    <TextView
+        android:id="@+id/fragement_live_program_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#101010"
+        android:layout_toRightOf="@id/fragement_live_program_note_back"
+        android:layout_toLeftOf="@id/fragement_live_program_right_text"
+        android:gravity="center"
+        android:textSize="@dimen/font_size_large"
+        android:layout_centerVertical="true"
+        />
+</RelativeLayout>

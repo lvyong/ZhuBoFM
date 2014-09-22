@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <include
+        android:id="@+id/fragement_live_note_title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/fragement_live_program_note_layout"
+        android:layout_alignParentTop="true"
+     />
     <RelativeLayout
         android:id="@+id/fragement_live_note_empty_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="-13dp"
         android:visibility="gone"
+        android:layout_below="@id/fragement_live_note_title_layout"
      >
        <ImageView
            android:id="@+id/fragement_live_note_right_img"
@@ -17,7 +24,7 @@
            android:scaleType="centerInside"
            android:src="@drawable/live_note_indicator"
            android:layout_alignParentRight="true"
-           android:layout_marginRight="26dip"
+           android:layout_marginRight="28dip"
         />
         <ImageView
             android:id="@+id/fragement_live_note_comment_img"
@@ -40,5 +47,8 @@
          android:textColor="#333333"
          android:lineSpacingExtra="1.5dip"
          android:layout_marginTop="12dip"
+         android:layout_below="@id/fragement_live_note_title_layout"
+         android:visibility="visible"
+         android:text=""
       />
-</FrameLayout>
+</RelativeLayout>

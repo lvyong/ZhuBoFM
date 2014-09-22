@@ -120,8 +120,8 @@ public class AddProductAdapter extends BaseAdapter{
             @Override
             public void onClick(View view) {
                 if(null != handler){
-                    Message msg = Message.obtain(handler, FmConstant.ADD_PRODUCT,productBean.isAdd()? -1:1,position);
-                    handler.sendMessage(msg);
+                        Message msg = Message.obtain(handler, FmConstant.ADD_PRODUCT,productBean.isAdd()? 1:-1,position);
+                        handler.sendMessage(msg);
                 }
             }
         });

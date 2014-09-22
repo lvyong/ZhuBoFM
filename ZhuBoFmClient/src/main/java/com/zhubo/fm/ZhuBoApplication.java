@@ -8,6 +8,7 @@ import com.andy.ui.libray.dialog.AlertDialog;
 import com.imageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.imageloader.core.ImageLoader;
 import com.imageloader.core.ImageLoaderConfiguration;
+import com.zhubo.control.bussiness.bean.UserBean;
 
 /**
  *
@@ -17,8 +18,18 @@ public class ZhuBoApplication extends CoreApplication {
 
     private static ZhuBoApplication zhuBoApplication;
 
+    private UserBean userBean;
+
     public static ZhuBoApplication getInstance(){
         return zhuBoApplication;
+    }
+
+    public void setUserBean(UserBean userBean){
+        this.userBean = userBean;
+    }
+
+    public UserBean getUserBean(){
+        return this.userBean;
     }
 
 

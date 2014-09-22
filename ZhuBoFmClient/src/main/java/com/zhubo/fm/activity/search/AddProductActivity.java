@@ -24,6 +24,7 @@ import com.andy.ui.libray.common.Dimension;
 import com.andy.ui.libray.pullrefreshview.PullToRefreshBase;
 import com.andy.ui.libray.pullrefreshview.PullToRefreshListView;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.zhubo.control.activity.BaseActivity;
 import com.zhubo.control.bussiness.bean.ProductBean;
 import com.zhubo.control.bussiness.bean.SearchResultBean;
@@ -35,6 +36,7 @@ import com.zhubo.fm.bll.request.SearchRequestFactory;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -62,10 +64,15 @@ public class AddProductActivity extends BaseActivity {
 
     private OrderEum currentOrder = OrderEum.ASCE;
 
+    //搜索
+    private final int SEARCH_PRODUCT = 10000;
+
     private AddProductActivity self;
     private int currentPage = 1;
     private int programId ;
     private int addCount = 0;
+
+    private  ArrayList<ProductBean> choosedProductList;
 
     /**
      * 排序
@@ -95,6 +102,9 @@ public class AddProductActivity extends BaseActivity {
                 case FmConstant.ADD_PRODUCT:
                      chooseProduct(adapter.getItem(msg.arg2).getId(),msg.arg1 == 1?false:true,msg.arg2);
                      break;
+                case SEARCH_PRODUCT:
+                    searchProduct(currentPage);
+                    break;
             }
         }
     };
@@ -108,7 +118,7 @@ public class AddProductActivity extends BaseActivity {
         setListener();
         initData();
         setAddCount();
-        searchProduct(1);
+        loadAlreadyChoosedProduct(programId);
     }
 
     /**
@@ -132,13 +142,15 @@ public class AddProductActivity extends BaseActivity {
        listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2() {
            @Override
            public void onPullDownToRefresh() {
+               handler.removeMessages(SEARCH_PRODUCT);
                currentPage = 1;
-               searchProduct(currentPage);
+               handler.sendEmptyMessage(SEARCH_PRODUCT);
            }
 
            @Override
            public void onPullUpToRefresh() {
-               searchProduct(currentPage);
+               handler.removeMessages(SEARCH_PRODUCT);
+               handler.sendEmptyMessage(SEARCH_PRODUCT);
            }
        });
     }
@@ -261,7 +273,9 @@ public class AddProductActivity extends BaseActivity {
                          adapter.setHandler(handler);
                          listview.getAdapterView().setAdapter(adapter);
                      }
-                     adapter.addData(searchResultBean.getProducts(), page == 1 ? true : false);
+                     ArrayList<ProductBean> list = searchResultBean.getProducts();
+                     adapter.addData(list, page == 1 ? true : false);
+                     filterProductChoose(list,page == 1?true:false);
                      adapter.notifyDataSetChanged();
                      if (searchResultBean.isHasNext()) {
                          currentPage = currentPage + 1;
@@ -325,8 +339,9 @@ public class AddProductActivity extends BaseActivity {
                                      ToastUtil.toast(self,"选中产品成功");
                                      saveChoosedProduct(adapter.getItem(positionInList));
                                  }
-                                 handleProgram(!cancel);
-                                 adapter.setAddState(positionInList,!cancel);
+                                 //handleProgram(!cancel);
+                                 adapter.setAddState(positionInList,cancel);
+                                 loadAlreadyChoosedProduct(programId);
                             }
                         }catch (Exception e){
 
@@ -357,4 +372,76 @@ public class AddProductActivity extends BaseActivity {
             }
         }.start();
     }
+
+
+    /**
+     *查询此节目下的所有产品
+     * @param programId
+     */
+    private void loadAlreadyChoosedProduct(int programId){
+        searchRequestFactory = new SearchRequestFactory(this);
+        searchRequestFactory.getAllProductsOfProgram(programId+""
+                , new BusinessResponseHandler(this,true) {
+            @Override
+            public void success(String response) {
+                Log.e(TAG,"----getAllProductsOfProgram:"+response);
+                try{
+                    Gson gson = new Gson();
+                    JSONObject jsonObject = new JSONObject(response);
+                    if(jsonObject != null){
+                        ArrayList<ProductBean> list =
+                                gson.fromJson(jsonObject.optString("products"),
+                                        new TypeToken<List<ProductBean>>() {
+                                        }.getType());
+                        if(null == choosedProductList){
+                            handler.sendEmptyMessage(SEARCH_PRODUCT);
+                        }
+                        choosedProductList = list;
+                        if(choosedProductList != null){
+                            addCount = choosedProductList.size();
+                            setAddCount();
+                        }
+                    }
+                }catch(Exception e){
+
+                }
+            }
+
+            @Override
+            public void fail(MessageException exception) {
+                super.fail(exception);
+            }
+
+            @Override
+            public void cancel() {
+                super.cancel();
+
+            }
+        });
+    }
+
+    /**
+     * 判断某个产品是否被收藏
+     * @param alreadyList
+     * @param  isAll 是否过滤所有
+     * @return
+     */
+    private void filterProductChoose( ArrayList<ProductBean> alreadyList,boolean isAll){
+      if(null != choosedProductList && alreadyList != null){
+         Iterator iterator = choosedProductList.listIterator();
+         while(iterator.hasNext()){
+             ProductBean proBean = (ProductBean) iterator.next();
+             Iterator<ProductBean> iterator1 = alreadyList.listIterator();
+             while (iterator1.hasNext()){
+                 ProductBean productBean = iterator1.next();
+                 if(productBean.getId().equals(proBean.getId())){
+                     productBean.setAdd(false);
+                 }
+             }
+         }
+      }
+    }
+
+
+
 }

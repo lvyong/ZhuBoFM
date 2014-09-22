@@ -10,7 +10,8 @@
         android:id="@+id/message_popup_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:listSelector="@color/gray_888888"
+        android:listSelector="#4D4D4D"
+        android:divider="@null"
         android:fadingEdge="none"
         android:scrollbars="none"
      />

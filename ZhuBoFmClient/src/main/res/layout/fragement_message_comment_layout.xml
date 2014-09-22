@@ -11,6 +11,10 @@
        android:layout_height="wrap_content"
        android:visibility="gone"
      />
+    <FrameLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+        >
     <ListView
       android:id="@+id/fragement_message_comment_listview"
       android:layout_width="match_parent"
@@ -19,5 +23,21 @@
       android:fadingEdge="none"
       android:listSelector="#eaeaea"
       android:background="@color/white"
+      android:visibility="visible"
     />
+
+    <view
+       xmlns:ptr="http://schemas.android.com/apk/res/com.zhubo.fm"
+       android:id="@+id/fragement_message_comment_column_listview"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:scrollbars="none"
+       android:fadingEdge="none"
+       android:listSelector="@color/transparent_background"
+       android:background="@color/white"
+       class="com.andy.ui.libray.pullrefreshview.PullToRefreshListView"
+       android:visibility="visible"
+       ptr:ptrMode="both"
+     />
+    </FrameLayout>
 </LinearLayout>

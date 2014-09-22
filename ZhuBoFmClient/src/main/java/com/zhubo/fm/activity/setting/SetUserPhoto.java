@@ -24,6 +24,17 @@ public class SetUserPhoto {
     private Button cancelButton;
     private View rootView;
 
+    public interface UserPhotoCallBack{
+        public void takePhoto();
+        public void openAlbum();
+    }
+
+    /**
+     * 设置用户头像调用回调
+     */
+    private UserPhotoCallBack userPhotoCallBack;
+
+
     public  SetUserPhoto(Context context){
          this.context = context;
          ceateDialog();
@@ -52,6 +63,9 @@ public class SetUserPhoto {
             public void onClick(View view) {
                takePhotoLayout.setBackgroundColor(context.getResources().getColor(R.color.linear_choose_bg));
                openAlbumLayout.setBackgroundColor(context.getResources().getColor(R.color.transparent_background));
+               if(null != userPhotoCallBack){
+                   userPhotoCallBack.takePhoto();;
+               }
             }
         });
         openAlbumLayout.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +73,9 @@ public class SetUserPhoto {
             public void onClick(View view) {
                 openAlbumLayout.setBackgroundColor(context.getResources().getColor(R.color.linear_choose_bg));
                 takePhotoLayout.setBackgroundColor(context.getResources().getColor(R.color.transparent_background));
+                if(null != userPhotoCallBack){
+                    userPhotoCallBack.openAlbum();
+                }
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener(){
@@ -83,6 +100,11 @@ public class SetUserPhoto {
            dialog.getWindow().setAttributes(lp);
        }
     }
+
+    public void setSetUserPhotoCallBack(UserPhotoCallBack userPhotoCallBack){
+     this.userPhotoCallBack = userPhotoCallBack;
+    }
+
 
     /**
      *

@@ -1,5 +1,9 @@
 package com.zhubo.fm.activity.main;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,6 +19,7 @@ import com.zhubo.fm.ZhuBoApplication;
 import com.zhubo.fm.activity.main.fragement.MessageCommentFragement;
 import com.zhubo.fm.activity.main.fragement.ProductSaleFragement;
 import com.zhubo.fm.activity.main.fragement.ProgramManageFragement;
+import com.zhubo.fm.bll.common.FmConstant;
 
 /**
  * 应用程序入口页面
@@ -25,6 +30,15 @@ public class MainActivity extends BaseActivity implements BottomTabBar.BottomTab
     private FragmentController fragmentController;
 
 
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if(action.equals(FmConstant.UNLOGIN_ACTION)){
+                 finish();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +78,8 @@ public class MainActivity extends BaseActivity implements BottomTabBar.BottomTab
      */
      private void initData(){
          this.bottomTabBar.clickTab(BottomTabBar.BottomTabBarButtonType.LEFT_BUTTON);
+         IntentFilter intentFilter =new IntentFilter(FmConstant.UNLOGIN_ACTION);
+         registerReceiver(receiver,intentFilter);
      }
 
     /**
@@ -80,6 +96,7 @@ public class MainActivity extends BaseActivity implements BottomTabBar.BottomTab
             case LEFT_BUTTON:
                 fName = ProgramManageFragement.class.getName();
                 newFragment = new ProgramManageFragement();
+                ProgramManageFragement.setIsStopStateHide(false);
                 break;
             case MIDDLE_BUTTON:
                 fName = ProductSaleFragement.class.getName();
@@ -116,6 +133,11 @@ public class MainActivity extends BaseActivity implements BottomTabBar.BottomTab
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
 
     /**
      *

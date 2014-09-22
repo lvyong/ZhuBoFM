@@ -8,8 +8,8 @@
     >
     <CheckBox
         android:id="@+id/music_comment_checkbox"
-        android:layout_width="32dip"
-        android:layout_height="32dip"
+        android:layout_width="35dip"
+        android:layout_height="35dip"
         android:button="@drawable/checkbox_drawable"
         android:layout_alignParentLeft="true"
         android:checked="false"
@@ -24,6 +24,7 @@
         android:scaleType="centerCrop"
         class="com.zhubo.control.activity.common.ItotemImageView"
         android:src="@drawable/default_img"
+        android:layout_toRightOf="@id/music_comment_checkbox"
     />
     <LinearLayout
           android:layout_width="match_parent"

@@ -44,6 +44,26 @@ public class FmConstant {
     //签名字段常量
     public static final  String USER_QIANMING = "USER_QIANMING";
 
+    public static final  int PROGRAM_MANAGEMENT_TO_EMPTY_NOTE
+            = 5000;
+
+    public static final int  EMPTY_NOTE_TO_EDIT_NOTE = 6000;
+
+    public static final String COLUMN_FILE_NAME = "column";
+
+    public static final String MESSAGE_FROM_SOMEBODY = "MESSAGE_FROM_SOMEBODY";
+
+
+    /**
+     * 登陆
+     */
+    public static final String LOGIN_ACCOUNT = "LOGIN_ACCOUNT";
+    public static final String PASSWORD  = "PASSWORD";
+    public static final String IS_LOGIN = "IS_LOGIN";
+    public static final String IS_REMMBER_PASS = "IS_REMMBER_PASS";
+    public static final String UNLOGIN_ACTION = "UNLOGIN_ACTION";
+    public static final String USER_SINGTURE = "USER_SINGTURE";
+
 
 
 }
