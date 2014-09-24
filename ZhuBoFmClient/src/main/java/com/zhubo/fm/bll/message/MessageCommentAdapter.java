@@ -138,6 +138,7 @@ public class MessageCommentAdapter extends BaseAdapter {
             viewHolder.dateTextView            = (TextView)contentView.findViewById(R.id.message_comment_list_item_date);
             viewHolder.listenerTextView        = (TextView)contentView.findViewById(R.id.message_comment_list_item_listener);
             viewHolder.messageContextTextView  = (TextView)contentView.findViewById(R.id.message_comment_list_item_message_context);
+            viewHolder.right_arrow             = (ImageView)contentView.findViewById(R.id.message_comment_list_item_arrow_img);
             contentView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder)contentView.getTag();
@@ -154,6 +155,7 @@ public class MessageCommentAdapter extends BaseAdapter {
             }
         });
         viewHolder.checkBox.setVisibility(isCheckBoxVisible?View.VISIBLE:View.GONE);
+        viewHolder.right_arrow.setVisibility(isCheckBoxVisible?View.GONE:View.VISIBLE);
         viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -199,6 +201,7 @@ public class MessageCommentAdapter extends BaseAdapter {
     class ViewHolder{
          CheckBox  checkBox;
          ItotemImageView imageView;
+         ImageView right_arrow;
          TextView  listenerTextView;
          TextView  dateTextView;
          TextView  messageContextTextView;

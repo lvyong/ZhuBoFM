@@ -12,8 +12,8 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:background="@drawable/ui_white_bg_gray_border"
-         android:paddingTop="15dip"
-         android:paddingBottom="15dip"
+         android:paddingTop="13dip"
+         android:paddingBottom="13dip"
          android:paddingLeft="12dip"
          android:paddingRight="12dip"
          >
@@ -49,14 +49,14 @@
              android:singleLine="true"
              android:layout_below="@id/fragement_program_management_item_left_imageview"
              android:layout_alignLeft="@id/fragement_program_management_item_left_imageview"
-             android:layout_marginTop="12dip"
+             android:layout_marginTop="9dip"
              android:gravity="center_vertical"
              android:text=""
              />
       </RelativeLayout>
       <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="46dip"
+          android:layout_height="43dip"
           android:orientation="horizontal"
           android:background="#f8f8f8"
        >

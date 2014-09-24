@@ -92,7 +92,7 @@ public class MessageDetailAdapter extends BaseAdapter{
             if(null != createArray && createArray.length == 2){
                 String date = createArray[0].substring(5);
                 String time  = createArray[1].substring(0,5);
-                result = date+" "+time;
+                result = date+"   "+time;
             }
         }
         return result;
@@ -128,7 +128,6 @@ public class MessageDetailAdapter extends BaseAdapter{
                     otherViewHolder = new OtherViewHolder();
                     otherViewHolder.otherImageView = (ItotemImageView)
                             contentView.findViewById(R.id.message_come_other_imageview);
-                    otherViewHolder.otherImageView.setRoundedCorner(true);
                     otherViewHolder.otherNameTextView = (TextView)contentView.findViewById(R.id.message_come_other_peopleName);
                     otherViewHolder.otherTimeTextView = (TextView)contentView.findViewById(R.id.message_come_other_time);
                     otherViewHolder.otherMessageTextView = (TextView)contentView.findViewById(R.id.message_come_other_textview);
@@ -139,7 +138,6 @@ public class MessageDetailAdapter extends BaseAdapter{
                     meViewHolder = new MeViewHolder();
                     meViewHolder.meImageView = (ItotemImageView)
                             contentView.findViewById(R.id.message_come_me_imageview);
-                    meViewHolder.meImageView.setRoundedCorner(true);
                     meViewHolder.meNameTextView = (TextView)contentView.findViewById(R.id.message_come_me_peopleName);
                     meViewHolder.meTimeTextView = (TextView)contentView.findViewById(R.id.message_come_me_time);
                     meViewHolder.meMessageTextView = (TextView)contentView.findViewById(R.id.message_come_me_textview);
@@ -160,6 +158,7 @@ public class MessageDetailAdapter extends BaseAdapter{
             case other_type:
                 if(null != messageBean){
                     otherViewHolder.otherImageView.setDefault(R.drawable.default_img);
+                    otherViewHolder.otherImageView.setRoundedCorner(true);
                     if(null != fromUser){
                         if (!TextUtils.isEmpty(fromUser.getImageUrl())
                                 && URLUtil.isHttpUrl(fromUser.getImageUrl())) {
@@ -189,6 +188,7 @@ public class MessageDetailAdapter extends BaseAdapter{
                 break;
             case me_type:
                 meViewHolder.meImageView.setDefault(R.drawable.default_img);
+                meViewHolder.meImageView.setRoundedCorner(true);
                 if(null != myUserBean){
                     if (!TextUtils.isEmpty(myUserBean.getImageUrl())
                             && URLUtil.isHttpUrl(myUserBean.getImageUrl())) {

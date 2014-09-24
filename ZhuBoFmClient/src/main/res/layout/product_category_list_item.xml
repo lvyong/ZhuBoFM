@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="15dip"
-    android:paddingBottom="15dip"
+    android:paddingTop="14dip"
+    android:paddingBottom="14dip"
     android:paddingLeft="17dip"
     android:paddingRight="17dip"
     >
@@ -13,7 +13,7 @@
         android:layout_width="9dip"
         android:layout_height="13.5dip"
         android:scaleType="centerInside"
-        android:src="@drawable/right_arrow"
+        android:src="@drawable/gray_right_arrow"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         />

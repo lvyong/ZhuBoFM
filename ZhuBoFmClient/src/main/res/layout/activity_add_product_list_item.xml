@@ -13,7 +13,7 @@
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:scaleType="centerCrop"
-        android:src="@color/blue_475580"
+        android:src="@drawable/default_img"
         android:layout_alignParentLeft="true"
         class = "com.zhubo.control.activity.common.ItotemImageView"
      />
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#444444"
-        android:textSize="@dimen/font_size_normal"
+        android:textSize="15sp"
         android:layout_alignTop="@id/activity_add_product_list_item_image"
         android:layout_marginLeft="15dip"
         android:text=""
@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#444444"
-        android:textSize="@dimen/font_size_normal"
+        android:textSize="15sp"
         android:layout_below="@id/activity_add_product_list_item_programName"
         android:layout_alignLeft="@id/activity_add_product_list_item_programName"
         />

@@ -8,8 +8,8 @@
     >
     <ImageView
       android:id="@+id/labeltext_imageview"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      android:layout_width="20dip"
+      android:layout_height="20dip"
       android:scaleType="centerInside"
       android:layout_gravity="center_vertical"
     />
@@ -17,7 +17,7 @@
         android:id="@+id/labeltext_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dip"
+        android:layout_marginLeft="8dip"
         android:layout_gravity="center_vertical"
      />
 </LinearLayout>

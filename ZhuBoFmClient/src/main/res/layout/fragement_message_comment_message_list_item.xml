@@ -30,10 +30,11 @@
         android:id="@+id/message_comment_list_item_arrow_img"
         android:layout_width="9dip"
         android:layout_height="13.5dip"
-        android:src="@drawable/right_arrow"
+        android:src="@drawable/gray_right_arrow"
         android:scaleType="centerInside"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="12dip"
      />
     <RelativeLayout
         android:layout_width="match_parent"
@@ -42,7 +43,6 @@
         android:layout_toLeftOf="@id/message_comment_list_item_arrow_img"
         android:layout_alignTop="@id/message_comment_list_item_img"
         android:layout_marginLeft="12dip"
-        android:layout_marginRight="12dip"
     >
         <TextView
             android:id="@+id/message_comment_list_item_listener"
@@ -73,10 +73,13 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:textColor="#797979"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:text=""
             android:layout_below="@id/message_comment_list_item_listener"
             android:layout_alignLeft="@id/message_comment_list_item_listener"
-            android:layout_marginTop="12dip"
+            android:layout_marginTop="3dip"
             />
     </RelativeLayout>
 </RelativeLayout>

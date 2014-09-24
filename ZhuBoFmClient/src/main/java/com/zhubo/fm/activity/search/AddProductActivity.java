@@ -9,6 +9,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
@@ -210,9 +212,11 @@ public class AddProductActivity extends BaseActivity {
      */
     private void setAddCount(){
         ForegroundColorSpan redSpan = new ForegroundColorSpan(Color.RED);
+
         SpannableStringBuilder builder = new SpannableStringBuilder("您已选择了"+addCount+"件产品");
         int length = new String(addCount+"").length();
         builder.setSpan(redSpan, 5, 5+length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.setSpan(new AbsoluteSizeSpan(18,true), 5, 5+length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         add_result_textview.setText(builder);
 
         if(addCount >0){
