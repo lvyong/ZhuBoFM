@@ -52,6 +52,10 @@
     <string name="exit_app_remider">再按一次就会退出应用</string>
     <string name="you_cannot_edit_note">您没有修改文稿</string>
 
+    <string name="please_input_your_password">请输入当前密码</string>
+    <string name="please_input_your_new_password">请输入新密码</string>
+    <string name="please_input_confirm_new_password">确认新密码</string>
+
 
 
 </resources>

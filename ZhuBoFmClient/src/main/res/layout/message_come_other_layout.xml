@@ -48,7 +48,7 @@
      </RelativeLayout>
      <TextView
          android:id="@+id/message_come_other_textview"
-         android:layout_height="wrap_content"
+         android:layout_height="47dip"
          android:layout_width="wrap_content"
          android:layout_below="@id/message_come_other_top_layout"
          android:layout_toRightOf="@id/message_come_other_imageview"

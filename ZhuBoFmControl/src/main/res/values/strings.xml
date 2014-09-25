@@ -20,6 +20,7 @@
     <string name="popular_product">热销产品</string>
     <string name="collect">收藏夹</string>
 
-
-
+    <string name="login">登录</string>
+    <string name="password">密码</string>
+    <string name="account">手机/账号</string>
 </resources>

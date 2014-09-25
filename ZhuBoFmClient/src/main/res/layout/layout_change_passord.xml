@@ -3,39 +3,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingLeft="14.5dip"
+    android:paddingRight="14.5dip"
+    >
     <EditText
         android:id="@+id/change_password_oldpassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:password="true"
-        android:hint="原密码"
+        style="@style/password_edit_style"
+        android:hint="@string/please_input_your_password"
     />
     <EditText
         android:id="@+id/change_password_newPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:layout_marginTop="10dip"
-        android:password="true"
-        android:hint="新密码"
+        style="@style/password_edit_style"
+        android:hint="@string/please_input_your_new_password"
         />
     <EditText
         android:id="@+id/change_password_confirmPasword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:layout_marginTop="10dip"
-        android:password="true"
-        android:hint="确认密码"
+        style="@style/password_edit_style"
+        android:hint="@string/please_input_confirm_new_password"
         />
-
     <Button
         android:id="@+id/change_password_save_Button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
+        android:layout_height="48dip"
+        android:layout_marginTop="23dip"
         android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="19sp"
+        android:background="@drawable/change_pass_bg"
      />
 </LinearLayout>

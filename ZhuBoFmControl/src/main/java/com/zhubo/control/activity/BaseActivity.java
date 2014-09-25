@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.andy.ui.libray.component.NavigationBar;
 import com.zhubo.control.R;
@@ -28,7 +29,7 @@ public class BaseActivity extends FragmentActivity implements NavigationBar.OnNa
     protected NavigationBar navigationBar;
 
     //view容器，所有子类的根布局都会添加到此容器中
-    private FrameLayout baseContainer;
+    private LinearLayout baseContainer;
 
     private static long lastClickTime;
     private static ArrayList<View> views = new ArrayList<View>();
@@ -50,7 +51,7 @@ public class BaseActivity extends FragmentActivity implements NavigationBar.OnNa
         navigationBar.setOnNavBarClickListener(this);
 
         //初始化根布局容器
-        baseContainer = (FrameLayout) findViewById(R.id.base_container);
+        baseContainer = (LinearLayout) findViewById(R.id.base_container);
         ViewGroup.inflate(this, layoutResID, baseContainer);
     }
 

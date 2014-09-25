@@ -42,6 +42,7 @@ import com.zhubo.control.activity.common.LabelTextView;
 import com.zhubo.control.activity.fragement.BaseFragment;
 import com.zhubo.control.bussiness.bean.MainProgram;
 import com.zhubo.control.bussiness.bean.ProgramBean;
+import com.zhubo.fm.ZhuBoApplication;
 import com.zhubo.fm.activity.common.EditNoteActivity;
 import com.zhubo.fm.activity.common.EmptyNoteActivity;
 import com.zhubo.fm.activity.live.LiveActivity;
@@ -275,7 +276,9 @@ public class ProgramManageFragement extends BaseFragment{
     private void initData(){
       //  loadData(1);
         //测试
-        loadPeopleImag("http://e.hiphotos.baidu.com/image/pic/item/91ef76c6a7efce1b39441ad2ad51f3deb48f65bf.jpg");
+        ZhuBoApplication zhuBoApplication = ZhuBoApplication.getInstance();
+        String iamgeUrl = zhuBoApplication.getUserBean().getImageUrl();
+        loadPeopleImag("http://api.mallfm.bjcathay.com"+iamgeUrl);
         peopleTextView.setText("张小溪");
     }
 
@@ -395,7 +398,7 @@ public class ProgramManageFragement extends BaseFragment{
             isLive = true;
             String startTime = programBeanData.getStartAt().substring(0,
                     programBeanData.getStartAt().lastIndexOf(":"));
-            topTextView.setText("已经结束");
+            topTextView.setText("暂无直播内容,"+startTime+" 已经结束");
             bottomTextView.setVisibility(View.GONE);
             buttonLayout.setVisibility(View.VISIBLE);
         }

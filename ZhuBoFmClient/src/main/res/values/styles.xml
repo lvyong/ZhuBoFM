@@ -5,5 +5,18 @@
         <item name="android:colorBackground">@color/bg_color</item>
     </style>
 
-
+    <!-- EditText 样式 -->
+    <style name="password_edit_style">
+       <item name="android:layout_height">50dp</item>
+       <item name="android:background">@drawable/shurukuang</item>
+       <item name="android:singleLine">true</item>
+       <item name="android:password">true</item>
+       <item name="android:ellipsize">end</item>
+       <item name="android:layout_marginTop">22dip</item>
+       <item name="android:textColor">#a9a9a9</item>
+       <item name="android:paddingLeft">17.5dip</item>
+       <item name="android:paddingRight">17.5dip</item>
+       <item name="android:gravity">center_vertical</item>
+       <item name="android:textSize">@dimen/font_size_medium</item>
+    </style>
 </resources>

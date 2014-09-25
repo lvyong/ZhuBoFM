@@ -53,7 +53,7 @@
         </activity>
         <activity android:name=".activity.common.ProductDetailActivity"/>
         <activity android:name=".activity.messagecomment.MessageDetailActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden">
+            android:windowSoftInputMode="adjustPan">
          </activity>
         <activity android:name=".activity.live.LiveActivity"/>
         <activity android:name=".activity.search.SearchProductActivity"/>
