@@ -1,8 +1,10 @@
 package com.zhubo.fm.activity.main.fragement;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -40,8 +42,10 @@ import com.imageloader.core.download.URLConnectionImageDownloader;
 import com.zhubo.control.activity.common.ItotemImageView;
 import com.zhubo.control.activity.common.LabelTextView;
 import com.zhubo.control.activity.fragement.BaseFragment;
+import com.zhubo.control.bussiness.bean.AnchorBean;
 import com.zhubo.control.bussiness.bean.MainProgram;
 import com.zhubo.control.bussiness.bean.ProgramBean;
+import com.zhubo.control.bussiness.bean.UserBean;
 import com.zhubo.fm.ZhuBoApplication;
 import com.zhubo.fm.activity.common.EditNoteActivity;
 import com.zhubo.fm.activity.common.EmptyNoteActivity;
@@ -93,6 +97,17 @@ public class ProgramManageFragement extends BaseFragment{
 
     private static boolean isStopStateHide = false;
 
+    private BroadcastReceiver receiver =new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action =intent.getAction();
+            if(action.equals(FmConstant.CHANGE_USER_PHOTO_ACTION)){
+                setPeopleInfo();
+            }
+        }
+    };
+
+
     public static void setIsStopStateHide(boolean hide){
         isStopStateHide = hide;
     }
@@ -123,6 +138,7 @@ public class ProgramManageFragement extends BaseFragment{
           initView();
           setLitener();
           initData();
+          setPeopleInfo();
        }else{
            ((ViewGroup)rootView.getParent()).removeView(rootView);
        }
@@ -270,17 +286,27 @@ public class ProgramManageFragement extends BaseFragment{
         }*/
     }
 
-    /**
-     * 初始化数据
-     */
     private void initData(){
-      //  loadData(1);
-        //测试
-        ZhuBoApplication zhuBoApplication = ZhuBoApplication.getInstance();
-        String iamgeUrl = zhuBoApplication.getUserBean().getImageUrl();
-        loadPeopleImag("http://api.mallfm.bjcathay.com"+iamgeUrl);
-        peopleTextView.setText("张小溪");
+        IntentFilter filter = new IntentFilter(FmConstant.CHANGE_USER_PHOTO_ACTION);
+        getActivity().registerReceiver(receiver,filter);
     }
+
+    /**
+     * 设置用户头像
+     */
+    private void setPeopleInfo(){
+        ZhuBoApplication zhuBoApplication = ZhuBoApplication.getInstance();
+        UserBean userBean = zhuBoApplication.getUserBean();
+        if(null != userBean){
+            String iamgeUrl = userBean.getImageUrl();
+            loadPeopleImag("http://api.mallfm.bjcathay.com"+iamgeUrl);
+            AnchorBean anchorBean = userBean.getAnchor();
+            if(null != anchorBean){
+                peopleTextView.setText(anchorBean.getName());
+            }
+        }
+    }
+
 
     @Override
     public void onResume() {
@@ -304,6 +330,12 @@ public class ProgramManageFragement extends BaseFragment{
         if(navigationBar.getVisibility() == View.GONE && isStopStateHide){
             navigationBar.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(receiver);
     }
 
     /**

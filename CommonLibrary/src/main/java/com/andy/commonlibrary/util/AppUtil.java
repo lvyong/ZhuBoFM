@@ -179,7 +179,7 @@ public class AppUtil {
         Bitmap output = Bitmap.createBitmap(x,
                 x, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
-        int color = 0xff424242;
+        int color = 0xffffffff;
         final Paint paint = new Paint();
     	/*paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(1);
@@ -203,7 +203,7 @@ public class AppUtil {
         paint1.setStrokeWidth(2);
         canvas.setDrawFilter(new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG));
         //paint.setAntiAlias(true);
-        color = 0x55454d54;
+        color = 0xffffffff;
         paint1.setColor(color);
         // 画出一个圆
         canvas.drawCircle(x/2, x/2, x/2, paint1);

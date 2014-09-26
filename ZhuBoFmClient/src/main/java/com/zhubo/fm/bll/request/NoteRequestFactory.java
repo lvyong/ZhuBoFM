@@ -39,7 +39,7 @@ public class NoteRequestFactory{
         bussinessParams.setRelative_url("/api/anchor_client/contents/" +programId);
         //增加基本参数
         List<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
+      //  list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
         list.add(new BasicNameValuePair("presentation", text));
 
         bussinessParams.setParamList(list);

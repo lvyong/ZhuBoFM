@@ -49,11 +49,12 @@
         <activity android:name=".activity.main.MainActivity"/>
         <activity android:name=".activity.setting.SettingActivity"/>
         <activity android:name=".activity.common.EditNoteActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden">
+            android:windowSoftInputMode="adjustResize">
         </activity>
         <activity android:name=".activity.common.ProductDetailActivity"/>
         <activity android:name=".activity.messagecomment.MessageDetailActivity"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustResize|stateHidden">
+
          </activity>
         <activity android:name=".activity.live.LiveActivity"/>
         <activity android:name=".activity.search.SearchProductActivity"/>
@@ -66,7 +67,7 @@
         <activity android:name=".activity.realtimeinteract.RealTimeInteractActivity"/>
         <activity android:name=".activity.search.RecentlyChoosedProductActivity"/>
         <activity android:name=".activity.setting.SetUserInfoActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden">
+            android:windowSoftInputMode="adjustResize">
         </activity>
         <activity android:name=".activity.common.EmptyNoteActivity"/>
         <activity android:name=".activity.setting.ChangePasswordActivity"/>

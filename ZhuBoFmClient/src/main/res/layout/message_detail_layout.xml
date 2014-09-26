@@ -56,5 +56,6 @@
         ptr:ptrMode="both"
         android:divider="@null"
         android:layout_above="@id/mssage_detail_top_layout"
+        android:paddingBottom="10dip"
         />
 </RelativeLayout>

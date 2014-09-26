@@ -86,7 +86,7 @@ public class UserReqeustFactory {
         bussinessParams.setRelative_url("/api/user/change_password");
 
         List<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
+      //  list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
 
         list.add(new BasicNameValuePair("oldPassword",oldPass));
         list.add(new BasicNameValuePair("password",newOld));
@@ -106,7 +106,7 @@ public class UserReqeustFactory {
         bussinessParams.setRelative_url("/api/user");
 
         List<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
+      //  list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
         list.add(new BasicNameValuePair("message",signature));
 
         bussinessParams.setParamList(list);

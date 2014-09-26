@@ -11,13 +11,20 @@
         android:paddingRight="12dip"
         android:gravity="center_vertical"
         >
+       <RelativeLayout
+           android:id="@+id/l_navigation_bar_back_layout"
+           android:layout_width="50dip"
+           android:layout_height="match_parent"
+           >
         <TextView
             android:id="@+id/nav_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:gravity="left|center_vertical"
-            android:textSize="@dimen/font_size_normal"/>
+            android:gravity="center"
+            android:textSize="@dimen/font_size_normal"
+            android:layout_alignParentLeft="true"/>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/nav_right_btn"

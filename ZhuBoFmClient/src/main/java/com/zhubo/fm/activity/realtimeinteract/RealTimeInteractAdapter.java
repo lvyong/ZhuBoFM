@@ -99,7 +99,7 @@ public class RealTimeInteractAdapter extends BaseAdapter {
 
         switch (type){
             case other_type:
-                 Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.meimei);
+                 Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.ic_launcher);
                  otherViewHolder.otherImageView.setImageBitmap(AppUtil.getRoundedCornerBitmap(bitmap,3.0f));
                  otherViewHolder.otherMessageTextView.setText("我来啦，我来啦，我来啦，我来啦，我来啦，我来啦，" +
                         "我来啦，我来啦，我来啦，我来啦，我来啦，");
@@ -107,7 +107,7 @@ public class RealTimeInteractAdapter extends BaseAdapter {
                  otherViewHolder.otherNameTextView.setText("张三");
                 break;
             case me_type:
-                Bitmap bitmap1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.meimei);
+                Bitmap bitmap1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.ic_launcher);
                 meViewHolder.meImageView.setImageBitmap(AppUtil.getRoundedCornerBitmap(bitmap1,3.0f));
                 meViewHolder.meMessageTextView.setText("我来啦，我来啦，我来啦，我来啦，我来啦，我来啦，" +
                         "我来啦，我来啦，我来啦，我来啦，我来啦，");

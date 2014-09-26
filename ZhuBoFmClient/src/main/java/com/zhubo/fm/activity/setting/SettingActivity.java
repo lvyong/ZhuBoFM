@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.util.FloatMath;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -74,6 +75,7 @@ public class SettingActivity extends BaseActivity implements SetUserPhoto.UserPh
                         userPhotoImageView.setUrl("http://api.mallfm.bjcathay.com"+iamgeUrl);
                         userPhotoImageView.reload(false);
                         ToastUtil.toast(SettingActivity.this,"头像设置成功");
+                        sendBroadcast(new Intent(FmConstant.CHANGE_USER_PHOTO_ACTION));
                     }else if(msg.arg1 == 0){
                         ToastUtil.toast(SettingActivity.this,"头像设置失败");
                     }
@@ -98,6 +100,7 @@ public class SettingActivity extends BaseActivity implements SetUserPhoto.UserPh
     private void initView(){
         navigationBar.setTitle(R.string.settings);
         userPhotoImageView = (ItotemImageView)findViewById(R.id.settings_photo_img);
+        userPhotoImageView.setIsCircle(true);
         qianmingTextView = (TextView)findViewById(R.id.settings_qianming);
         newButton  = (Button)findViewById(R.id.activity_settings_layout_new_button);
     }

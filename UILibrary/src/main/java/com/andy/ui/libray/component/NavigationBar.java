@@ -53,6 +53,8 @@ public class NavigationBar extends LinearLayout implements View.OnClickListener 
     private OnNavBarClickListener onNavBarClickListener;    //导航栏点击事件监听器
     private RelativeLayout mRootLayout; //根布局
 
+    private RelativeLayout back_layout;
+
     public NavigationBar(Context context) {
         super(context);
     }
@@ -96,7 +98,7 @@ public class NavigationBar extends LinearLayout implements View.OnClickListener 
 
         if (onNavBarClickListener == null) return;
 
-        if (view.equals(backButton)) {
+        if (view.equals(back_layout)) {
             onNavBarClickListener.onNavItemClick(NavigationBarItem.back);
         } else if (view.equals(titleText)) {
             onNavBarClickListener.onNavItemClick(NavigationBarItem.title);
@@ -406,6 +408,7 @@ public class NavigationBar extends LinearLayout implements View.OnClickListener 
         actionButton    = (TextView) findViewById(R.id.nav_right_btn);
         titleText       = (TextView) findViewById(R.id.nav_center_text);
         mProgress       = (ProgressBar) findViewById(R.id.nav_right_progress);
+        back_layout    = (RelativeLayout)findViewById(R.id.l_navigation_bar_back_layout);
 
         //背景
         mRootLayout = (RelativeLayout) backButton.getParent();
@@ -436,7 +439,7 @@ public class NavigationBar extends LinearLayout implements View.OnClickListener 
             titleText.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleTextSize);
 
         //设置事件监听器
-        backButton.setOnClickListener(this);
+        back_layout.setOnClickListener(this);
         titleText.setOnClickListener(this);
         actionButton.setOnClickListener(this);
     }

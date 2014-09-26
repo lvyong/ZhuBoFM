@@ -40,7 +40,7 @@ public class SearchRequestFactory {
         bussinessParams.setRelative_url("/api/anchor_client/search_products");
         //增加基本参数
         List<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
+       // list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
         list.add(new BasicNameValuePair("page", page+""));
         list.add(new BasicNameValuePair("type", type));
         list.add(new BasicNameValuePair("categoryId", categoryId));
@@ -60,7 +60,7 @@ public class SearchRequestFactory {
         bussinessParams.setRelative_url("/api/anchor_client/categories");
         //增加基本参数
         List<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
+       // list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
 
         bussinessParams.setParamList(list);
         httpAsyncTask = HttpManger.getInstance().getSend(context,bussinessParams,handleInterface);
@@ -80,7 +80,7 @@ public class SearchRequestFactory {
                 "/choose_product");
         //增加基本参数
         List<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
+     //   list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
         list.add(new BasicNameValuePair("productIds",productIds));
         list.add(new BasicNameValuePair("cancel", cancel+""));
         bussinessParams.setParamList(list);
@@ -96,7 +96,7 @@ public class SearchRequestFactory {
                 "/products");
         //增加基本参数
         List<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
+     //   list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
         bussinessParams.setParamList(list);
         httpAsyncTask = HttpManger.getInstance().getSend(context,bussinessParams,handleInterface);
     }

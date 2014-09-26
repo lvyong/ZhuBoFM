@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.andy.commonlibrary.util.AppUtil;
+import com.andy.commonlibrary.util.ToastUtil;
 import com.imageloader.core.ImageLoader;
 import com.imageloader.core.assist.FailReason;
 import com.imageloader.core.assist.ImageLoadingListener;
@@ -28,6 +29,7 @@ public class ItotemImageView extends ImageView {
     private int default_drawalbe;
 
     private boolean isRoundedCorner = false;
+    private boolean isCircle  = false;
 
 	public ItotemImageView(Context context) {
 		super(context);
@@ -66,6 +68,14 @@ public class ItotemImageView extends ImageView {
 
     public void setRoundedCorner(boolean isRoundedCorner){
         this.isRoundedCorner = isRoundedCorner;
+    }
+
+    /**
+     *
+     * @param isCircle
+     */
+    public void setIsCircle(boolean isCircle){
+        this.isCircle = isCircle;
     }
 	
 	@Override
@@ -134,7 +144,10 @@ public class ItotemImageView extends ImageView {
 						@Override
 						public void onLoadingComplete(Bitmap loadedImage) {
 							if(isRoundedCorner){
-                                setImageBitmap(AppUtil.getRoundedCornerBitmap(loadedImage, 3.0f));
+                                setImageBitmap(AppUtil.getRoundedCornerBitmap(loadedImage,0.3f));
+                            }
+                            if(isCircle){
+                                setImageBitmap(AppUtil.getCircleBitmap(loadedImage));
                             }
 						}
 						@Override

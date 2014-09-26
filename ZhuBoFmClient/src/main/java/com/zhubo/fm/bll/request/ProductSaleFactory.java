@@ -39,7 +39,7 @@ public class ProductSaleFactory {
         bussinessParams.setRelative_url("/api/anchor_client/sales");
         //增加基本参数
         List<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
+       // list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
       /*  list.add(new BasicNameValuePair("start",startDate));
         list.add(new BasicNameValuePair("end",endDate));*/
         list.add(new BasicNameValuePair("start","2014-08-01"));
@@ -65,7 +65,7 @@ public class ProductSaleFactory {
         bussinessParams.setRelative_url("/api/anchor_client/sales/"+productId);
         //增加基本参数
         List<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
+       // list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
        // list.add(new BasicNameValuePair("start",startDate));
         list.add(new BasicNameValuePair("start","2014-08-01"));
         list.add(new BasicNameValuePair("end","2014-09-01"));

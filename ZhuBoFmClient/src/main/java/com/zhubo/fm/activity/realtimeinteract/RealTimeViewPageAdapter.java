@@ -21,7 +21,7 @@ import com.zhubo.fm.R;
 public class RealTimeViewPageAdapter extends PagerAdapter {
     private Activity context;
 
-    private int[] image_array = {R.drawable.guide_1, R.drawable.guide_2,R.drawable.guide_3};
+    private int[] image_array = {R.drawable.ic_launcher, R.drawable.ic_launcher,R.drawable.ic_launcher};
 
     public RealTimeViewPageAdapter(Activity context){
         this.context = context;

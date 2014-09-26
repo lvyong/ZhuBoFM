@@ -143,7 +143,8 @@ public class MessagePopView {
                int screenWidth = dm.widthPixels;
                int screenHeigh = dm.heightPixels;
                int x = (screenWidth - achorView.getWidth()) / 4;
-               this.popupWindow.showAsDropDown(achorView,-x, Dimension.dip2px(15,context));
+               this.popupWindow.showAsDropDown(achorView,-x+Dimension.dip2px(9,context),
+                       Dimension.dip2px(15,context));
                if(null != messagePopViewCallBack){
                    messagePopViewCallBack.open();
                }

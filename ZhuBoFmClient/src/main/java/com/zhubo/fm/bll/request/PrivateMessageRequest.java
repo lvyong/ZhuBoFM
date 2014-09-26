@@ -6,6 +6,7 @@ import android.util.Log;
 import com.andy.corelibray.net.BusinessResponseHandler;
 import com.andy.corelibray.net.BussinessParams;
 import com.andy.corelibray.net.HttpManger;
+import com.zhubo.fm.ZhuBoApplication;
 import com.zhubo.fm.activity.setting.SetUserPhoto;
 import com.zhubo.fm.bll.util.UploadPhoto;
 
@@ -40,7 +41,7 @@ public class PrivateMessageRequest {
         bussinessParams.setRelative_url("/api/messages/group");
         //增加基本参数
         List<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
+       // list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
 
         bussinessParams.setParamList(list);
         httpAsyncTask = HttpManger.getInstance().getSend(context,bussinessParams,handler);
@@ -55,7 +56,7 @@ public class PrivateMessageRequest {
         bussinessParams.setRelative_url("/api/anchor_client/columns");
         //增加基本参数
         List<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
+       // list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
 
         bussinessParams.setParamList(list);
         httpAsyncTask = HttpManger.getInstance().getSend(context,bussinessParams,handler);
@@ -73,7 +74,7 @@ public class PrivateMessageRequest {
                 "/comments");
         //增加基本参数
         List<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
+     //   list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
         list.add(new BasicNameValuePair("page",page+""));
 
         bussinessParams.setParamList(list);
@@ -90,7 +91,9 @@ public class PrivateMessageRequest {
         BussinessParams bussinessParams = new BussinessParams(context);
         //增加基本参数
         HashMap<String,String> map = new HashMap<String,String>();
-        map.put("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d");
+       String apiToken = ZhuBoApplication.getInstance().getApiToken();
+      //  map.put("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d");
+        map.put("t",apiToken);
         map.put("from",idStr);
         map.put("s","1");
         string = UploadPhoto.delete("http://api.mallfm.bjcathay.com/api/messages",map);
@@ -110,7 +113,7 @@ public class PrivateMessageRequest {
         bussinessParams.setRelative_url("/api/messages");
         //增加基本参数
         List<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
+       // list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
         list.add(new BasicNameValuePair("page",page+""));
         list.add(new BasicNameValuePair("from",from));
 
@@ -129,7 +132,7 @@ public class PrivateMessageRequest {
         bussinessParams.setRelative_url("/api/messages");
         //增加基本参数
         List<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
+       // list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
         list.add(new BasicNameValuePair("to",to));
         list.add(new BasicNameValuePair("content",content));
 

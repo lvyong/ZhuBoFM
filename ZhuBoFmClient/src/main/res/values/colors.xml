@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="bg_color">#f4f4f4</color>
-    <color name="red_fe6f02">#f36f02</color>
+    <color name="red_fe6902">#f36902</color>
     <color name="red_fe6804">#fe6804</color>
+    <color name="red_fd6800">#fd6800</color>
     <color name="linear_choose_bg">#eeeeee</color>
     <color name="button_default_textcolor">#313131</color>
 </resources>

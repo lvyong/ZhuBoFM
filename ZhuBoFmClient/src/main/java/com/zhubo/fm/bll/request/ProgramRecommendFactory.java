@@ -37,7 +37,7 @@ public class ProgramRecommendFactory {
         bussinessParams.setRelative_url("/api/contents/" +programId+"/products");
         //增加基本参数
         List<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
+      //  list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
         bussinessParams.setParamList(list);
         httpAsyncTask = HttpManger.getInstance().getSend(context,bussinessParams,handler);
     }
@@ -53,7 +53,7 @@ public class ProgramRecommendFactory {
         bussinessParams.setRelative_url("/api/anchor_client/contents/" +programId+"/recommend_product");
         //增加基本参数
         List<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
+      //  list.add(new BasicNameValuePair("t", "f05da37f8656c78db7efdb64a1166fb6273caf0d"));
         list.add(new BasicNameValuePair("productId",productId));
         bussinessParams.setParamList(list);
         httpAsyncTask = HttpManger.getInstance().postSend(context,bussinessParams,handler);

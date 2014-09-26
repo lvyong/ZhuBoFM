@@ -26,6 +26,9 @@ public class ZhuBoApplication extends CoreApplication {
 
     public void setUserBean(UserBean userBean){
         this.userBean = userBean;
+        if(userBean != null){
+            setApiToken(userBean.getApiToken());
+        }
     }
 
     public UserBean getUserBean(){

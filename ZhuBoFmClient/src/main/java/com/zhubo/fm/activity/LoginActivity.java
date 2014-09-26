@@ -14,7 +14,6 @@ import com.andy.commonlibrary.net.exception.MessageException;
 import com.andy.commonlibrary.util.SharePreferUtil;
 import com.andy.commonlibrary.util.ToastUtil;
 import com.andy.corelibray.net.BusinessResponseHandler;
-import com.andy.ui.libray.component.PhoneNumberInputWatcher;
 import com.google.gson.Gson;
 import com.zhubo.control.activity.BaseActivity;
 import com.zhubo.control.bussiness.bean.UserBean;
@@ -45,6 +44,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         navigationBar.setTitle(R.string.login);
+        navigationBar.setBackBtnVisibility(View.INVISIBLE);
         initView();
         setListener();
         initData();

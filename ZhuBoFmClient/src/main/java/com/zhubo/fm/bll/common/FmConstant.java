@@ -64,6 +64,8 @@ public class FmConstant {
     public static final String UNLOGIN_ACTION = "UNLOGIN_ACTION";
     public static final String USER_SINGTURE = "USER_SINGTURE";
 
+    public static final String CHANGE_USER_PHOTO_ACTION = "CHANGE_USER_PHOTO_ACTION";
+
 
 
 }

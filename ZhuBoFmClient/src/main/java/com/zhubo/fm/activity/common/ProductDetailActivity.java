@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.util.SparseArray;
@@ -132,7 +134,14 @@ public class ProductDetailActivity extends BaseActivity {
               productImage.setUrl(productBean.getImageUrl());
               productImage.reload(false);
               programNameTextView.setText(productBean.getName());
-              priceTextView.setText("¥ "+productBean.getPrice());
+
+              String  value ="¥ "+productBean.getPrice();
+              ForegroundColorSpan redSpan = new ForegroundColorSpan(getResources().
+                      getColor(R.color.red_fe6804));
+              SpannableStringBuilder builder = new SpannableStringBuilder(value);
+              int index = value.indexOf("¥");
+              builder.setSpan(redSpan, index, index+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+              priceTextView.setText(builder);
 
               chooseDateTextView.setText(startDate.replaceAll("-",".")+"-"+endDate.replaceAll("-","."));
               setTopLableValue(productBean.getQuantity(),productBean.getAmount());
@@ -140,8 +149,8 @@ public class ProductDetailActivity extends BaseActivity {
     }
 
     private void setTopLableValue(int totalProductCount,String totalSale){
-        ForegroundColorSpan redSpan = new ForegroundColorSpan(Color.RED);
-        SpannableStringBuilder builder = new SpannableStringBuilder(getDays()+"天,共销售"+
+        ForegroundColorSpan redSpan = new ForegroundColorSpan(getResources().getColor(R.color.red_fd6800));
+        SpannableStringBuilder builder = new SpannableStringBuilder(getDays()+"天，共销售"+
                 totalProductCount);
         int length = new String(totalProductCount+"").length();
         int firstLength = new String(getDays()+"天,共销售").length();
@@ -151,6 +160,7 @@ public class ProductDetailActivity extends BaseActivity {
         SpannableStringBuilder builder1 = new SpannableStringBuilder("合计:¥ "+
                 StringUtil.formatAmount(totalSale + ""));
         int length1 =StringUtil.formatAmount(totalSale+"").length();
+        builder1.setSpan(new AbsoluteSizeSpan(18,true), 3, 5+length1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder1.setSpan(redSpan, 3,5+length1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         saleSumTextView.setText(builder1);
     }
@@ -257,11 +267,20 @@ public class ProductDetailActivity extends BaseActivity {
                viewHolder.programNameTextView.setText(saleDetailBean.getName());
                viewHolder.timeTextView.setText(saleDetailBean.getTime());
                viewHolder.quantityTextView.setText("销量:"+saleDetailBean.getQuantity()+"");
-               viewHolder.saleTextView.setText("营业额：¥ "+saleDetailBean.getAmount()+"");
+               setSaleText( viewHolder.saleTextView,"营业额：¥ "+saleDetailBean.getAmount()+"");
            }
            return contentView;
         }
 
+
+        private void setSaleText(TextView textView,String value){
+            ForegroundColorSpan redSpan = new ForegroundColorSpan(getResources().
+                    getColor(R.color.red_fe6804));
+            SpannableStringBuilder builder = new SpannableStringBuilder(value);
+            int index = value.indexOf("¥");
+            builder.setSpan(redSpan, index, index+1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            textView.setText(builder);
+        }
 
         class ViewHolder{
             TextView programNameTextView;

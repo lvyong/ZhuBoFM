@@ -9,7 +9,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -302,8 +304,8 @@ public class ProductSaleFragement extends BaseFragment {
 
     private void setTopLableValue(int totalProductCount,int totalSale){
         ForegroundColorSpan redSpan = new ForegroundColorSpan(getResources().
-                getColor(R.color.red_fe6f02));
-        SpannableStringBuilder builder = new SpannableStringBuilder(getDays()+"天,共销售"+
+                getColor(R.color.red_fe6902));
+        SpannableStringBuilder builder = new SpannableStringBuilder(getDays()+"天，共销售"+
                 totalProductCount);
         int length = new String(totalProductCount+"").length();
         int firstLength = new String(getDays()+"天,共销售").length();
@@ -313,6 +315,7 @@ public class ProductSaleFragement extends BaseFragment {
         SpannableStringBuilder builder1 = new SpannableStringBuilder("合计:¥ "+
                 StringUtil.formatAmount(totalSale+""));
         int length1 =StringUtil.formatAmount(totalSale+"").length();
+        builder1.setSpan(new AbsoluteSizeSpan(18,true), 3, 5+length1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder1.setSpan(redSpan, 3,5+length1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         sumTextView.setText(builder1);
     }

@@ -5,7 +5,7 @@
     <include
         android:id="@+id/fragement_live_note_title_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dip"
         layout="@layout/fragement_live_program_note_layout"
         android:layout_alignParentTop="true"
      />
